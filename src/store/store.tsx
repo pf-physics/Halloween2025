@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import indexReducer from './indexSlice'
+import playerIndexReducer from './playerIndexSlice'
 
 export const store = configureStore({
   reducer: {
     index: indexReducer,
+    playerIndex: playerIndexReducer
   },
 })
 

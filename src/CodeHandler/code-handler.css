@@ -1,0 +1,37 @@
+.loading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.team-choice {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.MuiFormControl-root {
+    border: green !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused fieldset{
+        border-color: "orange";
+}
+
+.label.Mui-focused {
+    border-color: green;
+}
+
+.code-input {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button {
+    width: 100% !important;
+}

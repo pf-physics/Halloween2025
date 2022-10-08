@@ -1,0 +1,16 @@
+.profile {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 10px;
+}
+
+.dialogue {
+    width: 100%;
+}
+
+.dialogue-text {
+    padding-top: 20px;
+    font-size: 20px;
+}
