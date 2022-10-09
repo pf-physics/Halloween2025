@@ -10,18 +10,17 @@ import skeleton from "../assets/imgs/skeleton.png"
 import Dialogue from "../dialogue/templates/dialogue";
 import dialogueList from "../dialogue/dialogue-list";
 import { setPlayerIndex } from "../store/playerIndexSlice";
+import { team1, team2 } from "../constants";
+
 
 // https://firebase.google.com/docs/database/web/read-and-write
 // https://firebase.google.com/docs/app-check/web/recaptcha-provider
-
-type pumpkins = "pumpkins"
-type skeletons = "skeletons"
 
 // This component should wrap the rest of the app
 const CodeHandler = () => {
     const [loading, setLoading] = useState(true)
     const [code, setCode] = useState("") // need to store also? yes. and team
-    const [team, setTeam] = useState<pumpkins | skeletons | undefined>()
+    const [team, setTeam] = useState<string | undefined>()
     const index = useAppSelector((state) => state.index.value)
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
     const dispatch = useAppDispatch()
@@ -30,7 +29,7 @@ const CodeHandler = () => {
     const [err, setErr] = useState("")
     const [tries, setTries] = useState(0)
 
-    const chooseTeam = (team: skeletons | pumpkins) => {
+    const chooseTeam = (team: string) => {
         localStorage.setItem("team", team)
         setTeam(team)
         getData()
@@ -45,8 +44,7 @@ const CodeHandler = () => {
             setCodeValid(true)
             const team = localStorage.getItem("team")
 
-            // TODO hardcoded
-            if (team === "pumpkins" || team === "skeletons") {
+            if (team === team1 || team === team2) {
                 setTeam(team)
 
                 getData()
@@ -81,7 +79,7 @@ const CodeHandler = () => {
             dispatch(setIndex(data))
             dispatch(setPlayerIndex(data))
           } else {
-            // error
+            console.log("There was an error fetching the code")
           }
           setLoading(false)
         });
@@ -91,8 +89,8 @@ const CodeHandler = () => {
         return <div>
             <div className="title">Choose your team</div>
             <div className="team-choice">
-            <img style={{cursor: "pointer"}} src={pumpkin} onClick={() => chooseTeam("pumpkins")}/>
-            <img style={{width: "100px", height: "100px", cursor: "pointer"}} src={skeleton} onClick={() => chooseTeam("skeletons")}/>
+            <img style={{cursor: "pointer"}} src={pumpkin} onClick={() => chooseTeam(team1)}/>
+            <img style={{width: "100px", height: "100px", cursor: "pointer"}} src={skeleton} onClick={() => chooseTeam(team2)}/>
         </div>
         </div>
     }

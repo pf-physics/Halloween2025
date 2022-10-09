@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "../store/hooks";
 import dialogueList from "../dialogue/dialogue-list";
 import { setIndex } from "../store/indexSlice";
 import { setPlayerIndex } from "../store/playerIndexSlice";
+import { team1, team2 } from "../constants";
 
 // in custom components, handle update local index/global index, proceeding to next thing
 // set local index to 0, in the common increase index, always set it to 0
@@ -22,10 +23,6 @@ import { setPlayerIndex } from "../store/playerIndexSlice";
 // customIdx components handle inc/dec themselves 
 
 // sometimes BOTH teams need to be at a certain index to continue, different component or just boolean?
-
-// put teams in constants? just v
-const team1 = "pumpkins"
-const team2 = "skeletons"
 
 export const useIncIndex = () => {
     const index = useAppSelector((state) => state.index.value)
@@ -107,17 +104,15 @@ export const useIncAllIndices = () => {
         return vIdx;
     }
 
-    // TODO hardcoded teams
     const incIndices = (newIndex: number) => {
         const code = (localStorage.getItem("code") as string)
-        set(ref(db, code + "/" + "pumpkins" + "/index"), newIndex);
-        set(ref(db, code + "/" + "skeletons" + "/index"), newIndex);
+        set(ref(db, code + "/" + team1 + "/index"), newIndex);
+        set(ref(db, code + "/" + team2 + "/index"), newIndex);
     }
 
     const incGlobalIndex = async () => {
-        // TODO hardcoded teams
-        const idx1 = await getTeamIndex("pumpkins")
-        const idx2 = await getTeamIndex("skeletons")
+        const idx1 = await getTeamIndex(team1)
+        const idx2 = await getTeamIndex(team2)
 
         if (playerIdx === undefined || index === undefined) {
             return;
