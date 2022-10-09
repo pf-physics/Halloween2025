@@ -1,9 +1,10 @@
-import { getDatabase, ref, onValue, set, get} from "firebase/database";
+import { getDatabase, ref, onValue, set } from "firebase/database";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import dialogueList from "../dialogue/dialogue-list";
 import { setIndex } from "../store/indexSlice";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
+import { useResetComponentIdx } from "./componentIndexHooks";
 
 // in custom components, handle update local index/global index, proceeding to next thing
 // set local index to 0, in the common increase index, always set it to 0
@@ -27,6 +28,7 @@ import { team1, team2 } from "../constants";
 export const useIncIndex = () => {
     const index = useAppSelector((state) => state.index.value)
     const playerIdx = useAppSelector((state) => state.playerIndex.value)
+    const resetComponentIndex = useResetComponentIdx();
 
     const dispatch = useAppDispatch()
     const db = getDatabase();
@@ -45,8 +47,10 @@ export const useIncIndex = () => {
             set(ref(db, code + "/" + team + "/index"), index+1);
             dispatch(setIndex(index+1))
             dispatch(setPlayerIndex(index+1))
-        }
 
+            // might be overkill to do every time, but it's safe
+            resetComponentIndex()
+        }
 
     }
 
@@ -82,7 +86,10 @@ export const useDecIndex = () => {
     return decIndex;
 }
 
+// TODO this probably doesn't work, that function is wack
 export const useIncAllIndices = () => {
+    // setReadyForNext (or whatever) to true for current team. if other team is also ready, then doot
+
     const index = useAppSelector((state) => state.index.value)
     const playerIdx = useAppSelector((state) => state.playerIndex.value)
     const dispatch = useAppDispatch()

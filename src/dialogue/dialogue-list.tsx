@@ -1,6 +1,9 @@
 import NormalDialogue from "./templates/normal-dialogue"
 import pumpkinHead from "../assets/imgs/pumpkin_head.png"
+import pumpkinIntro from "../assets/audio/pumpkinIntro.mp3"
+import pumpkinHeadMusic from "../assets/audio/pumpkinHead.mp3"
 import { team1, team2 } from "../constants"
+import Intro from "./scenes/intro"
 
 // import GlobalDialogue from "./templates/normal-dialogue", basically the same...?
 
@@ -15,7 +18,11 @@ import { team1, team2 } from "../constants"
 const dialogueListTest = [
     <NormalDialogue text="test" image={pumpkinHead} answers={[]}/>,
     <NormalDialogue text="test2" image={pumpkinHead} answers={[]}/>,
-    <NormalDialogue text="test3" image={pumpkinHead} answers={["TeSt"]}/>,
+    <Intro/>,
+    <NormalDialogue text="boot" image={pumpkinHead} answers={[]}/>,
+    <NormalDialogue text="test3" image={pumpkinHead} answers={["TeSt"]} audio={pumpkinIntro}/>,
+    <NormalDialogue text="same audio" image={pumpkinHead} answers={[]}/>,
+    <NormalDialogue text="switch" image={pumpkinHead} answers={["TeSt"]} audio={pumpkinHeadMusic}/>,
     <NormalDialogue text="test4" image={pumpkinHead} answers={["spooky","pumpkin"]}/>,
     <NormalDialogue text="test5" image={pumpkinHead} answers={[]}/>,
 ]

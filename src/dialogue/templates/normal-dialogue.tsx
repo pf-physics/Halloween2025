@@ -1,17 +1,25 @@
 import "./dialogue.css"
-import React, { useState } from 'react';
-import { useAppSelector } from '../../store/hooks'
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { Button } from '@mui/material';
 import Dialogue from "./dialogue";
 import { useIncIndex, useDecIndex } from "../../hooks/indexHooks";
+import { setAudio } from "../../store/audioSlice";
 
 
-const NormalDialogue = ({text, image, answers}: {text: string, image: string, answers: string[]}) => {
+const NormalDialogue = ({text, image, answers, audio}: {text: string, image: string, answers: string[], audio?: any}) => {
     const index = useAppSelector((state) => state.index.value)
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
     const incIdx = useIncIndex()
     const decIdx = useDecIndex()
     const ansRequired = playerIndex !== undefined && index != undefined && !(playerIndex < index) && answers.length > 0
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        if (audio !== undefined) {
+            dispatch(setAudio(audio))
+        }
+    }, [index])
 
     const [ans, setAns] = useState<string>("")
 

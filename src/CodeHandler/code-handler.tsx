@@ -11,6 +11,7 @@ import Dialogue from "../dialogue/templates/dialogue";
 import dialogueList from "../dialogue/dialogue-list";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
+import AudioControl from "../dialogue/audio-control";
 
 
 // https://firebase.google.com/docs/database/web/read-and-write
@@ -172,7 +173,11 @@ const CodeHandler = () => {
         <div className='loading'>
             <CircularProgress color='primary'/>
         </div>
-         : codeValid ? team ? DisplayApp()
+         : codeValid ? team ?
+            <div>
+                {DisplayApp()}
+                <AudioControl/>
+            </div>
          : <TeamChoice/>
          : <EnterCode/>}
     </div>
