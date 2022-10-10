@@ -4,32 +4,21 @@ import dialogueList from "../dialogue/dialogue-list";
 import { setIndex } from "../store/indexSlice";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
+import { useState } from "react";
+import { getTeamIndex } from "./common";
 
 const indexUrl = "/componentIndex"
-
-const getTeamIndex = async (db: Database, team: string) => {
-    const dbCode = (localStorage.getItem("code") as string)
-    const q = ref(db, dbCode + "/" + team + indexUrl);
-
-    // TODO get in the other file too! (make this common...)
-    const data = (await get(q)).val()
-
-    if (typeof(data) === "number") {
-        return data;
-      } else {
-        console.log("error")
-        return 0;
-      }
-}
-
 
 // DOES NOT WORK
 // Either make component slice, or handle in component itself
 const useGetComponentIdx = () => {
     const team = (localStorage.getItem("team") as string);
     const db = getDatabase();
+    const [index, setIndex] = useState(0)
 
-    return getTeamIndex(db, team)
+
+
+    return getTeamIndex(db, team, indexUrl)
 }
 
 export const useIncComponentIndex = () => {
@@ -39,7 +28,7 @@ export const useIncComponentIndex = () => {
     const incComponentIndex = async () => {
         const team = (localStorage.getItem("team") as string)
         const code = (localStorage.getItem("code") as string)
-        const componentIndex = getTeamIndex(db, team)
+        const componentIndex = getTeamIndex(db, team, indexUrl)
 
         componentIndex.then(i => set(ref(db, code + "/" + team + indexUrl), i + 1))
     }
@@ -79,8 +68,8 @@ export const useIncAllComponentIndices = () => {
     }
 
     const incGlobalIndex = async () => {
-        const idx1 = await getTeamIndex(db, team1)
-        const idx2 = await getTeamIndex(db, team2)
+        const idx1 = await getTeamIndex(db, team1, indexUrl)
+        const idx2 = await getTeamIndex(db, team2, indexUrl)
 
         if (playerIdx === undefined || index === undefined) {
             return;

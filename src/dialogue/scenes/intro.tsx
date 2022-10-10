@@ -14,7 +14,7 @@ import { Fade } from '@mui/material';
 import { setAudio, setLoop } from "../../store/audioSlice";
 
 const dialogue =
-    [ {text: "Welcome to Halloween 2022! When everyone is ready, press next"}
+    [ {text: "When everyone is ready, press next"}
     , {text: "This year's Halloween party is all about remembering what Halloween is really about."}
     , {nextLocked: true, doorTime: true, text: "Halloween originated with the Celtic Festival of Samhain. The Celts belief was that the dead returned to earth on Samhain, October 31st. On this night, people gathered to light bonfires, offer sacrifices and pay homage to the dead."}
     , {text: "", doorOpen: true, nextLocked: true}
@@ -34,10 +34,9 @@ const Intro = ({}: {}) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(setAudio(music))
-    }, [])
-
-    useEffect(() => {
+        if (index === 1) {
+            dispatch(setAudio(music))
+        }
         if (el.doorTime) {
             setTimeout(() => setDoorTime(true), 4000)
             setTimeout(() => dispatch(setAudio(undefined)), 4000)
@@ -77,6 +76,7 @@ const Intro = ({}: {}) => {
     }, [])
 
     const incIdx = useIncComponentIndex()
+    // SHOULD BE ALL INDICES
     const incAppIndex = useIncIndex()
     const decIdx = useDecIndex()
     const answers: string[] = []
@@ -138,6 +138,10 @@ const Intro = ({}: {}) => {
          <img src={door} style={{height: "100%", width: "100vw", objectFit: "cover", objectPosition: "top"}} />
          </div>
          </Fade>}
+         {index === 0 &&
+            <div className='title'>
+                Welcome to Halloween 2022
+            </div>}
         {!open && <Dialogue text={el.text} image={""}/>}
         {answers.length > 0 && ansRequired && <input value={ans} onChange={(e) => setAns(e.target.value)}/>}
         {!open && <div className="buttons-row">

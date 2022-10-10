@@ -1,10 +1,11 @@
 import "./dialogue.css"
 import React from 'react';
 
-const Dialogue = ({text, image}: {text: string, image: string}) => {
+const Dialogue = ({text, image}: {text: string, image?: string}) => {
 
     return <div className="dialogue">
-            <img className='profile' src={image}/>
+            {image ? <img className='profile' src={image}/> :
+            <div className="profile"/>}
         <div className="dialogue-text">
             {text}
         </div>
