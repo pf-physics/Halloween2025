@@ -36,6 +36,12 @@ const CodeHandler = () => {
         getData()
     }
 
+    useEffect(() => {
+        if(codeValid && team) {
+            initComponentIdx();
+        }
+    }, [team, code])
+
     const trySetCode = async (code: string) => {
         setLoading(true)
         const res = (await get(ref(db, code))).val()
@@ -60,8 +66,6 @@ const CodeHandler = () => {
     }
 
     useEffect(() => {
-        initComponentIdx();
-
         const key = (localStorage.getItem("code") as string)
         if (!key) {
             setLoading(false)

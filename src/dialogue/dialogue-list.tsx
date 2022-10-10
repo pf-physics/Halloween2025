@@ -19,7 +19,6 @@ const dialogueListTest = [
     <NormalDialogue text="test" image={pumpkinHead} answers={[]}/>,
     <NormalDialogue text="test2" image={pumpkinHead} answers={[]}/>,
     <Intro/>,
-    <NormalDialogue text="boot" image={pumpkinHead} answers={[]}/>,
     <NormalDialogue text="test3" image={pumpkinHead} answers={["TeSt"]} audio={pumpkinIntro}/>,
     <NormalDialogue text="same audio" image={pumpkinHead} answers={[]}/>,
     <NormalDialogue text="switch" image={pumpkinHead} answers={["TeSt"]} audio={pumpkinHeadMusic}/>,

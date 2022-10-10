@@ -113,8 +113,9 @@ const Intro = ({}: {}) => {
         }
     }
 
+    // TODO might break if multiple people doing it
     const handleOpenDoor = () => {
-        if (!opening) {
+        if (!el.doorOpen) {
             setOpening(true)
             incIdx()
             setTimeout(incAppIndex, 4000)
@@ -133,7 +134,7 @@ const Intro = ({}: {}) => {
             <div className='title'>
                 Welcome to Halloween 2022
             </div>}
-        {!open && <Dialogue text={el.text} image={""}/>}
+        {!open && !opening && <Dialogue text={el.text} image={""}/>}
         {answers.length > 0 && ansRequired && <input value={ans} onChange={(e) => setAns(e.target.value)}/>}
         {!open && <div className="buttons-row">
             <Button
