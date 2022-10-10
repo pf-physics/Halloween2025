@@ -40,7 +40,8 @@ const Intro = ({}: {}) => {
     useEffect(() => {
         if (el.doorTime) {
             setTimeout(() => setDoorTime(true), 4000)
-            setTimeout(() => setAudio(knock), 6000)
+            setTimeout(() => dispatch(setAudio(undefined)), 4000)
+            setTimeout(() => dispatch(setAudio(knock)), 6000)
         }
         if (el.doorOpen) {
             dispatch(setAudio(openSound))
