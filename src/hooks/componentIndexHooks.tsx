@@ -1,15 +1,15 @@
 import { getDatabase, ref, onValue, set, get, Database} from "firebase/database";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import dialogueList from "../dialogue/dialogue-list";
-import { setIndex } from "../store/indexSlice";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
 import { useState } from "react";
-import { getTeamIndex } from "./common";
+import { getTeamIndex, getTeamScene } from "./common";
+import { setComponentIndex } from "../store/componentIndexSlice";
 
 const indexUrl = "/componentIndex"
 
-export const useGetComponentIdx = () => {
+const useGetComponentIdx = () => {
     const db = getDatabase();
 
     const getComponentIdx = (callback: (t: number) => void) => {
@@ -32,6 +32,24 @@ export const useGetComponentIdx = () => {
 }
 
 export const useIncComponentIndex = () => {
+    const componentIndex = useAppSelector((state) => state.componentIndex.value)
+    const dispatch = useAppDispatch()
+    const db = getDatabase();
+
+    const incComponentIndex = () => {
+        const team = (localStorage.getItem("team") as string)
+        const code = (localStorage.getItem("code") as string)
+
+        if (componentIndex !== undefined) {
+            set(ref(db, code + "/" + team + indexUrl), componentIndex+1);
+            dispatch(setComponentIndex(componentIndex+1))
+        }
+    }
+
+    return incComponentIndex;
+}
+
+export const useIncComponentIndexOld = () => {
     const team = (localStorage.getItem("team") as string);
     const db = getDatabase();
 
@@ -49,12 +67,14 @@ export const useIncComponentIndex = () => {
 
 export const useResetComponentIdx = () => {
     const db = getDatabase();
+    const dispatch = useAppDispatch();
 
     const resetComponentIndex = async () => {
         const team = (localStorage.getItem("team") as string)
         const code = (localStorage.getItem("code") as string)
 
         set(ref(db, code + "/" + team + indexUrl), 0);
+        dispatch(setComponentIndex(0));
     }
 
     return resetComponentIndex
@@ -66,37 +86,24 @@ export const resetAllComponentIndices = () => {
 }
 
 export const useIncAllComponentIndices = () => {
-    const index = useAppSelector((state) => state.index.value)
-    const playerIdx = useAppSelector((state) => state.playerIndex.value)
-    const dispatch = useAppDispatch()
     const db = getDatabase();
 
-    const incIndices = (newIndex: number) => {
-        const code = (localStorage.getItem("code") as string)
-        set(ref(db, code + "/" + team1 + indexUrl), newIndex);
-        set(ref(db, code + "/" + team2 + indexUrl), newIndex);
-    }
-
-    const incGlobalIndex = async () => {
+    const incAllComponenentIndex = async () => {
         const idx1 = await getTeamIndex(db, team1, indexUrl)
+        const scene1 = await getTeamScene(db, team1)
         const idx2 = await getTeamIndex(db, team2, indexUrl)
+        const scene2 = await getTeamScene(db, team1)
 
-        if (playerIdx === undefined || index === undefined) {
-            return;
-        }
-
-        if (playerIdx < index) {
-            dispatch(setPlayerIndex(playerIdx+1))
-        }
-
-        // TODO this is wrong
-        if (idx1 !== idx2) {
-            console.log("Indices do not match")
+        if (scene1 !== scene2) {
+            console.log("Wait until both teams are ready")
         } else if (idx1 < dialogueList.length-1) {
+
             // TODO test multiple people pressing at same time?
-            incIndices(idx1+1)
+            const code = (localStorage.getItem("code") as string)
+            set(ref(db, code + "/" + team1 + indexUrl), idx1+1);
+            set(ref(db, code + "/" + team2 + indexUrl), idx2+1);
         }
     }
 
-    return incGlobalIndex;
+    return incAllComponenentIndex;
 }

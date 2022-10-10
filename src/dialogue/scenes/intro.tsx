@@ -7,11 +7,12 @@ import door from "../../assets/imgs/black_door.png"
 import music from "../../assets/audio/intro1.mp3"
 import knock from "../../assets/audio/knock.wav"
 import openSound from "../../assets/audio/door_open.mp3"
-import { useGetComponentIdx, useIncComponentIndex } from "../../hooks/componentIndexHooks";
+import { useIncComponentIndex } from "../../hooks/componentIndexHooks";
 import { ref, onValue, getDatabase } from 'firebase/database';
 import { setPlayerIndex } from '../../store/playerIndexSlice';
 import { Fade } from '@mui/material';
 import { setAudio, setLoop } from "../../store/audioSlice";
+import { useSetGlobalScene } from '../../hooks/common';
 
 const dialogue =
     [ {text: "When everyone is ready, press next"}
@@ -20,22 +21,23 @@ const dialogue =
     , {text: "", doorOpen: true, nextLocked: true}
     ];
 
-// local index is just the index here, should make a "global" local index slice
-// TODO if player index < index, then use a local component index
+// TODO if playerIndex < index, then use a local component index
 const Intro = ({}: {}) => {
-    const appIndex = useAppSelector((state) => state.index.value)
-    const playerIndex = useAppSelector((state) => state.playerIndex.value)
-    const [index, setIndex] = useState(0)
-    const db = getDatabase();
-    const el = dialogue[index]
+    const componentIndex = useAppSelector((state) => state.componentIndex.value)
+    const dispatch = useAppDispatch()
+    const [playerComponentIndex, setPlayerComponentIndex] = useState(componentIndex)
+    const [el, setEl] = useState(dialogue[playerComponentIndex])
+    const [doorTime, setDoorTime] = useState(false)
     const [opening, setOpening] = useState(false)
     const [open, setOpen] = useState(false)
-    const [doorTime, setDoorTime] = useState(false)
-    const dispatch = useAppDispatch()
-    const getComponentIdx = useGetComponentIdx()
+    const setGlobalScene = useSetGlobalScene();
 
     useEffect(() => {
-        if (index === 1) {
+        setGlobalScene("intro")
+    },[])
+
+    useEffect(() => {
+        if (componentIndex === 1) {
             dispatch(setAudio(music))
         }
         if (el.doorTime) {
@@ -52,14 +54,14 @@ const Intro = ({}: {}) => {
     // if playerIndex < appIndex, set index = 0
 
     useEffect(() => {
-        // kind of works but kind of doesn't
-        if (appIndex && playerIndex && playerIndex < appIndex) {
-            //return
+        if (componentIndex-1 === playerComponentIndex) {
+            setPlayerComponentIndex(componentIndex)
         }
+    }, [componentIndex])
 
-        getComponentIdx(setIndex)
-
-    }, [])
+    useEffect(() => {
+        setEl(dialogue[playerComponentIndex])
+    }, [playerComponentIndex])
 
     const incIdx = useIncComponentIndex()
     const incAppIndex = useIncIndex()
@@ -77,13 +79,12 @@ const Intro = ({}: {}) => {
             return
         }
 
-        // always returns up to date and incs by one, can handle this later
-        if (appIndex && playerIndex && playerIndex < appIndex) {
-            // setIndex(index+1)
-            // return
+        if (playerComponentIndex < componentIndex) {
+            setPlayerComponentIndex(playerComponentIndex+1)
+            return
         }
 
-        if (index >= dialogue.length - 1) {
+        if (playerComponentIndex === componentIndex && componentIndex >= dialogue.length - 1) {
             incAppIndex()
             return
         }
@@ -100,10 +101,15 @@ const Intro = ({}: {}) => {
     }
 
     const handleBack = async () => {
-        if (index === 0) {
+        // can maybe be optimized
+        if (el.nextLocked) {
+            return
+        }
+
+        if (playerComponentIndex === 0) {
             decIdx();
         } else {
-            setIndex(index-1)
+            setPlayerComponentIndex(playerComponentIndex-1)
         }
     }
 
@@ -123,7 +129,7 @@ const Intro = ({}: {}) => {
          <img src={door} style={{height: "100%", width: "100vw", objectFit: "cover", objectPosition: "top"}} />
          </div>
          </Fade>}
-         {index === 0 &&
+         {playerComponentIndex === 0 &&
             <div className='title'>
                 Welcome to Halloween 2022
             </div>}
