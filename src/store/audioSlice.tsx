@@ -5,15 +5,19 @@ export const counterSlice = createSlice({
   initialState: {
     value: undefined as any | undefined,
     fadeIn: false,
-    fadeOut: false
+    fadeOut: false,
+    loop: true,
   },
   reducers: {
     setAudio: (state, action: PayloadAction<any>) => {
           state.value = action.payload
     },
+    setLoop: (state, action: PayloadAction<boolean>) => {
+      state.loop = action.payload
+    },
   },
 })
 
-export const { setAudio } = counterSlice.actions
+export const { setAudio, setLoop } = counterSlice.actions
 
 export default counterSlice.reducer

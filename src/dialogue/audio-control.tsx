@@ -6,6 +6,7 @@ const AudioControl = () => {
     const aud = useAppSelector((state) => state.audio.value)
     const fadeIn = useAppSelector((state) => state.audio.fadeIn)
     const fadeOut = useAppSelector((state) => state.audio.fadeOut)
+    const loop = useAppSelector((state) => state.audio.loop)
     const [id, setId] = useState(0)
 
     useEffect(() => {
@@ -19,7 +20,7 @@ const AudioControl = () => {
         key={`${id}`}
         style={{opacity:0}}
         autoPlay={true}
-        loop={true}
+        loop={loop}
         controls
         src={audio}>
     </audio>

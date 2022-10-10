@@ -16,7 +16,7 @@ const dialogue =
     [ {text: "Welcome to Halloween 2022! When everyone is ready, press next"}
     , {text: "This year's Halloween party is all about remembering what Halloween is really about."}
     , {nextLocked: true, doorTime: true, text: "Halloween originated with the Celtic Festival of Samhain. The Celts belief was that the dead returned to earth on Samhain, October 31st. On this night, people gathered to light bonfires, offer sacrifices and pay homage to the dead."}
-    , {text: "", doorOpen: true}
+    , {text: "", doorOpen: true, nextLocked: true}
     ];
 
 
@@ -34,9 +34,9 @@ const Intro = ({}: {}) => {
 
     useEffect(() => {
         if (el.doorTime) {
-            setDoorTime(true)
-            setAudio(null)
-            setTimeout(() => setAudio(knock), 2000)
+            setTimeout(() => setDoorTime(true), 4000)
+            setAudio(undefined)
+            setTimeout(() => setAudio(knock), 6000)
         }
         if (el.doorOpen) {
             setAudio(openSound)
