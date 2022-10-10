@@ -5,6 +5,7 @@ import { setIndex } from "../store/indexSlice";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
 import { useResetComponentIdx } from "./componentIndexHooks";
+import { getTeamIndex, getTeamScene } from "./common";
 
 // in custom components, handle update local index/global index, proceeding to next thing
 // set local index to 0, in the common increase index, always set it to 0
@@ -24,6 +25,8 @@ import { useResetComponentIdx } from "./componentIndexHooks";
 // customIdx components handle inc/dec themselves 
 
 // sometimes BOTH teams need to be at a certain index to continue, different component or just boolean?
+
+const indexUrl = "/index"
 
 export const useIncIndex = () => {
     const index = useAppSelector((state) => state.index.value)
@@ -87,58 +90,27 @@ export const useDecIndex = () => {
     return decIndex;
 }
 
-// TODO this probably doesn't work, that function is wack
 export const useIncAllIndices = () => {
-    // setReadyForNext (or whatever) to true for current team. if other team is also ready, then doot
-
-    const index = useAppSelector((state) => state.index.value)
-    const playerIdx = useAppSelector((state) => state.playerIndex.value)
-    const dispatch = useAppDispatch()
     const db = getDatabase();
 
-    const getTeamIndex = async (team: string) => {
-        const dbCode = (localStorage.getItem("code") as string)
-        const q = ref(db, dbCode + "/" + team + "/index");
-        var vIdx = 0;
+    const incAllIndices = async () => {
+        // For component index, they must both match
+        const idx1 = await getTeamIndex(db, team1, indexUrl)
+        const idx2 = await getTeamIndex(db, team2, indexUrl)
+        const scene1 = await getTeamScene(db, team1)
+        const scene2 = await getTeamScene(db, team2)
 
-        onValue(q, async (snapshot) => {
-          const data = await snapshot.val();
-          if (typeof(data) === "number") {
-            vIdx =  data;
-          } else {
-            console.log("error")
-          }
-        });
-        return vIdx;
-    }
+        if (scene1 !== scene2) {
+            console.log("Wait until both teams are ready")
+        } else if (idx1 < getDialogue(team1).length-1) {
+            const code = (localStorage.getItem("code") as string)
+            set(ref(db, code + "/" + team1 + indexUrl), idx1+1);
+            set(ref(db, code + "/" + team2 + indexUrl), idx2+1);
 
-    const incIndices = (newIndex: number) => {
-        const code = (localStorage.getItem("code") as string)
-        set(ref(db, code + "/" + team1 + "/index"), newIndex);
-        set(ref(db, code + "/" + team2 + "/index"), newIndex);
-    }
-
-    const incGlobalIndex = async () => {
-        const idx1 = await getTeamIndex(team1)
-        const idx2 = await getTeamIndex(team2)
-        const dialogueList = getDialogue(team1)
-
-        if (playerIdx === undefined || index === undefined) {
-            return;
-        }
-
-        if (playerIdx < index) {
-            dispatch(setPlayerIndex(playerIdx+1))
-        }
-
-        // HAVE TO FIX THIS
-        if (idx1 !== idx2) {
-            console.log("Indices do not match")
-        } else if (idx1 < dialogueList.length-1) {
-            // TODO test multiple people pressing at same time?
-            incIndices(idx1+1)
+            // TODO
+            // resetGlobalComponentIdx
         }
     }
 
-    return incGlobalIndex;
+    return incAllIndices;
 }

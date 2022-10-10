@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { Button } from '@mui/material';
 import Dialogue from "../templates/dialogue";
-import { useIncIndex, useDecIndex } from "../../hooks/indexHooks";
+import { useIncIndex, useDecIndex, useIncAllIndices } from "../../hooks/indexHooks";
 import door from "../../assets/imgs/black_door.png"
 import music from "../../assets/audio/intro1.mp3"
 import knock from "../../assets/audio/knock.wav"
 import openSound from "../../assets/audio/door_open.mp3"
-import { useIncComponentIndex } from "../../hooks/componentIndexHooks";
+import { useIncAllComponentIndices, useIncComponentIndex, useInitComponentIdx } from "../../hooks/componentIndexHooks";
 import { ref, onValue, getDatabase } from 'firebase/database';
 import { setPlayerIndex } from '../../store/playerIndexSlice';
 import { Fade } from '@mui/material';
@@ -63,8 +63,8 @@ const Intro = ({}: {}) => {
         setEl(dialogue[playerComponentIndex])
     }, [playerComponentIndex])
 
-    const incIdx = useIncComponentIndex()
-    const incAppIndex = useIncIndex()
+    const incIdx = useIncAllComponentIndices()
+    const incAppIndex = useIncAllIndices()
     const decIdx = useDecIndex()
     const answers: string[] = []
     const ansRequired = false

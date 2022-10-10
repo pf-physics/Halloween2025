@@ -1,6 +1,6 @@
 import { getDatabase, ref, onValue, set, get, Database} from "firebase/database";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-import dialogueList from "../dialogue/dialogue-list";
+import getDialogue from "../dialogue/dialogue-list";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
 import { useState } from "react";
@@ -28,7 +28,28 @@ const useGetComponentIdx = () => {
     }
 
     return getComponentIdx;
+}
 
+export const useInitComponentIdx = () => {
+    const db = getDatabase();
+    const dispatch = useAppDispatch()
+
+    const getComponentIdx = () => {
+        const team = (localStorage.getItem("team") as string);
+        const dbCode = (localStorage.getItem("code") as string)
+        const q = ref(db, dbCode + "/" + team + indexUrl);
+
+        onValue(q, async (snapshot) => {
+            const data = await snapshot.val();
+            if (typeof(data) === "number") {
+                dispatch(setComponentIndex(data))
+            } else {
+              console.log("There was an error fetching the component data")
+            }
+          });
+    }
+
+    return getComponentIdx;
 }
 
 export const useIncComponentIndex = () => {
@@ -80,28 +101,23 @@ export const useResetComponentIdx = () => {
     return resetComponentIndex
 }
 
-// might not need
-export const resetAllComponentIndices = () => {
-    
-}
-
 export const useIncAllComponentIndices = () => {
     const db = getDatabase();
 
     const incAllComponenentIndex = async () => {
+        // For component index, they must both match
         const idx1 = await getTeamIndex(db, team1, indexUrl)
         const scene1 = await getTeamScene(db, team1)
-        const idx2 = await getTeamIndex(db, team2, indexUrl)
-        const scene2 = await getTeamScene(db, team1)
+        const scene2 = await getTeamScene(db, team2)
 
         if (scene1 !== scene2) {
             console.log("Wait until both teams are ready")
-        } else if (idx1 < dialogueList.length-1) {
+        } else if (idx1 < getDialogue(team1).length-1) {
 
             // TODO test multiple people pressing at same time?
             const code = (localStorage.getItem("code") as string)
             set(ref(db, code + "/" + team1 + indexUrl), idx1+1);
-            set(ref(db, code + "/" + team2 + indexUrl), idx2+1);
+            set(ref(db, code + "/" + team2 + indexUrl), idx1+1);
         }
     }
 

@@ -10,6 +10,7 @@ import getDialogue from "../dialogue/dialogue-list";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
 import AudioControl from "../dialogue/audio-control";
+import { useInitComponentIdx } from "../hooks/componentIndexHooks";
 
 
 // https://firebase.google.com/docs/database/web/read-and-write
@@ -27,6 +28,7 @@ const CodeHandler = () => {
     const db = getDatabase();
     const [err, setErr] = useState("")
     const [tries, setTries] = useState(0)
+    const initComponentIdx = useInitComponentIdx();
 
     const chooseTeam = (team: string) => {
         localStorage.setItem("team", team)
@@ -58,6 +60,8 @@ const CodeHandler = () => {
     }
 
     useEffect(() => {
+        initComponentIdx();
+
         const key = (localStorage.getItem("code") as string)
         if (!key) {
             setLoading(false)
