@@ -9,16 +9,26 @@ import { getTeamIndex } from "./common";
 
 const indexUrl = "/componentIndex"
 
-// DOES NOT WORK
-// Either make component slice, or handle in component itself
-const useGetComponentIdx = () => {
-    const team = (localStorage.getItem("team") as string);
+export const useGetComponentIdx = () => {
     const db = getDatabase();
-    const [index, setIndex] = useState(0)
 
+    const getComponentIdx = (callback: (t: number) => void) => {
+        const team = (localStorage.getItem("team") as string);
+        const dbCode = (localStorage.getItem("code") as string)
+        const q = ref(db, dbCode + "/" + team + indexUrl);
 
+        onValue(q, async (snapshot) => {
+            const data = await snapshot.val();
+            if (typeof(data) === "number") {
+              callback(data)
+            } else {
+              console.log("There was an error fetching the component data")
+            }
+          });
+    }
 
-    return getTeamIndex(db, team, indexUrl)
+    return getComponentIdx;
+
 }
 
 export const useIncComponentIndex = () => {

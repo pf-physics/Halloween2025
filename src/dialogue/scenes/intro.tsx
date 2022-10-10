@@ -7,7 +7,7 @@ import door from "../../assets/imgs/black_door.png"
 import music from "../../assets/audio/intro1.mp3"
 import knock from "../../assets/audio/knock.wav"
 import openSound from "../../assets/audio/door_open.mp3"
-import { useIncComponentIndex } from "../../hooks/componentIndexHooks";
+import { useGetComponentIdx, useIncComponentIndex } from "../../hooks/componentIndexHooks";
 import { ref, onValue, getDatabase } from 'firebase/database';
 import { setPlayerIndex } from '../../store/playerIndexSlice';
 import { Fade } from '@mui/material';
@@ -20,7 +20,7 @@ const dialogue =
     , {text: "", doorOpen: true, nextLocked: true}
     ];
 
-
+// local index is just the index here, should make a "global" local index slice
 // TODO if player index < index, then use a local component index
 const Intro = ({}: {}) => {
     const appIndex = useAppSelector((state) => state.index.value)
@@ -32,6 +32,7 @@ const Intro = ({}: {}) => {
     const [open, setOpen] = useState(false)
     const [doorTime, setDoorTime] = useState(false)
     const dispatch = useAppDispatch()
+    const getComponentIdx = useGetComponentIdx()
 
     useEffect(() => {
         if (index === 1) {
@@ -50,33 +51,17 @@ const Intro = ({}: {}) => {
 
     // if playerIndex < appIndex, set index = 0
 
-    const getComponentIndex = async () => {
-        const team = (localStorage.getItem("team") as string)
-        const dbCode = (localStorage.getItem("code") as string)
-        const q = ref(db, dbCode + "/" + team + "/componentIndex");
-
-        onValue(q, async (snapshot) => {
-          const data = await snapshot.val();
-          if (typeof(data) === "number") {
-            setIndex(data)
-          } else {
-            console.log("There was an error fetching the component code")
-          }
-        });
-    }
-
     useEffect(() => {
         // kind of works but kind of doesn't
         if (appIndex && playerIndex && playerIndex < appIndex) {
             //return
         }
 
-        getComponentIndex()
+        getComponentIdx(setIndex)
 
     }, [])
 
     const incIdx = useIncComponentIndex()
-    // SHOULD BE ALL INDICES
     const incAppIndex = useIncIndex()
     const decIdx = useDecIndex()
     const answers: string[] = []

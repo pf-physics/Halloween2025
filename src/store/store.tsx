@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import indexReducer from './indexSlice'
 import playerIndexReducer from './playerIndexSlice'
 import audioReducer from './audioSlice'
+import componentIndexReducer from './componentIndexSlice'
 
 export const store = configureStore({
   reducer: {
     index: indexReducer,
     playerIndex: playerIndexReducer,
+    componentIndex: componentIndexReducer,
     audio: audioReducer
   },
 })
