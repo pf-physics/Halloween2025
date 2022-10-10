@@ -5,10 +5,8 @@ import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { setIndex } from '../store/indexSlice';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import pumpkin from "../assets/imgs/pumpkin.png"
-import pumpkinHead from "../assets/imgs/pumpkin_head.png"
 import skeleton from "../assets/imgs/skeleton.png"
-import Dialogue from "../dialogue/templates/dialogue";
-import dialogueList from "../dialogue/dialogue-list";
+import getDialogue from "../dialogue/dialogue-list";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
 import AudioControl from "../dialogue/audio-control";
@@ -96,22 +94,6 @@ const CodeHandler = () => {
         </div>
     }
 
-    const ugleCode = () => {
-        return <TextField
-        sx={{"& .MuiOutlinedInput-root.Mui-focused": {
-              "& > fieldset": {
-                borderColor: "lime"
-              }
-            },
-            "& .MuiOutlinedInput-root": {
-                "& > fieldset": {
-          borderColor: "lime"
-                }
-              }
-          }}
-    />
-    }
-
     const EnterCode = () => {
         const [inputCode, setInputCode] = useState("")
         const jokeCode = "goose"
@@ -161,6 +143,12 @@ const CodeHandler = () => {
     }
 
     const DisplayApp = () => {
+        if (!team) {
+            return
+        }
+
+        const dialogueList = getDialogue(team)
+
         if (playerIndex !== undefined && playerIndex < dialogueList.length) {
             return dialogueList[playerIndex]
         } else {

@@ -6,7 +6,6 @@ import Dialogue from "./dialogue";
 import { useIncIndex, useDecIndex } from "../../hooks/indexHooks";
 import { setAudio } from "../../store/audioSlice";
 
-
 const NormalDialogue = ({text, image, answers, audio}: {text: string, image: string, answers: string[], audio?: any}) => {
     const index = useAppSelector((state) => state.index.value)
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
@@ -24,7 +23,6 @@ const NormalDialogue = ({text, image, answers, audio}: {text: string, image: str
     const [ans, setAns] = useState<string>("")
 
     const handleNext = () => {
-        // CHECK
         if (ansRequired) {
             if (answers.map(a => a.toLowerCase()).includes(ans.toLowerCase())) {
                 setAns("")

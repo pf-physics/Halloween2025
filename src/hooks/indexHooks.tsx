@@ -1,6 +1,6 @@
 import { getDatabase, ref, onValue, set } from "firebase/database";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-import dialogueList from "../dialogue/dialogue-list";
+import getDialogue from "../dialogue/dialogue-list";
 import { setIndex } from "../store/indexSlice";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
@@ -36,6 +36,7 @@ export const useIncIndex = () => {
     const incIndex = () => {
         const team = (localStorage.getItem("team") as string)
         const code = (localStorage.getItem("code") as string)
+        const dialogueList = getDialogue(team)
 
         if (playerIdx === undefined || index === undefined) {
             return
@@ -120,6 +121,7 @@ export const useIncAllIndices = () => {
     const incGlobalIndex = async () => {
         const idx1 = await getTeamIndex(team1)
         const idx2 = await getTeamIndex(team2)
+        const dialogueList = getDialogue(team1)
 
         if (playerIdx === undefined || index === undefined) {
             return;
@@ -129,6 +131,7 @@ export const useIncAllIndices = () => {
             dispatch(setPlayerIndex(playerIdx+1))
         }
 
+        // HAVE TO FIX THIS
         if (idx1 !== idx2) {
             console.log("Indices do not match")
         } else if (idx1 < dialogueList.length-1) {

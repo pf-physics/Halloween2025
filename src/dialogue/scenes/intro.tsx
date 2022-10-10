@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { Button } from '@mui/material';
 import Dialogue from "../templates/dialogue";
 import { useIncIndex, useDecIndex } from "../../hooks/indexHooks";
@@ -11,6 +11,7 @@ import { useIncComponentIndex } from "../../hooks/componentIndexHooks";
 import { ref, onValue, getDatabase } from 'firebase/database';
 import { setPlayerIndex } from '../../store/playerIndexSlice';
 import { Fade } from '@mui/material';
+import { setAudio, setLoop } from "../../store/audioSlice";
 
 const dialogue =
     [ {text: "Welcome to Halloween 2022! When everyone is ready, press next"}
@@ -30,16 +31,19 @@ const Intro = ({}: {}) => {
     const [opening, setOpening] = useState(false)
     const [open, setOpen] = useState(false)
     const [doorTime, setDoorTime] = useState(false)
-    const [audio, setAudio] = useState(music)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(setAudio(music))
+    }, [])
 
     useEffect(() => {
         if (el.doorTime) {
             setTimeout(() => setDoorTime(true), 4000)
-            setAudio(undefined)
             setTimeout(() => setAudio(knock), 6000)
         }
         if (el.doorOpen) {
-            setAudio(openSound)
+            dispatch(setAudio(openSound))
             setTimeout(() => setOpen(true), 1000)
         }
     }, [el])
@@ -149,13 +153,6 @@ const Intro = ({}: {}) => {
                 Next
             </Button>
         </div>}
-        <audio
-            style={{opacity:0}}
-            autoPlay={true}
-            loop={!open}
-            controls
-            src={audio}>
-        </audio>
     </div>
 }
 

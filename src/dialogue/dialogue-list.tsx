@@ -23,8 +23,12 @@ const dialogueListTest = [
     <NormalDialogue text="test3" image={pumpkinHead} answers={["TeSt"]} audio={pumpkinIntro}/>,
     <NormalDialogue text="same audio" image={pumpkinHead} answers={[]}/>,
     <NormalDialogue text="switch" image={pumpkinHead} answers={["TeSt"]} audio={pumpkinHeadMusic}/>,
+    <NormalDialogue text="QUIET!" image={pumpkinHead} answers={[]} audio={"nothing"}/>,
+    <NormalDialogue text="okay haha let's listen" image={pumpkinHead} answers={[]} audio={pumpkinHeadMusic}/>,
+    <NormalDialogue text="nvm..." image={pumpkinHead} answers={[]} audio={"nothing"}/>,
     <NormalDialogue text="test4" image={pumpkinHead} answers={["spooky","pumpkin"]}/>,
     <NormalDialogue text="test5" image={pumpkinHead} answers={[]}/>,
+    
 ]
 
 
@@ -34,11 +38,13 @@ const team2Dialogue = [<NormalDialogue text="test" image={pumpkinHead} answers={
 
 export const getDialogue = (team: string) => {
     if (team === team1) {
-        return team1Dialogue
+        return dialogueListTest
     } else if (team === team2) {
-        return team2Dialogue
+        return dialogueListTest
+    } else {
+        return ([])
     }
 
 }
 
-export default dialogueListTest
+export default getDialogue
