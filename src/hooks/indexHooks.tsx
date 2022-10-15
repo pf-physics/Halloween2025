@@ -92,8 +92,24 @@ export const useDecIndex = () => {
 
 export const useIncAllIndices = () => {
     const db = getDatabase();
+    const index = useAppSelector((state) => state.index.value)
+    const playerIdx = useAppSelector((state) => state.playerIndex.value)
+    const dispatch = useAppDispatch()
 
     const incAllIndices = async () => {
+
+        if (playerIdx === undefined || index === undefined) {
+            return;
+        }
+
+        if (playerIdx < index) {
+            dispatch(setPlayerIndex(playerIdx+1))
+            return
+        }
+
+        dispatch(setPlayerIndex(playerIdx+1))
+        dispatch(setIndex(index+1))
+
         // For component index, they must both match
         const idx1 = await getTeamIndex(db, team1, indexUrl)
         const idx2 = await getTeamIndex(db, team2, indexUrl)
@@ -104,6 +120,7 @@ export const useIncAllIndices = () => {
             console.log("Wait until both teams are ready")
         } else if (idx1 < getDialogue(team1).length-1) {
             const code = (localStorage.getItem("code") as string)
+
             set(ref(db, code + "/" + team1 + indexUrl), idx1+1);
             set(ref(db, code + "/" + team2 + indexUrl), idx2+1);
 

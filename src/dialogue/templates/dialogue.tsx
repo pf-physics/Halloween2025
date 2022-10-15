@@ -1,11 +1,14 @@
 import "./dialogue.css"
 import React from 'react';
 
-const Dialogue = ({text, image}: {text: string, image?: string}) => {
+const Dialogue = ({text, image, header}: {text: string, image?: string, header?: string}) => {
 
     return <div className="dialogue">
             {image ? <img className='profile' src={image}/> :
             <div className="profile"/>}
+            <div className="title">
+                {header}
+            </div>
         <div className="dialogue-text">
             {text}
         </div>

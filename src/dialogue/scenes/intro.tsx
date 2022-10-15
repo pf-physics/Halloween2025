@@ -34,7 +34,7 @@ const Intro = ({}: {}) => {
 
     useEffect(() => {
         setGlobalScene("intro")
-    },[])
+    }, [])
 
     useEffect(() => {
         if (componentIndex === 1) {

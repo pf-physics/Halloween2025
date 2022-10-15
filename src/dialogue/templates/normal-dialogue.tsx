@@ -3,22 +3,29 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { Button } from '@mui/material';
 import Dialogue from "./dialogue";
-import { useIncIndex, useDecIndex } from "../../hooks/indexHooks";
+import { useIncIndex, useDecIndex, useIncAllIndices } from "../../hooks/indexHooks";
 import { setAudio } from "../../store/audioSlice";
 
-const NormalDialogue = ({text, image, answers, audio}: {text: string, image: string, answers: string[], audio?: any}) => {
+const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, header}: {text: string, image?: string, answers?: string[], audio?: any, isGlobal?: boolean, globalScene?: string, header?: string}) => {
     const index = useAppSelector((state) => state.index.value)
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
     const incIdx = useIncIndex()
+    const globalIncIdx = useIncAllIndices()
     const decIdx = useDecIndex()
     const ansRequired = playerIndex !== undefined && index != undefined && !(playerIndex < index) && answers.length > 0
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        if (globalScene !== undefined) {
+            setGlobalScene(globalScene)
+        }
+    }, [])
+
+    useEffect(() => {
         if (audio !== undefined) {
             dispatch(setAudio(audio))
         }
-    }, [index])
+    }, [playerIndex])
 
     const [ans, setAns] = useState<string>("")
 
@@ -26,10 +33,10 @@ const NormalDialogue = ({text, image, answers, audio}: {text: string, image: str
         if (ansRequired) {
             if (answers.map(a => a.toLowerCase()).includes(ans.toLowerCase())) {
                 setAns("")
-                incIdx();
+                isGlobal ? globalIncIdx() : incIdx();
             }
         } else {
-            incIdx();
+            isGlobal ? globalIncIdx() : incIdx();
         }
 
     }
@@ -42,7 +49,7 @@ const NormalDialogue = ({text, image, answers, audio}: {text: string, image: str
     // might put buttons in common class with "handleNext" field
 
     return <div>
-        <Dialogue text={text} image={image}/>
+        <Dialogue header={header} text={text} image={image}/>
         {answers.length > 0 && ansRequired && <input value={ans} onChange={(e) => setAns(e.target.value)}/>}
         <div className="buttons-row">
             <Button
@@ -62,3 +69,7 @@ const NormalDialogue = ({text, image, answers, audio}: {text: string, image: str
 }
 
 export default NormalDialogue
+
+function setGlobalScene(globalScene: string) {
+    throw new Error("Function not implemented.");
+}
