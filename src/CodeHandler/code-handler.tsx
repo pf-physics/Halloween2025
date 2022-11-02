@@ -171,7 +171,9 @@ const CodeHandler = () => {
         </div>
          : codeValid ? team ?
             <div>
-                {DisplayApp()}
+                <>
+                    {DisplayApp()}
+                </>
                 <AudioControl/>
             </div>
          : <TeamChoice/>

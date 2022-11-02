@@ -80,3 +80,21 @@ input {
   flex-direction: row;
   justify-content: space-between;
 }
+
+.black-out {
+  height: 200vh;
+  width: 200vw;
+  object-fit: cover;
+  object-position: "top";
+  background-color: black;
+  position: absolute;
+}
+
+.tree-cover {
+  height: 100%;
+  width: 110vw;
+  
+  object-position: "top";
+  background-color: black;
+  position: absolute;
+}

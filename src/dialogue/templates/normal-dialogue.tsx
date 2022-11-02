@@ -5,8 +5,9 @@ import { Button } from '@mui/material';
 import Dialogue from "./dialogue";
 import { useIncIndex, useDecIndex, useIncAllIndices } from "../../hooks/indexHooks";
 import { setAudio } from "../../store/audioSlice";
+import { useSetGlobalScene } from "../../hooks/common";
 
-const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, header}: {text: string, image?: string, answers?: string[], audio?: any, isGlobal?: boolean, globalScene?: string, header?: string}) => {
+const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, header}: {text: string | string[], image?: string, answers?: string[], audio?: any, isGlobal?: boolean, globalScene?: string, header?: string}) => {
     const index = useAppSelector((state) => state.index.value)
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
     const incIdx = useIncIndex()
@@ -14,12 +15,13 @@ const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, 
     const decIdx = useDecIndex()
     const ansRequired = playerIndex !== undefined && index != undefined && !(playerIndex < index) && answers.length > 0
     const dispatch = useAppDispatch()
+    const setGlobalScene = useSetGlobalScene();
 
     useEffect(() => {
         if (globalScene !== undefined) {
             setGlobalScene(globalScene)
         }
-    }, [])
+    }, [index])
 
     useEffect(() => {
         if (audio !== undefined) {
@@ -70,6 +72,3 @@ const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, 
 
 export default NormalDialogue
 
-function setGlobalScene(globalScene: string) {
-    throw new Error("Function not implemented.");
-}
