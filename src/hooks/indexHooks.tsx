@@ -5,7 +5,8 @@ import { setIndex } from "../store/indexSlice";
 import { setPlayerIndex } from "../store/playerIndexSlice";
 import { team1, team2 } from "../constants";
 import { useResetComponentIdx } from "./componentIndexHooks";
-import { getTeamIndex, getTeamScene } from "./common";
+import { getTeamIndex, getTeamScene, useSetGlobalScene } from "./common";
+import { setGlobalSceneValid } from "../store/globalSceneSlice";
 
 // in custom components, handle update local index/global index, proceeding to next thing
 // set local index to 0, in the common increase index, always set it to 0
@@ -46,11 +47,11 @@ export const useIncIndex = () => {
         }
 
         if (playerIdx < index) {
-            dispatch(setPlayerIndex(playerIdx+1))
-        } else if (index !== undefined && index < dialogueList.length-1) {
-            set(ref(db, code + "/" + team + "/index"), index+1);
-            dispatch(setIndex(index+1))
-            dispatch(setPlayerIndex(index+1))
+            dispatch(setPlayerIndex(playerIdx + 1))
+        } else if (index !== undefined && index < dialogueList.length - 1) {
+            set(ref(db, code + "/" + team + "/index"), index + 1);
+            dispatch(setIndex(index + 1))
+            dispatch(setPlayerIndex(index + 1))
 
             // might be overkill to do every time, but it's safe
             resetComponentIndex()
@@ -83,7 +84,7 @@ export const useDecIndex = () => {
     const decIndex = () => {
         // if 0 or undefined, don't decrease
         if (playerIdx) {
-            dispatch(setPlayerIndex(playerIdx-1))
+            dispatch(setPlayerIndex(playerIdx - 1))
         }
     }
 
@@ -94,17 +95,23 @@ export const useIncAllIndices = () => {
     const db = getDatabase();
     const index = useAppSelector((state) => state.index.value)
     const playerIdx = useAppSelector((state) => state.playerIndex.value)
+    const globalScene = useAppSelector((state) => state.globalScene.value)
+
     const dispatch = useAppDispatch()
 
     const incAllIndices = async () => {
-
         if (playerIdx === undefined || index === undefined) {
             return;
         }
 
         if (playerIdx < index) {
-            dispatch(setPlayerIndex(playerIdx+1))
+            dispatch(setPlayerIndex(playerIdx + 1))
             return
+        }
+
+        if (globalScene) {
+            dispatch(setPlayerIndex(playerIdx + 1))
+            dispatch(setIndex(playerIdx + 1))
         }
 
         // For component index, they must both match
@@ -115,14 +122,15 @@ export const useIncAllIndices = () => {
 
         if (scene1 !== scene2) {
             console.log("Wait until both teams are ready")
-        } else if (idx1 < getDialogue(team1).length-1) {
-            dispatch(setPlayerIndex(playerIdx+1))
-            dispatch(setIndex(index+1))
+        } else if (idx1 < getDialogue(team1).length - 1) {
+            dispatch(setPlayerIndex(playerIdx + 1))
+            dispatch(setIndex(index + 1))
 
             const code = (localStorage.getItem("code") as string)
 
-            set(ref(db, code + "/" + team1 + indexUrl), idx1+1);
-            set(ref(db, code + "/" + team2 + indexUrl), idx2+1);
+            set(ref(db, code + "/" + team1 + indexUrl), idx1 + 1);
+            set(ref(db, code + "/" + team2 + indexUrl), idx2 + 1);
+            dispatch(setGlobalSceneValid(true))
 
             // TODO
             // resetGlobalComponentIdx

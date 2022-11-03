@@ -1,4 +1,4 @@
-import { getDatabase, ref, onValue, set, get, Database} from "firebase/database";
+import { getDatabase, ref, onValue, set, get, Database } from "firebase/database";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import getDialogue from "../dialogue/dialogue-list";
 import { setPlayerIndex } from "../store/playerIndexSlice";
@@ -6,6 +6,8 @@ import { team1, team2 } from "../constants";
 import { useState } from "react";
 import { getTeamIndex, getTeamScene } from "./common";
 import { setComponentIndex } from "../store/componentIndexSlice";
+import { setIndex } from "../store/indexSlice";
+import { setGlobalSceneValid } from "../store/globalSceneSlice";
 
 const indexUrl = "/componentIndex"
 
@@ -19,12 +21,12 @@ const useGetComponentIdx = () => {
 
         onValue(q, async (snapshot) => {
             const data = await snapshot.val();
-            if (typeof(data) === "number") {
-              callback(data)
+            if (typeof (data) === "number") {
+                callback(data)
             } else {
-              console.log("There was an error fetching the component data")
+                console.log("There was an error fetching the component data")
             }
-          });
+        });
     }
 
     return getComponentIdx;
@@ -41,12 +43,12 @@ export const useInitComponentIdx = () => {
 
         onValue(q, async (snapshot) => {
             const data = await snapshot.val();
-            if (typeof(data) === "number") {
+            if (typeof (data) === "number") {
                 dispatch(setComponentIndex(data))
             } else {
-              console.log("There was an error fetching the component data")
+                console.log("There was an error fetching the component data")
             }
-          });
+        });
     }
 
     return getComponentIdx;
@@ -62,8 +64,8 @@ export const useIncComponentIndex = () => {
         const code = (localStorage.getItem("code") as string)
 
         if (componentIndex !== undefined) {
-            set(ref(db, code + "/" + team + indexUrl), componentIndex+1);
-            dispatch(setComponentIndex(componentIndex+1))
+            set(ref(db, code + "/" + team + indexUrl), componentIndex + 1);
+            dispatch(setComponentIndex(componentIndex + 1))
         }
     }
 
@@ -96,6 +98,7 @@ export const useResetComponentIdx = () => {
 
         set(ref(db, code + "/" + team + indexUrl), 0);
         dispatch(setComponentIndex(0));
+        dispatch(setGlobalSceneValid(false))
     }
 
     return resetComponentIndex
@@ -103,8 +106,15 @@ export const useResetComponentIdx = () => {
 
 export const useIncAllComponentIndices = () => {
     const db = getDatabase();
+    const globalScene = useAppSelector((state) => state.globalScene.value)
+    const cpIndex = useAppSelector((state) => state.componentIndex.value)
+    const dispatch = useAppDispatch()
 
     const incAllComponenentIndex = async () => {
+        if (globalScene && cpIndex) {
+            dispatch(setComponentIndex(cpIndex + 1))
+        }
+
         // For component index, they must both match
         const idx1 = await getTeamIndex(db, team1, indexUrl)
         const scene1 = await getTeamScene(db, team1)
@@ -112,12 +122,12 @@ export const useIncAllComponentIndices = () => {
 
         if (scene1 !== scene2) {
             console.log("Wait until both teams are ready")
-        } else if (idx1 < getDialogue(team1).length-1) {
+        } else if (idx1 < getDialogue(team1).length - 1) {
 
             // TODO test multiple people pressing at same time?
             const code = (localStorage.getItem("code") as string)
-            set(ref(db, code + "/" + team1 + indexUrl), idx1+1);
-            set(ref(db, code + "/" + team2 + indexUrl), idx1+1);
+            set(ref(db, code + "/" + team1 + indexUrl), idx1 + 1);
+            set(ref(db, code + "/" + team2 + indexUrl), idx1 + 1);
         }
     }
 

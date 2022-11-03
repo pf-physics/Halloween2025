@@ -26,15 +26,15 @@ type Dialogue = {
 }
 
 const dialogue: Dialogue[] =
-    [ {text: "Now that the party is ready, you are free to do whatever until the guests arrive. Make sure you stay in this area though, just in case", image: pumpkinHead, audio: pumpkinHeadMusic}
-    , {text: "I'm sure that timer at the top means absolutely nothing and there is nothing to worry about!", image:"", audio: song}
-    , {text: "...", image:""}
-    , {text: "Maybe it'd be a good idea to ask him some questions now. Be warned, if you ask aimless questions, your time will run out faster...", image:""}
-    , {text: "Huh? What do you want?", image: pumpkinHead, optionTime: true}
+    [{ text: "Now that the party is ready, you are free to do whatever until the guests arrive. Make sure you stay in this area though, just in case", image: pumpkinHead, audio: pumpkinHeadMusic }
+        , { text: "I'm sure that timer at the top means absolutely nothing and there is nothing to worry about!", image: "", audio: song }
+        , { text: "...", image: "" }
+        , { text: "Maybe it'd be a good idea to ask him some questions now. Be warned, if you ask aimless questions, your time will run out faster...", image: "" }
+        , { text: "Huh? What do you want?", image: pumpkinHead, optionTime: true }
     ];
 
 // TODO if playerIndex < index, then use a local component index
-const TimerGame = ({}: {}) => {
+const TimerGame = ({ }: {}) => {
     const componentIndex = useAppSelector((state) => state.componentIndex.value)
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
     const dispatch = useAppDispatch()
@@ -59,7 +59,7 @@ const TimerGame = ({}: {}) => {
     // if playerIndex < appIndex, set index = 0
 
     useEffect(() => {
-        if (componentIndex-1 === playerComponentIndex) {
+        if (componentIndex - 1 === playerComponentIndex) {
             setPlayerComponentIndex(componentIndex)
         }
     }, [componentIndex])
@@ -71,15 +71,12 @@ const TimerGame = ({}: {}) => {
     const incIdx = useIncAllComponentIndices()
     const incAppIndex = useIncAllIndices()
     const decIdx = useDecIndex()
-    const answers: string[] = []
-    const ansRequired = false
 
     // timer, get timer - if = 0, then set to user's time, else return the value
 
     const handleNext = async () => {
-
         if (playerComponentIndex < componentIndex) {
-            setPlayerComponentIndex(playerComponentIndex+1)
+            setPlayerComponentIndex(playerComponentIndex + 1)
             return
         }
 
@@ -97,7 +94,7 @@ const TimerGame = ({}: {}) => {
         if (playerComponentIndex === 0) {
             decIdx();
         } else {
-            setPlayerComponentIndex(playerComponentIndex-1)
+            setPlayerComponentIndex(playerComponentIndex - 1)
         }
     }
 
@@ -108,7 +105,6 @@ const TimerGame = ({}: {}) => {
         const [showInput, setShowInput] = useState(false)
         const [wrongAns, setWrongAns] = useState(false)
         const [ans, setAns] = useState<string>("")
-        // keeps getting rerendered...
 
         const handleWrongAnswer = async () => {
             const dbCode = (localStorage.getItem("code") as string)
@@ -131,7 +127,7 @@ const TimerGame = ({}: {}) => {
             setText(defaultText)
         }
 
-        // TODO - real curse and lowercase MAKE SURE THE TIMER IS SET TO 0!!!!
+        // TODO - real curse and MAKE SURE THE TIMER IS SET TO 0!!!!
         const inputCurse = () => {
             const realAns = ["sealing", "spell of sealing", "sealing spell"]
             if (realAns.includes(ans.toLocaleLowerCase())) {
@@ -142,62 +138,61 @@ const TimerGame = ({}: {}) => {
             }
         }
 
-        // TODO put timer somewhere else! (in its own component!)
         return <div>
-            <Dialogue text={text} image={el.image}/>
+            <Dialogue text={text} image={el.image} />
             {wrongAns &&
-            <div>
-                <p>(You've wasted some time...)</p>
-                <Button onClick={back}
-                    color="secondary"
-                    variant="contained">
-                    Back
-                </Button>
-            </div>}
+                <div>
+                    <p>(You've wasted some time...)</p>
+                    <Button onClick={back}
+                        color="secondary"
+                        variant="contained">
+                        Back
+                    </Button>
+                </div>}
             {showInput && !wrongAns ? <div>
-                <input value={ans} onChange={(e) => setAns(e.target.value)}/>
+                <input value={ans} onChange={(e) => setAns(e.target.value)} />
                 <Button color="primary"
                     variant="contained" onClick={inputCurse}>Submit</Button>
             </div> :
-            !wrongAns && <div style={{display: "flex", flexDirection: "column", gap:"10px"}}>
-                <p>What do you want to ask about?</p>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleWrongAnswer}>
-                    The scientist
-                </Button>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleCurse}>
-                    The curse
-                </Button>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleWrongAnswer}>
-                    The fountain
-                </Button>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleWrongAnswer}>
-                    The elixir
-                </Button>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleWrongAnswer}>
-                    The poison
-                </Button>
-            </div>}
+                !wrongAns && <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <p>What do you want to ask about?</p>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={handleWrongAnswer}>
+                        The scientist
+                    </Button>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={handleCurse}>
+                        The curse
+                    </Button>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={handleWrongAnswer}>
+                        The fountain
+                    </Button>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={handleWrongAnswer}>
+                        The elixir
+                    </Button>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={handleWrongAnswer}>
+                        The poison
+                    </Button>
+                </div>}
         </div>
     }
 
     return <div>
-        <Timer audio={song}/>
-       {showOptions ? <ShowOptions/> : <Dialogue text={el.text} image={el.image}/>}
+        <Timer audio={song} />
+        {showOptions ? <ShowOptions /> : <Dialogue text={el.text} image={el.image} />}
         {showOptions ? <div>
 
         </div> : <div className="buttons-row">

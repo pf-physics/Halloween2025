@@ -3,13 +3,15 @@ import indexReducer from './indexSlice'
 import playerIndexReducer from './playerIndexSlice'
 import audioReducer from './audioSlice'
 import componentIndexReducer from './componentIndexSlice'
+import globalSceneReducer from './globalSceneSlice'
 
 export const store = configureStore({
   reducer: {
     index: indexReducer,
     playerIndex: playerIndexReducer,
     componentIndex: componentIndexReducer,
-    audio: audioReducer
+    audio: audioReducer,
+    globalScene: globalSceneReducer,
   },
 })
 
