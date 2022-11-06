@@ -1,6 +1,6 @@
 import "./code-handler.css"
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, set, get} from "firebase/database";
+import { getDatabase, ref, onValue, set, get } from "firebase/database";
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { setIndex } from '../store/indexSlice';
 import { Button, CircularProgress, TextField } from '@mui/material';
@@ -37,7 +37,7 @@ const CodeHandler = () => {
     }
 
     useEffect(() => {
-        if(codeValid && team) {
+        if (codeValid && team) {
             initComponentIdx();
         }
     }, [team, code])
@@ -72,7 +72,7 @@ const CodeHandler = () => {
         } else {
             trySetCode(key)
         }
-    },[])
+    }, [])
 
     const getData = async () => {
         const team = (localStorage.getItem("team") as string)
@@ -80,15 +80,15 @@ const CodeHandler = () => {
         const q = ref(db, dbCode + "/" + team + "/index");
 
         onValue(q, async (snapshot) => {
-          setLoading(false)
-          const data = await snapshot.val();
-          if (typeof(data) === "number") {
-            dispatch(setIndex(data))
-            dispatch(setPlayerIndex(data))
-          } else {
-            console.log("There was an error fetching the code")
-          }
-          setLoading(false)
+            setLoading(false)
+            const data = await snapshot.val();
+            if (typeof (data) === "number") {
+                dispatch(setIndex(data))
+                dispatch(setPlayerIndex(data))
+            } else {
+                console.log("There was an error fetching the code")
+            }
+            setLoading(false)
         });
     }
 
@@ -96,9 +96,9 @@ const CodeHandler = () => {
         return <div>
             <div className="title">Choose your team</div>
             <div className="team-choice">
-            <img style={{cursor: "pointer"}} src={pumpkin} onClick={() => chooseTeam(team1)}/>
-            <img style={{width: "100px", height: "100px", cursor: "pointer"}} src={skeleton} onClick={() => chooseTeam(team2)}/>
-        </div>
+                <img style={{ cursor: "pointer" }} src={pumpkin} onClick={() => chooseTeam(team1)} />
+                <img style={{ width: "100px", height: "100px", cursor: "pointer" }} src={skeleton} onClick={() => chooseTeam(team2)} />
+            </div>
         </div>
     }
 
@@ -113,14 +113,14 @@ const CodeHandler = () => {
 
             setErr("")
             if (inputCode.toLocaleLowerCase() === "halloween") {
-                setTries(tries+1)
+                setTries(tries + 1)
                 setErr("nice try, but no")
                 return
-            } else if(inputCode.toLocaleLowerCase() === jokeCode) {
+            } else if (inputCode.toLocaleLowerCase() === jokeCode) {
                 setErr("honk")
                 return
             }
-            setTries(tries+1)
+            setTries(tries + 1)
             if (tries > 6) {
                 setErr("🎃")
             } else if (tries > 5) {
@@ -132,17 +132,17 @@ const CodeHandler = () => {
             localStorage.setItem("code", inputCode)
             trySetCode(inputCode)
         }
-    
+
         return <div className="code-input">
             <div className="title">Enter code</div>
             <input value={inputCode}
                 onChange={(e) => setInputCode(e.target.value)}
             />
             <Button
-            className="button"
-            color="primary"
-            variant="contained"
-            onClick={submitCode}
+                className="button"
+                color="primary"
+                variant="contained"
+                onClick={submitCode}
             >
                 <b>Submit Code</b>
             </Button>
@@ -165,19 +165,19 @@ const CodeHandler = () => {
     }
 
     return <div>
-        {loading ? 
-        <div className='loading'>
-            <CircularProgress color='primary'/>
-        </div>
-         : codeValid ? team ?
-            <div>
-                <>
-                    {DisplayApp()}
-                </>
-                <AudioControl/>
+        {loading ?
+            <div className='loading'>
+                <CircularProgress color='primary' />
             </div>
-         : <TeamChoice/>
-         : <EnterCode/>}
+            : codeValid ? team ?
+                <div>
+                    <>
+                        {DisplayApp()}
+                    </>
+                    <AudioControl />
+                </div>
+                : <TeamChoice />
+                : <EnterCode />}
     </div>
 }
 

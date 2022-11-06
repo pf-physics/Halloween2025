@@ -12,3 +12,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'Candy';
+  src: local('Candy'), url(./assets/fonts/scarycandy.otf) format('truetype');}
+
+  @font-face {
+    font-family: 'Murderer';
+    src: local('Murderer'), url(./assets/fonts/youmurdererbb_reg.ttf) format('truetype');}

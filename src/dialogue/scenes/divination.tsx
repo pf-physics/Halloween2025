@@ -101,7 +101,14 @@ const ans: { [key: string]: string } = {
     "Vegetable": "Eat your veggies.",
     "Fruit": "Eat your fruits.",
     "Sword": "You will vanquish your enemies!",
-    "Ants": "You have persistence, diligence, hard work, meticulousness, and the ability to produce"
+    "Ants": "You have persistence, diligence, hard work, meticulousness, and the ability to produce",
+    "Pumpkin": "You are full of Halloween spirit",
+    "Skull": "Are you flirting with me?",
+    "Skeleton": "Are you flirting with me?",
+    "Bowl": "You conain much inside of you",
+    "Bone": "You should pet a dog",
+    "Wolf" : "You have bones to bury",
+    "Devil": "You're mad about something"
 }
 
 const penalties = ["Boobs", "Butt", "Ass", "Vagina", "Cunt", "Penis", "Shit", "Poop", "Anus"]
@@ -141,7 +148,7 @@ const DivinationRules = () => {
         <Dialogue header={"Candle Divination"}
             text={[`Each wager one Halloween power to play.`
                 , `Light a long candle. One at a time, drop some wax into the water and input what you see.`
-                , `if you get a positive outcome, keep your Halloween power, otherwise add it to the Merchant's box. Keep wagering until amongst the whole team, you've had at least (n-1) positive outcomes, where n is the number of players.`
+                , `if you get a positive outcome, keep your Halloween power, otherwise add it to the Merchant's box. Keep wagering until amongst the whole team, you've had at least (n-1) positive outcomes, where n is the number of players, OR until every player has played 3 times.`
                 , `Press next when you are done.`
             ]} image={candlesImg} />
         <input value={inp} onChange={(e) => setInp(e.target.value)} />

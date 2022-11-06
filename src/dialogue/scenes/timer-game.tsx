@@ -129,7 +129,7 @@ const TimerGame = ({ }: {}) => {
 
         // TODO - real curse and MAKE SURE THE TIMER IS SET TO 0!!!!
         const inputCurse = () => {
-            const realAns = ["sealing", "spell of sealing", "sealing spell"]
+            const realAns = ["sealing", "spell of sealing", "sealing curse", "curse of sealing", "sealing spell"]
             if (realAns.includes(ans.toLocaleLowerCase())) {
                 incAppIndex()
             } else {

@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import Dialogue from "../templates/dialogue";
 import { useIncIndex, useDecIndex, useIncAllIndices } from "../../hooks/indexHooks";
 import door from "../../assets/imgs/black_door.png"
-import music from "../../assets/audio/intro1.mp3"
+import music from "../../assets/audio/intro_new.mp3"
 import knock from "../../assets/audio/knock.wav"
 import openSound from "../../assets/audio/door_open.mp3"
 import { useIncAllComponentIndices, useIncComponentIndex, useInitComponentIdx } from "../../hooks/componentIndexHooks";

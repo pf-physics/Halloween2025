@@ -20,17 +20,15 @@ const WolfRules = () => {
         decIdx();
     }
 
-    // TODO I say sticker here
-    // TODO pitch app
     return <div>
         <Dialogue header={"HOWL LIKE A WOLF"}
-            text={["Use the pitch app (download or use another member's phone) to use your voice to make the patterns shown below. Choose one of the patterns. You have three tries to make it."]} image={moonImage}/>
+            text={["Use the pitch app (download or use another member's phone) to use your voice to make the patterns shown below. Choose one of the patterns. You have three tries to make it.", "handicap: get only two tries"]} image={moonImage}/>
             <img className='howl' src={howl1}/>
-            <p>Regular Wolf Howl - 1 sticker</p>
+            <p>Regular Wolf Howl - 1 points</p>
             <img className='howl' src={howl2}/>
-            <p>Wobbly Wolf Howl - 3 stickers</p>
+            <p>Wobbly Wolf Howl - 3 points</p>
             <img className='howl' src={howl3}/>
-            <p>{"=) - 5 stickers"}</p>
+            <p>{"=) - 5 points"}</p>
         <div className="buttons-row">
             <Button
                 color="primary"

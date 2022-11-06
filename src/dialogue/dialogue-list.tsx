@@ -46,7 +46,7 @@ import DivinationRules from "./scenes/divination"
 
 const magicPower = "Halloween power"
 // TODO what to get from the guy
-const merchantItem1 = "Ghost Tears"
+const merchantItem1 = "Liquid Lightning"
 const merchantItem2 = "Spider Venom"
 
 // Add pausing ability?
@@ -74,7 +74,7 @@ const pumpkinIntroDialogue = [
         text={`Choose one of three rats to bet on: Ferdinand, Westley or Sproot.
             Make sure there is approximately the same number of people on each team.
             (Groups of both ${team1} and ${team2} must have at least one member supporting each of the rats)
-            In the dollhouse, each rat team place a tomato. When everyone is ready, release the rats on the first floor. The team whose rat finds a tomato first, gains 3 ${magicPower}. Teams gain 2 points for each tomato found which belongs to another team.
+            In the dollhouse, place three blueberries on the second floor. When everyone is ready, release the rats on the first floor. The team whose rat finds a blueberry first, gains 3 ${magicPower}. Teams gain 1 ${magicPower} for each additional blueberry found.
             (If you want to make this a drinking game, ask about raceh̶o̶r̶s̶erat rules)
             `} audio={ratMusic} isGlobal={true} />,
     <NormalDialogue text={`Take the two winning tickets to share among the winners on each team.`} image={pumpkinHead} isGlobal={true} />,
@@ -84,9 +84,9 @@ const pumpkinIntroDialogue = [
 // the page says something like,
 // Mix up groups again
 // "Gourd(s)", "Treat(s)", "Trick(s)", "Bats", "Spider", "Cats"
-// TODO - one team?
 const breakCurse1 = <NormalDialogue header={"BREAK THE CURSE - PART 1"} isGlobal
     text={[`Using the wands and a long exposure photograph where each person draws a pumpkin. (Try to fit a few people in each picture)`,
+        `In one photograph, write all together "Free Gourds"`,
         //, write: Free Gourd(s) or Free Pumpkin (depending on how many people there are)`,
         `Look at the pictures and vote on the best drawing. The winner gets 3 ${magicPower}, second place gets 2, third gets 1.`
     ]} />
@@ -121,7 +121,7 @@ const middleDialogue = [<NormalDialogue text="(Press next when you are all toget
         , "Use the syringe to move some liquid to the bowl, twice."
         , "Swing twice around the pole and return to the start"
         , "The next person in line does the same."]} audio={relayMusic} isGlobal={true} />,
-<NormalDialogue text={`The winning team gets 7 ${magicPower}`} image={pumpkinHead} isGlobal={true} />,
+<NormalDialogue text={`The winning team gets 5 ${magicPower}`} image={pumpkinHead} isGlobal={true} />,
 <TimerGame />,
 <NormalDialogue text={`...`} image={pumpkinHead} isGlobal={true} />,
 <NormalDialogue text={`*sigh* So, you've figured it out then? I might as well come clean... I never wanted any part in this anyways...`} image={pumpkinHead} isGlobal={true} />,
@@ -141,7 +141,7 @@ const middleDialogue = [<NormalDialogue text="(Press next when you are all toget
     `With a flick of my wrist, I can cure you all... but I think I will let a couple of you die.`,
     `Don't worry, I can resurrect them later, but for now, I need the insurance you won't run off...`]} image={pumpkinHead} isGlobal={true} />,
 <NormalDialogue header="RIP" text={[`(Some of you are now ghosts! Find the person on the ${team1} team and the ${team2} team with the least amount of ${magicPower}. they are now ghosts!)`,
-    `(Ghosts must wear the ghost cape. They must either end every sentence with woo~ or speak the whole sentence in a ghostly tone. If they forget, they must take a penalty.)`, // DCDCDC
+    `(Ghosts must wear the ghost cape. They must either end every sentence with woo~ or speak the whole sentence in a ghostly tone. If they forget, they must take a penalty.)`,
     `(Every game has a handicap that all ghosts must now take.)`,
 `(If a ghost gains ${magicPower} and is no longer the player with the least, they are resurrected and a new player becomes the ghost.)`,
     `(Happy Haunting!)`
@@ -149,9 +149,6 @@ const middleDialogue = [<NormalDialogue text="(Press next when you are all toget
 <NormalDialogue text={`We must split up into two groups once more. One group will investigate the Gardener's ritual, the other will remain here to plot how to defeat them.`} image={pumpkinHead} isGlobal={true} />,
 ]
 
-// USE REAL SUGAR and rubbing alcohol and baking soda
-//5g of baking soda 20g of sugar, 1 to 4 ratio
-// TODO DCDCDC
 const finalFight = <NormalDialogue header={`"Water" the Tree`}
     text={[`Take the pot of cursed soil from amongst the plants`,
         `Saturate the middle of the soil with fermented toad blood`,
@@ -195,7 +192,7 @@ const endDialogue = [<NormalDialogue text={"Press next when you are all together
 <NormalDialogue text={"Pumpkins! I mean, Peppers! We must restrain Them!"} image={pumpkinHead} isGlobal />,
 <NormalDialogue text={`Hss`} image={evilGuyImg} isGlobal />,
     finalFight,
-<NormalDialogue text={`(What is written on the seed?)`} answers={["eye", "eyeball"]} isGlobal />,
+<NormalDialogue text={`(What is written on the seed?)`} answers={["DIE", "die"]} isGlobal />,
 <NormalDialogue text={"Quickly, feed it to the rats!"} image={pumpkinHead} isGlobal />,
 <NormalDialogue text={`Press next when you have fed the rats`} isGlobal />,
 <NormalDialogue text={`You are fools to have gone against us! There are more seeds out there... one day... they will... sprout...`} image={evilGuyImg} isGlobal />,
@@ -227,32 +224,34 @@ The farmer seeks to rid the world of humans and ghosts, to be replaced with plan
 
 //     <NormalDialogue text={`If we are to fight the Gardener, we must make it appear as though everything is going according to plan. So you all must pretend to be Halloween creatures`} image={pumpkinHead} isGlobal={true}/>,
 
-const stickerRules = `First place winner gets 5 ${magicPower}, second gets 4, third gets 3, fourth gets 2, fifth get 1. In case of ties, both players get the same number`
+const stickerRules = `First place winner gets 4 ${magicPower}, second gets 3, third gets 2, fourth gets 1. In case of ties, both players get the same number`
 
-// TODO - revise rules
-const spiderPongRules = <NormalDialogue header={"SPIDER PONG"}
+const spiderPongRules = <NormalDialogue header={"FEED THE SPIDERS"}
     text={[`Your goal is to, as a team, get one prey in each bucket on the wall.`,
-        "Retrieve one container of spider prey. One at a time, stand behind the line and retrieve 3 prey from the container.",
-        "If you get a prey into a bucket, award yourself that number of points, and keep track of which buckets which have been filled",
+        "Retrieve the container of spider prey. One at a time, stand behind the middle of the coffee table and retrieve 3 prey from the container.",
+        "If you get a prey into a bucket, award yourself that number of points, and keep track of which buckets have been filled",
         "If you accidentally get prey in an already filled bucket, get one point. You can switch the order of who goes first each rotation.",
         "Once all the buckets have been filled, the winner is the player with the most points.",
+        "Handicap: Stand behind the pole",
         stickerRules,
-        "If you run out of prey, use the foil beside the containers to make more prey (do not take the other team's container)"]} image={spiderImg} />
+        "If you run out of prey, make more with foil"]} image={spiderImg} />
 
 const decorationRules = <NormalDialogue header={"WEB DECORATION"}
-    text={["Take turns using the spider web to decorate.",
-        "Each stand at the circle outside the pole and throw the end of the web with velcro up into the ceiling. Attach the other end somewhere on the wall. (try to get an even distributin around the pole)",
-        `Get 3 ${magicPower} if you hit the inner circle. 2 for middle. 1 for outer circle`
+    text={["Take some spider silk from the wall.",
+        "Everyone stand around the pole in the room and attempt to swing the silk into the circle.",
+        "When the silk is attached, use tape to tape the other end to another part of the ceiling/room",
+        `The person to attach their string first gets 4 ${magicPower}, second gets 2, and third gets 1`
     ]} image={spiderImg} />
 
 
-// TODO - people write their own words? nothing longer than 10 letters
 const summoningRules = <NormalDialogue header={"GHOST SUMMONING"}
     audio={summoning}
-    text={[`Sit in a circle around the board. One at a time, pick a word from the summoning sack (don't show it to anyone)`,
+    text={[`Sit in a circle around the board.`,
+        `Each team member must write down 5 words on the blank pieces and place them in a pile beside the board.`,
+        `One at a time, pick a word from the pile (don't show it to anyone)`,
         `Hold the string at the halfway point over the board (The planchet must hover oven the board without touching it).`,
-        `Set a timer for one minute. By moving the planchet from letter to letter, the other teammembers must guess what the word is.`,
-        `Get one points for each word you guess, and one point if your word was guessed.`,
+        `Set a timer for one minute. By moving the planchet from letter to letter, the other teammembers must guess what the word is. Try to spell as many as you can.`,
+        `The person moving the planchet and the person who guess the word correctly both get a point. (You cannot guess a word that you wrote)`,
         `Handicaps: Ghosts must hold the string from the top`,
         stickerRules
     ]} />
@@ -268,15 +267,17 @@ const trickOrTreat = <NormalDialogue header={"TRICK OR TREAT"}
     audio={trickMusic}
     image={trickImg}
     text={[`One at a time, pick up the knocker from the door. Close your eyes and walk towards the door. Attempt to aim at a good Trick or Treating door.`, // DCDCDC knocker? Blindfold?
-        `Purple doors: get 3 candies from the treat bucket. Green door: get 2 candies from treat bucket. Orange door: Get 1 candy from treat bucket. Garbage can: 1 trick from trick bucket. In between doors: 1 from trick and one from treat`,
+        `Purple doors: get 3 candies from the treat mbucket. Green door: get 2 candies from treat bucket. Orange door: Get 1 candy from treat bucket. Garbage can: 1 trick from trick bucket. In between doors: 1 from trick and one from treat`,
         `Play until someone gets 20 points (but finish the round)`,
-        `Chocolate is worth 5 points, lollipops are worth 3, other candies are worth 1. Fruit and other things are worth 0.`,
+        `Chocolate is worth 5 points, lollipops are worth 3, other candies are worth 1. Fruit and other things are worth 0. Carrots are worth -1.`,
+        `If you get a trick, put it back in the button after you've completed the task`,
         `Handicaps: Ghosts must walk backwards to the door`,
         stickerRules
     ]} />
 
 const fangGame = <NormalDialogue header={"SPOOKY SPEECH"}
-    text={[`One a time, pick a word from the bag with vampire teeth, as well as teeth.`,
+    text={[`Grab the bag labelled "SPOOKY SPEECH"`,
+        `One a time, pick a word from the bag, as well as teeth.`,
         `Wear the teeth and say the word to a text-to-speech app (ie - google translate). You have three tries to get it to recognize the word.`,
         `Get 3 ${magicPower} if you succeed.`,
         `Handicaps: Ghosts get only two tries`,
@@ -291,15 +292,13 @@ const disguiseGame = <NormalDialogue header={"SPOOKY DISGUISE"}
     ]} />
 
 
-// penalty - eyes closed?
-// get markers
-// custom? with timer?
 const ghostDecorations = <NormalDialogue header={"HALLOWEEN SPIRIT"}
     text={["Fill the room with Halloween Spirits!",
-        "Take the box labelled Halloween spirit and put it on the coffee table. Try to position yourself so the box is in reach.",
+        `Take the bag labelled "Halloween spirit", along with the house, and put it on the coffee table. Try to position yourself so the box is in reach.`,
         "When everyone is ready, start a 5 minute timer and try to make as many ghosts as you can.",
         "The winner is the one with the most little ghosts at the end of the 5 minutes.",
         "The ghosts must all have a face and a hook attached to their back. If ghosts are poorly made other team members can reject the ghost, if there is a consensus.",
+        "handicap: Close your eyes when building the ghost. Eyes can be open while fetching ingredients and drawing the face.",
         stickerRules
     ]} image={ghostCraft} />
 
@@ -339,7 +338,7 @@ const team1Dialogue = [
     // NEEDS TO BE CUSTOM
     // if they refuse, have to find keys on their own? or can come back later...
     <DivinationRules />,
-    <NormalDialogue text={`Outside this portal is a painting, check behind the painting for a key. Use that key to unlock the suitcase under my desk. You can borrow what's inside.`} image={merchantImg} />,
+    <NormalDialogue text={`Check under the skeleton on the Witch's dresser for a key. Use that key to unlock the suitcase under my desk. You can borrow what's inside.`} image={merchantImg} />,
     <NormalDialogue text={`Good luck.`} image={merchantImg} />,
     <NormalDialogue text={`(Check the other room to see if the other group is done with their tasks. If so, switch places, otherwise, hang around until they are ready. And don't forget the ghost tears!)`} />,
     <NormalDialogue text={`(Press next when you are in the lounge)`} />,
@@ -360,7 +359,7 @@ const team1Dialogue = [
     <NormalDialogue text="It's looking much spookier now! We just need the other team to make the final touches!" image={pumpkinHead} />,
     ...middleDialogue,
     <NormalDialogue text="You lot will stay here with me." image={pumpkinHead} />,
-    <NormalDialogue text={`If we are to fight the Gardener, we must make it appear as though everything is going according to plan. So you all must pretend to be Halloween creatures`} audio={pumpkinHeadMusic2} image={pumpkinHead}/>,
+    <NormalDialogue text={`If we are to fight the Gardener, we must make it appear as though everything is going according to plan. So you all must pretend to be Halloween creatures`} audio={pumpkinHeadMusic2} image={pumpkinHead} />,
     <NormalDialogue text="First, you have to be able to speak like a Halloween creature!" image={pumpkinHead} />,
     fangGame,
     <NormalDialogue text="...perhaps you should let me do the talking..." image={pumpkinHead} />,
@@ -380,7 +379,7 @@ const team1Dialogue = [
     <NormalDialogue text="Good luck~" image={merchantImg} />,
     <NormalDialogue text="(Take the Ouija board, planchet and summoning bag. If the other team is finished, then take your shoes off and step into the cemetery. Otherwise, take the Ouija board to the lounge)" />,
     summoningRules,
-    <NormalDialogue text="(When you are done summoning, put the Ouija board, bag and planchet back on the Merchant's table.)" />,
+    <NormalDialogue text="(When you are done summoning, put the Ouija board, bag and planchet back on the Merchant's table. Discard the words you wrote.)" />,
     <NormalDialogue text="oooOOOoooo" image={ghostsImg} />,
     <NormalDialogue text={["Why have you summoned us? (What do you need?)"]} image={ghostsImg} />,
     <NormalDialogue text={["The curse? (the curse...) Do we know this curse? (Maybe we can find the page) Maybe, but not for free!"]} image={ghostsImg} />,
@@ -389,7 +388,7 @@ const team1Dialogue = [
     <NormalDialogue text={["You have our candy! (Delicious candy!) Okay, we'll find the page. (Be right back!)"]} image={ghostsImg} />,
     <NormalDialogue text={["..."]} />,
     // DCDCDC where
-    <NormalDialogue text={["We found the page! (We hid it for you!) Check under the pillow on the Witch's bed!"]} image={ghostsImg} />,
+    <NormalDialogue text={["We found the page! (We hid it for you!) Check behind painting outside the portal!"]} image={ghostsImg} />,
     <NormalDialogue text={["Bye now! (Summon us again if you have more candy!)"]} image={ghostsImg} />,
     <NormalDialogue text={["(Find the page. Take the wands from the Witch's table. Check if the other group is finished)"]} />,
     ...endDialogue

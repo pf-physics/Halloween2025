@@ -4,7 +4,7 @@
   color: #902EBB;
   color: #63C328;
   color: #F4831B;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Candy, Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 16px;
 }
 
@@ -41,9 +41,9 @@
   font-size: 20px;
   font-weight: bold;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 20px;
 }
 
@@ -97,4 +97,22 @@ input {
   object-position: "top";
   background-color: black;
   position: absolute;
+}
+
+.MuiPaper-root {
+  background-color: #11100F !important;
+}
+
+.MuiList-root {
+  background-color: #11100F !important;
+  color: black;
+}
+
+.menu-dropdown {
+  color: #86FF3C;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: larger;
 }

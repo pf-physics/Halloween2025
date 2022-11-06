@@ -29,11 +29,11 @@ const SoupGame = () => {
     }
 
 
-    const exampleCode = "df5cba"
+    const exampleCode = "dfcba"
 
     const handleSubmit = () => {
-        // TODO - real code
-        if (ans === "abc") {
+        // DCDC - real code
+        if (ans.toLocaleLowerCase() === "faedc") {
             console.log("yay");
             handleNext();
         } else {
