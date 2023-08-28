@@ -1,7 +1,7 @@
 {
-  "name": "halloween2022",
+  "name": "halloween2023",
   "version": "0.1.0",
-  "homepage": "https://pf-physics.github.io/Halloween2022",
+  "homepage": "https://pf-physics.github.io/Halloween2023",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
