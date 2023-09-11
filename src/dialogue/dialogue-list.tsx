@@ -29,7 +29,6 @@ import trickImg from "../assets/imgs/candy.jpg"
 import pepperImg from "../assets/imgs/pepper.png"
 import endImg from "../assets/imgs/endImg.jpg"
 
-import { team1, team2 } from "../constants"
 import Intro from "./scenes/intro"
 import WolfRules from "./scenes/wolf-rules"
 import SoupGame from "./scenes/soup-game"
@@ -48,6 +47,15 @@ const magicPower = "Halloween power"
 // TODO what to get from the guy
 const merchantItem1 = "Liquid Lightning"
 const merchantItem2 = "Spider Venom"
+
+// TODO change name
+// TODO - also change image
+const dialogue2023 =
+[<NormalDialogue text="This potion will allow your soul to leave your body to secretly infiltrate the other cemetery." image={pumpkinHead} answers={[]} isGlobal={true} />,
+<NormalDialogue text="So it is effectively poison" image={pumpkinHead} answers={[]} isGlobal={true} />,
+<NormalDialogue text="Don't worry! The souls here will inhabit your body while you're gone so it doesn't 'Die'. The potion also removes the tether to your body, so you can move freel." image={pumpkinHead} answers={[]} isGlobal={true} />,
+<NormalDialogue text="In case some of you are captured, I recommend you go in pairs." image={pumpkinHead} answers={[]} isGlobal={true} />
+]
 
 // Add pausing ability?
 const pumpkinIntroDialogue = [
@@ -68,12 +76,11 @@ const pumpkinIntroDialogue = [
     <NormalDialogue text={`You'll need to pick up supplies from the merchant. He never gives good deals so it's better to trade him.`} image={pumpkinHead} isGlobal={true} />,
     <NormalDialogue text={`Luckily, I happen to know that he's been collecting winning rat race tickets. Before we split up, we must go to the races!`} image={pumpkinHead} isGlobal={true} />,
     // each member place a seed
-    // TODO - change rules maybe
     <NormalDialogue header={"RAT RACES"}
         image={ratsImg}
         text={`Choose one of three rats to bet on: Ferdinand, Westley or Sproot.
             Make sure there is approximately the same number of people on each team.
-            (Groups of both ${team1} and ${team2} must have at least one member supporting each of the rats)
+            (Groups must have at least one member supporting each of the rats)
             In the dollhouse, place three blueberries on the second floor. When everyone is ready, release the rats on the first floor. The team whose rat finds a blueberry first, gains 3 ${magicPower}. Teams gain 1 ${magicPower} for each additional blueberry found.
             (If you want to make this a drinking game, ask about raceh̶o̶r̶s̶erat rules)
             `} audio={ratMusic} isGlobal={true} />,
@@ -106,7 +113,7 @@ const middleDialogue = [<NormalDialogue text="(Press next when you are all toget
 <NormalDialogue text={`You have the ingredients yes? Fill the cup on the left with ${merchantItem1} and the cup on the right with ${merchantItem2}.`} image={pumpkinHead} isGlobal={true} />,
 <NormalDialogue text={`Now all that's left to do is to enchant the punch!`} image={pumpkinHead} isGlobal={true} />,
 <NormalDialogue text={`A raven must fly forth and give us a sign. Through the pumpkin patch, the liquid must flow, to be fed to one whos' heart is still beating. Return and add the potion to your cauldron, then spin until all is forgotten.`} image={pumpkinHead} isGlobal={true} />,
-<NormalDialogue text={`(It's time for a punch enchantment relay race! Mix up the teams of ${team1} and ${team2} into two groups, and line up beside the main table.)`} isGlobal={true} />,
+<NormalDialogue text={`(It's time for a punch enchantment relay race! Mix up the teams into two groups, and line up beside the main table.)`} isGlobal={true} />,
 <NormalDialogue
     text={[`(In order to use your ${magicPower} to its full ability, you need to learn to embody Halloween!`,
         `Each member of your group must write down one famous Halloween/horror movie/series that the other team must act out.`,
@@ -140,7 +147,7 @@ const middleDialogue = [<NormalDialogue text="(Press next when you are all toget
 <NormalDialogue text={[`I will need your help. I'm sure you've noticed by now, but the punch is poisoned and you will soon die.`,
     `With a flick of my wrist, I can cure you all... but I think I will let a couple of you die.`,
     `Don't worry, I can resurrect them later, but for now, I need the insurance you won't run off...`]} image={pumpkinHead} isGlobal={true} />,
-<NormalDialogue header="RIP" text={[`(Some of you are now ghosts! Find the person on the ${team1} team and the ${team2} team with the least amount of ${magicPower}. they are now ghosts!)`,
+<NormalDialogue header="RIP" text={[`(Some of you are now ghosts! Find the person on the each team with the least amount of ${magicPower}. they are now ghosts!)`,
     `(Ghosts must wear the ghost cape. They must either end every sentence with woo~ or speak the whole sentence in a ghostly tone. If they forget, they must take a penalty.)`,
     `(Every game has a handicap that all ghosts must now take.)`,
 `(If a ghost gains ${magicPower} and is no longer the player with the least, they are resurrected and a new player becomes the ghost.)`,
@@ -485,10 +492,39 @@ const team2Dialogue = [
     ...endDialogue
 ]
 
+const dialogueList = [<NormalDialogue text="You lot are staying here with me. The rest will go into the portal." image={pumpkinHead} />,
+<NormalDialogue text="It's time to make this place fitting for a real Halloween party!" image={pumpkinHead} audio={pumpkinHeadMusic2} />,
+<NormalDialogue text="Every great Halloween party needs spider silk. It's just our luck that a few spiders have made their home here and their silk looks exquisite!" image={pumpkinHead} />,
+<NormalDialogue text="Though, I'll let you do the negotiating. My kind doesn't get along well with them..." image={pumpkinHead} />,
+<NormalDialogue text="(The spiders watch your with their many eyes)" image={spiderImg} audio={spiderMusic} />,
+<NormalDialogue text="I can tell by the way you eye my web why you have come to us." image={spiderImg} />,
+<NormalDialogue text="Pumpkinhead refuses to approach our lair I see. What a shame. His head would make a great home for my children." image={spiderImg} />,
+<NormalDialogue text="You must understand that silk of this quality doesn't come cheap. And we are very hungry. I'm sure you wouldn't mind providing us a few morsels for our wares." image={spiderImg} />,
+<NormalDialogue text="Psst. There is some food in that bucket there. Make sure you keep your distance when you give it to them, and then grab the thread while they're distracted!" image={pumpkinHead} />,
+spiderPongRules,
+<NormalDialogue text="Quick! While they're busy feeding, each get a string of web!" image={pumpkinHead} audio={itsy} />,
+decorationRules,
+<NormalDialogue text="This room is already looking quite spooky, but it's not enough! This room lacks Halloween spirit! You'd better hurry, there's much to do!" image={pumpkinHead} audio={pumpkinHeadMusic2} />,
+ghostDecorations,
+<NormalDialogue text={`(Get two extra ${magicPower} if your ghosts have a least 3 different expressions. Hang up the ghosts on the string light above the table.)`} />,
+<NormalDialogue text="Not bad, not bad, it's starting to get spooky!" image={pumpkinHead} />,
+<NormalDialogue text="Now that you're done, I'll need you to run some errands for me as well." image={pumpkinHead} />,
+<NormalDialogue text="(If the other team has finished their tasks, switch places with them and enter the portal, otherwise sit tight!)" />,
+<NormalDialogue text="(Press next when you are in front of the merchant's table.)" />,
+<NormalDialogue text="Hello, and welcome to my shop." image={merchantImg} audio={merchantMusic} />,
+<NormalDialogue text="More new customers! Today must be my lucky day!" image={merchantImg} />,
+<NormalDialogue text={`You want to trade your winning rat race card for ${merchantItem2}? Well, normally that'd be a good deal, but seeing as your friends just gave me one, I'd prefer something else.`} image={merchantImg} />,
+<NormalDialogue text={`How about this? We play a friendly game and I'll give you the ${merchantItem2} if you win!`} image={merchantImg} />,
+<DivinationRules />
+]
+
+// TODO - all areas have same dialogue, depending on team, return different order (future task after Halloween2023)
 export const getDialogue = (team: string) => {
-    if (team === team1) {
+    return dialogueList;
+
+    if (team === "team1") {
         return team1Dialogue
-    } else if (team === team2) {
+    } else if (team === "team2") {
         return team2Dialogue
     } else {
         return ([])

@@ -1,9 +1,9 @@
 import "./dialogue.css"
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { Button } from '@mui/material';
 import Dialogue from "./dialogue";
-import { useIncIndex, useDecIndex, useIncAllIndices } from "../../hooks/indexHooks";
+import { useIncIndex, useDecIndex, useIncAllIndices, useJumpToCurrent } from "../../hooks/indexHooks";
 import { setAudio } from "../../store/audioSlice";
 import { useSetGlobalScene } from "../../hooks/common";
 
@@ -13,6 +13,7 @@ const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, 
     const incIdx = useIncIndex()
     const globalIncIdx = useIncAllIndices()
     const decIdx = useDecIndex()
+    const jumpToCurrent = useJumpToCurrent();
     const ansRequired = playerIndex !== undefined && index != undefined && !(playerIndex < index) && answers.length > 0
     const dispatch = useAppDispatch()
     const setGlobalScene = useSetGlobalScene();
@@ -47,8 +48,9 @@ const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, 
         decIdx();
     }
 
-    // Probably have to provide as a child to dialogue, since the design color has to wrap them both, or whatever just make a css class
-    // might put buttons in common class with "handleNext" field
+    const handleReset = () => {
+        jumpToCurrent();
+    }
 
     return <div>
         <Dialogue header={header} text={text} image={image}/>
@@ -65,6 +67,14 @@ const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, 
                 variant="contained"
                 onClick={handleNext}>
                 Next
+            </Button>
+        </div>
+        <div className="reset-index-row">
+            <Button
+                color="primary"
+                variant="contained"
+                onClick={handleReset}>
+                Jump to current
             </Button>
         </div>
     </div>

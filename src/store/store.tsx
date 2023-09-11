@@ -4,6 +4,7 @@ import playerIndexReducer from './playerIndexSlice'
 import audioReducer from './audioSlice'
 import componentIndexReducer from './componentIndexSlice'
 import globalSceneReducer from './globalSceneSlice'
+import teamSliceReducer from './teamSlice'
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     playerIndex: playerIndexReducer,
     componentIndex: componentIndexReducer,
     audio: audioReducer,
-    globalScene: globalSceneReducer,
+    globalSceneValid: globalSceneReducer,
+    teams: teamSliceReducer,
   },
 })
 

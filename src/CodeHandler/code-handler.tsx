@@ -7,10 +7,11 @@ import { Button, CircularProgress, TextField } from '@mui/material';
 import pumpkin from "../assets/imgs/pumpkin.png"
 import skeleton from "../assets/imgs/skeleton.png"
 import getDialogue from "../dialogue/dialogue-list";
-import { setPlayerIndex } from "../store/playerIndexSlice";
-import { team1, team2 } from "../constants";
+import { initializePlayerIndex, setPlayerIndex } from "../store/playerIndexSlice";
+import { localCode, localIndex, teamAccess } from "../constants";
 import AudioControl from "../dialogue/audio-control";
 import { useInitComponentIdx } from "../hooks/componentIndexHooks";
+import { setTeams } from "../store/teamSlice";
 
 
 // https://firebase.google.com/docs/database/web/read-and-write
@@ -19,7 +20,7 @@ import { useInitComponentIdx } from "../hooks/componentIndexHooks";
 // This component should wrap the rest of the app
 const CodeHandler = () => {
     const [loading, setLoading] = useState(true)
-    const [code, setCode] = useState("") // need to store also? yes. and team
+    const [code, setCode] = useState("")
     const [team, setTeam] = useState<string | undefined>()
     const index = useAppSelector((state) => state.index.value)
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
@@ -28,12 +29,15 @@ const CodeHandler = () => {
     const db = getDatabase();
     const [err, setErr] = useState("")
     const [tries, setTries] = useState(0)
+    const [teams, updateTeams] = useState<string[]>([])
     const initComponentIdx = useInitComponentIdx();
 
     const chooseTeam = (team: string) => {
-        localStorage.setItem("team", team)
-        setTeam(team)
-        getData()
+        if (teams.includes(team)){
+            localStorage.setItem("team", team)
+            setTeam(team)
+            getData()
+        }
     }
 
     useEffect(() => {
@@ -50,14 +54,24 @@ const CodeHandler = () => {
             setCode(code)
             setCodeValid(true)
             const team = localStorage.getItem("team")
+            const teamsObj = (await get(ref(db, code + "/" + teamAccess))).val();
+            const teamList = Object.keys(teamsObj)
+            dispatch(setTeams(teamList))
 
-            if (team === team1 || team === team2) {
+            updateTeams(teamList)
+
+            if (team && teamList.includes(team)) {
                 setTeam(team)
 
                 getData()
             } else {
                 setLoading(false)
             }
+        } if (code === localCode) {
+            setCode(code)
+            setCodeValid(true)
+            getData()
+            // local team
         } else {
             // code invalid err
             setLoading(false)
@@ -77,14 +91,30 @@ const CodeHandler = () => {
     const getData = async () => {
         const team = (localStorage.getItem("team") as string)
         const dbCode = (localStorage.getItem("code") as string)
-        const q = ref(db, dbCode + "/" + team + "/index");
+        const localIdx = (localStorage.getItem(localIndex) as string);
+
+        if (dbCode === localCode) {
+            const idx = parseInt(localIdx) || 0
+            dispatch(setIndex(idx))
+            dispatch(setPlayerIndex(idx))
+            setLoading(false)
+            setTeam("localTeam")
+            return
+        }
+
+        const q = ref(db, dbCode + "/" + teamAccess + "/" + team + "/index");
 
         onValue(q, async (snapshot) => {
             setLoading(false)
             const data = await snapshot.val();
             if (typeof (data) === "number") {
                 dispatch(setIndex(data))
-                dispatch(setPlayerIndex(data))
+                // No longer automatically updates player index
+                // YAH it's not working
+                // Only do it on init
+                if (!playerIndex) {
+                    dispatch(initializePlayerIndex(data))
+                }
             } else {
                 console.log("There was an error fetching the code")
             }
@@ -92,12 +122,14 @@ const CodeHandler = () => {
         });
     }
 
+    // TODO - eventually this will be replaced by another code input
+    // TODO 2023 team1 and team2 are harcoded, need to use the team list or an input!!
     const TeamChoice = () => {
         return <div>
             <div className="title">Choose your team</div>
             <div className="team-choice">
-                <img style={{ cursor: "pointer" }} src={pumpkin} onClick={() => chooseTeam(team1)} />
-                <img style={{ width: "100px", height: "100px", cursor: "pointer" }} src={skeleton} onClick={() => chooseTeam(team2)} />
+                <img style={{ cursor: "pointer" }} src={pumpkin} onClick={() => chooseTeam("team1")} />
+                <img style={{ width: "100px", height: "100px", cursor: "pointer" }} src={skeleton} onClick={() => chooseTeam("team2")} />
             </div>
         </div>
     }
@@ -133,6 +165,12 @@ const CodeHandler = () => {
             trySetCode(inputCode)
         }
 
+        const chooseLocal = () => {
+            localStorage.setItem("code", localCode)
+            setCode(localCode)
+            setCodeValid(true)
+        }
+
         return <div className="code-input">
             <div className="title">Enter code</div>
             <input value={inputCode}
@@ -145,6 +183,17 @@ const CodeHandler = () => {
                 onClick={submitCode}
             >
                 <b>Submit Code</b>
+            </Button>
+            OR
+            <Button
+                className="button"
+                style={{background: "#2a2a2a"}}
+                color="secondary"
+                variant="contained"
+                disabled
+                onClick={chooseLocal}
+            >
+                <b>Play local version (alone)</b>
             </Button>
             <div className="error">{err}</div>
         </div>

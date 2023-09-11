@@ -81,6 +81,12 @@ input {
   justify-content: space-between;
 }
 
+.reset-index-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 .black-out {
   height: 200vh;
   width: 200vw;

@@ -33,13 +33,13 @@ const theme = createTheme({
 
 function App() {
   useEffect(() => {
-    document.title = "Halloween 2022"
+    document.title = "Halloween 2023"
   }, [])
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
       <header className="App-header">
-        <div>Halloween 2022</div>
+        <div>Halloween 2023</div>
         <Menu/>
       </header>
       <div className="app-content">

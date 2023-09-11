@@ -1,11 +1,12 @@
 import { Database, ref, get, getDatabase, set } from "firebase/database";
 import { StringDecoder } from "string_decoder";
+import { teamAccess } from "../constants";
 import { setComponentIndex } from "../store/componentIndexSlice";
 
 
 export const getTeamIndex = async (db: Database, team: string, indexUrl: string) => {
     const dbCode = (localStorage.getItem("code") as string)
-    const q = ref(db, dbCode + "/" + team + indexUrl);
+    const q = ref(db, dbCode + "/" + teamAccess + "/" + team + indexUrl);
 
     // TODO get in the other file too!
     const data = (await get(q)).val()

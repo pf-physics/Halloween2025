@@ -1,2 +1,9 @@
-export const team1 = "pumpkins"
-export const team2 = "skeletons"
+
+
+export const teams = ["pumpkins", "skeletons"]
+
+export const localCode = "local"
+export const localIndex = "index"
+export const localComponentIdx = "componentIndex"
+
+export const teamAccess = "teams"

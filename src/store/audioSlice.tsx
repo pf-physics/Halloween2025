@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export const counterSlice = createSlice({
-  name: 'index',
+export const audioSlice = createSlice({
+  name: 'index', // ???
   initialState: {
     value: undefined as any | undefined,
     fadeIn: false,
@@ -18,6 +18,6 @@ export const counterSlice = createSlice({
   },
 })
 
-export const { setAudio, setLoop } = counterSlice.actions
+export const { setAudio, setLoop } = audioSlice.actions
 
-export default counterSlice.reducer
+export default audioSlice.reducer

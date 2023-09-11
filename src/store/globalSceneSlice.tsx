@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export const globalSceneSlice = createSlice({
-  name: 'index',
+  name: 'globalSceneValid',
   initialState: {
     value: false,
   },
