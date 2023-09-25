@@ -190,7 +190,7 @@ const CodeHandler = () => {
                 style={{background: "#2a2a2a"}}
                 color="secondary"
                 variant="contained"
-                disabled
+                //disabled TODO DCDCDC
                 onClick={chooseLocal}
             >
                 <b>Play local version (alone)</b>

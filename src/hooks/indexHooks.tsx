@@ -123,7 +123,7 @@ export const useIncAllIndices = () => {
         const scenes = await Promise.all(teams.map(async t => getTeamScene(db, t)))
 
         // Check all scenes match the first scene
-        if (scenes && scenes.every(v => v === scenes[0])) {
+        if (!scenes || !scenes.every(v => v === scenes[0])) {
             console.log("Wait until both teams are ready")
         } else if (indices && indices[0] < getDialogue(teams[0]).length - 1) {
             dispatch(setPlayerIndex(playerIdx + 1))
