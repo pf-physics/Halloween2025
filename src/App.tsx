@@ -30,16 +30,16 @@ const theme = createTheme({
   }
 });
 
-// TODO - this should be changed to Halloween 2024
+// TODO - render points here!
 function App() {
   useEffect(() => {
-    document.title = "Halloween 2023"
+    document.title = "Halloween 2024"
   }, [])
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
       <header className="App-header">
-        <div>Halloween 2023</div>
+        <div>Halloween 2024</div>
         <Menu/>
       </header>
       <div className="app-content">
