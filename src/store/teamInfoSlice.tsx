@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export const counterSlice = createSlice({
-  name: 'index',
+  name: 'index', // TODO
   initialState: {
     value: "",
   },

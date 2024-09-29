@@ -14,7 +14,6 @@ import { setGlobalSceneValid } from "../store/globalSceneSlice";
 // incIdx in shared func
 // incGlobalIdx in shared fun (incs idx for both teams, also set local to 0)
 // make one for updating both at the same time
-// a door randomly appears in front of the text, with a knocking sound?
 
 // componentIdx: when the component has its own special behaviour and subset of dialogue indices (ie - first scene, door)
 // index: the index for the current team
@@ -23,9 +22,8 @@ import { setGlobalSceneValid } from "../store/globalSceneSlice";
 // -- incIdx - check if index === playerIdx, if yes inc both else inc index
 // incGlobalIndex: increases index for both teams
 
-// customIdx components handle inc/dec themselves 
+// customIdx components handle inc/dec themselves (but should still use these, right?)
 
-// sometimes BOTH teams need to be at a certain index to continue (uh)
 
 const indexUrl = "/index"
 

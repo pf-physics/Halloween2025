@@ -4,14 +4,13 @@ import { getDatabase, ref, onValue, set, get } from "firebase/database";
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { setIndex } from '../store/indexSlice';
 import { Button, CircularProgress, TextField } from '@mui/material';
-import pumpkin from "../assets/imgs/pumpkin.png"
-import skeleton from "../assets/imgs/skeleton.png"
 import getDialogue from "../dialogue/dialogue-list";
 import { initializePlayerIndex, setPlayerIndex } from "../store/playerIndexSlice";
-import { localCode, localIndex, teamAccess } from "../constants";
+import { localCode, localIndex, teamAccess } from "../constants"; //LOCAL TODO this probably shouldn't be a constant, should be in the DB? (If local mode is enabled)
 import AudioControl from "../dialogue/audio-control";
 import { useInitComponentIdx } from "../hooks/componentIndexHooks";
 import { setTeams } from "../store/teamSlice";
+import { TeamChoice } from "../misc/SharedComponents";
 
 
 // https://firebase.google.com/docs/database/web/read-and-write
@@ -22,14 +21,15 @@ const CodeHandler = () => {
     const [loading, setLoading] = useState(true)
     const [code, setCode] = useState("")
     const [team, setTeam] = useState<string | undefined>()
-    const index = useAppSelector((state) => state.index.value)
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
     const dispatch = useAppDispatch()
     const [codeValid, setCodeValid] = useState(false)
     const db = getDatabase();
     const [err, setErr] = useState("")
+    const [teamErr, setTeamErr] = useState("")
     const [tries, setTries] = useState(0)
-    const [teams, updateTeams] = useState<string[]>([])
+    const teams = useAppSelector((state) => state.teams.value)
+    // const [teams, updateTeams] = useState<string[]>([])
     const initComponentIdx = useInitComponentIdx();
 
     const chooseTeam = (team: string) => {
@@ -37,6 +37,8 @@ const CodeHandler = () => {
             localStorage.setItem("team", team)
             setTeam(team)
             getData()
+        } else {
+            setTeamErr("This is not a real team")
         }
     }
 
@@ -58,8 +60,6 @@ const CodeHandler = () => {
             const teamList = Object.keys(teamsObj)
             dispatch(setTeams(teamList))
 
-            updateTeams(teamList)
-
             if (team && teamList.includes(team)) {
                 setTeam(team)
 
@@ -71,7 +71,6 @@ const CodeHandler = () => {
             setCode(code)
             setCodeValid(true)
             getData()
-            // local team
         } else {
             // code invalid err
             setLoading(false)
@@ -79,8 +78,11 @@ const CodeHandler = () => {
         }
     }
 
+    // on load of page
     useEffect(() => {
         const key = (localStorage.getItem("code") as string)
+
+        // No key so don't need to show loading while checking the code
         if (!key) {
             setLoading(false)
         } else {
@@ -88,6 +90,7 @@ const CodeHandler = () => {
         }
     }, [])
 
+    // When the code is input, then the query is made with the access code + team name to find the index the player should be at
     const getData = async () => {
         const team = (localStorage.getItem("team") as string)
         const dbCode = (localStorage.getItem("code") as string)
@@ -98,7 +101,8 @@ const CodeHandler = () => {
             dispatch(setIndex(idx))
             dispatch(setPlayerIndex(idx))
             setLoading(false)
-            setTeam("localTeam")
+            setTeam("localTeam") // LOCAL TODO - this is hardcoded
+            localStorage.setItem("team", "localTeam")
             return
         }
 
@@ -109,6 +113,7 @@ const CodeHandler = () => {
             const data = await snapshot.val();
             if (typeof (data) === "number") {
                 dispatch(setIndex(data))
+                // TODO - fix this I guess? It seems fine though??
                 // No longer automatically updates player index
                 // YAH it's not working
                 // Only do it on init
@@ -122,17 +127,6 @@ const CodeHandler = () => {
         });
     }
 
-    // TODO - eventually this will be replaced by another code input
-    // TODO 2023 team1 and team2 are harcoded, need to use the team list or an input!!
-    const TeamChoice = () => {
-        return <div>
-            <div className="title">Choose your team</div>
-            <div className="team-choice">
-                <img style={{ cursor: "pointer" }} src={pumpkin} onClick={() => chooseTeam("team1")} />
-                <img style={{ width: "100px", height: "100px", cursor: "pointer" }} src={skeleton} onClick={() => chooseTeam("team2")} />
-            </div>
-        </div>
-    }
 
     const EnterCode = () => {
         const [inputCode, setInputCode] = useState("")
@@ -169,6 +163,7 @@ const CodeHandler = () => {
             localStorage.setItem("code", localCode)
             setCode(localCode)
             setCodeValid(true)
+            getData() // TODO - I'm calling this a lot of places
         }
 
         return <div className="code-input">
@@ -225,7 +220,7 @@ const CodeHandler = () => {
                     </>
                     <AudioControl />
                 </div>
-                : <TeamChoice />
+                : <TeamChoice teamErr={teamErr} chooseTeam={chooseTeam}/>
                 : <EnterCode />}
     </div>
 }

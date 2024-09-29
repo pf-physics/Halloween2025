@@ -3,10 +3,9 @@ import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Button, Modal } from '@mui/material';
-import pumpkin from "../assets/imgs/pumpkin.png"
-import skeleton from "../assets/imgs/skeleton.png"
 import { useState } from 'react';
 import { useAppSelector } from '../store/hooks';
+import { TeamChoice } from './SharedComponents';
 
 export default function MenuDropDown() {
     const teams = useAppSelector((state) => state.teams.value)
@@ -17,17 +16,26 @@ export default function MenuDropDown() {
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = (mr: string) => () => {
+    const handleClose = () => {
+        setAnchorEl(null);
+      };
+    
+    const handleMenuClick = (mr: string) => () => {
         setAnchorEl(null);
         setModalRender(mr)
         setModalOpen(true)
     };
+    const [teamErr, setTeamErr] = useState("")
 
     const chooseTeam = (team: string) => {
-        localStorage.setItem("team", team)
-        setTeam(team)
-        setModalOpen(false)
-        window.location.reload()
+        if (teams.includes(team)){
+            localStorage.setItem("team", team)
+            setTeam(team)
+            setModalOpen(false)
+            window.location.reload()
+        } else {
+            setTeamErr("This is not a real team")
+        }
     }
 
     const clearCode = () => {
@@ -46,11 +54,10 @@ export default function MenuDropDown() {
         border: '2px solid #000',
         backgroundColor: "black",
         color: "lime",
-        padding: "20px",
+        padding: "10px",
         borderRadius: "10px"
       };
 
-      // TODO 2023 hardcoded teams
     return (
         <div>
             <Modal
@@ -63,10 +70,7 @@ export default function MenuDropDown() {
                 <div style={style} className='modal-content'>
                     <div className='modal-title'>Switch Teams</div>
                     <div>You are currently on the {team} team</div>
-                    <div className="team-choice">
-                        <img style={{ cursor: "pointer" }} src={pumpkin} onClick={() => chooseTeam("team1")} />
-                        <img style={{ width: "100px", height: "100px", cursor: "pointer" }} src={skeleton} onClick={() => chooseTeam("team2")} />
-                    </div>
+                    <TeamChoice teamErr={teamErr} chooseTeam={chooseTeam}/>
                 </div> :
                 <div style={style} className='modal-content'>
                     <div className='modal-title'>Reset Code</div>
@@ -91,21 +95,13 @@ export default function MenuDropDown() {
                 id="demo-positioned-menu"
                 aria-labelledby="demo-positioned-button"
                 anchorEl={anchorEl}
-                open={open}
+                open={Boolean(anchorEl)}
                 onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
             >
-                <MenuItem onClick={handleClose("teams")}>
+                <MenuItem onClick={handleMenuClick("teams")}>
                     <div className="menu-dropdown">Teams</div>
                 </MenuItem>
-                <MenuItem onClick={handleClose("code")}>
+                <MenuItem onClick={handleMenuClick("code")}>
                     <div className="menu-dropdown">Reset Code</div>
                 </MenuItem>
             </Menu>

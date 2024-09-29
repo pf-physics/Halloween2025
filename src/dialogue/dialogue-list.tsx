@@ -35,6 +35,11 @@ import WolfRules from "./scenes/wolf-rules"
 import SoupGame from "./scenes/soup-game"
 import TimerGame from "./scenes/timer-game"
 import DivinationRules from "./scenes/divination"
+import PotionRules from "./scenes/potion"
+
+const graveDiggerImg = ghostsImg
+const tiredCorpseImage = ghostsImg
+const lostSoulsImg = ghostsImg
 
 // import GlobalDialogue from "./templates/normal-dialogue", basically the same...?
 
@@ -62,7 +67,7 @@ const tombstoneRules = <NormalDialogue header={"TOMBSTONE ARCHITECTURE"}
         `An angel tombstone gets 10 points`,
         `A cross tombstone gets 4 points`,
         `A regular tombstone gets 2 point`,
-        `If the lines are very wiggly, get half the points point`,
+        `If the lines are very wiggly, get half the points`,
         `The best tombstone gets 7 points, second gets 5, third gets 3`,
         rules,
     ]} />
@@ -77,44 +82,103 @@ const graveDiggingRules = <NormalDialogue header={"GRAVE DIGGING"}
     ]} />
 
 const corpseFindingRules = <NormalDialogue header={"CORPSE SEARCH"}
-    text={[`One at a time, use the emf to locate corpses. You can each find a maximum of 2 coprses`, // TODO DCDCDC this
+    text={[`Everyone grab an EMF (one person gets the real one). Use the emf to locate corpses. You can each find a maximum of 2 corpses`, // TODO DCDCDC this
         `You have two minutes to find and dig up the corpses (a demonstration will be made)`,
         `Each corpse is worth 2 points`,
-        `-1 points if you start on an odd number`,
-        rules,
+        // `-1 points if you start on an odd number`,
+        //rules,
     ]} />
+
+    const callLostSoulsRules = <NormalDialogue header={"BOBBING FOR LOST SOULS"}
+    text={[`Take turns using the chopsticks to remove a lost soul from the water.`,
+        `Unwrap the lost soul and takes the number of penalties written.`,
+        `The number on the lost soul is also the row from which you must hit to get the number of points.`, // TODO - paper airplanes instead?
+        `(ie - 1 = first row onwards, 2 = second row onwards, etc.)`,
+        //rules,
+    ]} />
+
+    const potionIngredientsGame = <NormalDialogue header={"POTION RECIPE"}
+    text={[`A member from one team picks a question from the deck of trivia questions`,
+        `They read the question for the other team to guess`,
+        `Then switch roles until 7 questions have been asked of each team`,
+        `Keep track of the number of correct answers each team has`,
+        //rules,
+    ]} />
+
 
 // TODO change name
 // TODO - also change image
 const dialogue2023 =
     [<NormalDialogue text="Halloween 2023 >:)" image={ghostsImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="Another day... another empty grave to fill... *mumble mumble*" image={evilGuyImg} answers={[]} isGlobal={true} audio={backstory} />,
-    <NormalDialogue text="Oh! Hello! Welcome to my graveyard, I hope you will choose to-" image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="Ah. You're alive. Then have you perhaps come to reserve your future tombstone?" image={evilGuyImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Another day... another empty grave to fill... *mumble mumble*" image={graveDiggerImg} answers={[]} isGlobal={true} audio={backstory} />,
+    <NormalDialogue text="Well, hello there! Welcome to my graveyard, I hope you'll choose to-" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Ah. You're alive. Then have you perhaps come to reserve your future tombstone?" image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="Oh you're here for the party... Well, this is a little awkward. You see, the party is actually for lost souls, and yours seem pretty at home in your body so..." image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="Though I suppose you technically could be future customers *mumble mumble*" image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="Tell you what. If you help me get things ready, you can join in on the fun! Do we have a deal?" image={evilGuyImg} answers={["yes", "of course", "i guess", "sure", "okay", "ok", "k", "kk", "yeah", "ya", "ye"]} isGlobal={true} />,
-    <NormalDialogue text="Fantastic! The point of this party is mainly to attract lost souls to come live here. Every graveyard does the same thing around Halloween." image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="I've dug some graves, but we need some tombstones to go with them." image={evilGuyImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Though I suppose you technically could be future customers *mumble mumble*" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Tell you what. If you help me get things ready, you can join in on the fun! Do we got a deal?" image={graveDiggerImg} answers={["yes", "of course", "i guess", "sure", "okay", "ok", "k", "kk", "yeah", "ya", "ye", "deal", "We have a deal", "sounds good"]} isGlobal={true} />,
+    // DCDC - you receive info about lost souls
+    <NormalDialogue text="Good on ya!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    // DCDC lost humans, wayward humans?
+    <NormalDialogue text="So you see, this here's a party for lost souls, real ones, not just lost humans. We wanna thank em for all they do for us an' try to show em that our graveyard is a nice place to take a rest. Every graveyard does the same thing around Halloween." image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="I've dug some new comfy graves, but we need some tombstones to go with them." image={graveDiggerImg} answers={[]} isGlobal={true} />,
         tombstoneRules,
-    <NormalDialogue text="Oh your tombstones are very, um, abstract. Well you did your best anyhow." image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="Usually I get the actual residents of the graveyard to help, but they've been keeping to themselves recently... I'm sure once the music gets pumping, they'll come out! I hope... *mumble mumble*" image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="You know what?! Let's wake them up! I'm not letting them get away with snoozing at the most important time of the year!" image={evilGuyImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Hm. Those sure are some... intersting tombstones. Well you did your best." image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="You know, the corpses that live here are supposed to help, but they've been keeping to themselves recently... I'm sure once the music gets pumping, they'll come out! I hope... *mumble mumble*" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="You know what?! Let's wake 'em up! I'm not letting em get away with snoozing at the most important time of the year!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
         graveDiggingRules,
-    <NormalDialogue text="The graves are empty... they all left!" image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="boo hoo hoo... we're going to be evicted! why did they leave meeeee?! Are the tombstones not shiny enough? Graves not deep enough?!" image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="Wait a second. Most of the ghosts here aren't poltergeists... how did they move their own bodies?" image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="There have to be some corpses here! I need you lot to go find them!" image={evilGuyImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="The graves are empty... they all left!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="boo hoo hoo... my graveyard is a failure! Why did they leave meeeee?! Are the tombstones not shiny enough? Graves not deep enough?!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Hold on a tic! Ghosts can't move their own bodies? How did they leave?!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="There's gotta be some corpses around here somewhere... I need you lot to go find them!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
         corpseFindingRules,
+    <NormalDialogue text="I knew there were some left! Oi! Wake up!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="*yawn* What's all the ruckus?" image={tiredCorpseImage} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Halloween is soon! I need you lot" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="You're not pulling one over me again! Lost souls might help the other souls keep their plots clean, but I live in an unmarked grave! Why should I care about them when my plots overrun by weeds and trash!" image={tiredCorpseImage} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="..." image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Er, my mistake. Would you care for one of these tombs?" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Those are tombs?" image={tiredCorpseImage} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Ahem. Never mind. Before you go back to sleep... you got any idea where everyone else is...?" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="The other corpses? They're in the graveyard next door." image={tiredCorpseImage} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="..." image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="They really did abandon me!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Don't be silly. They were all taken by some lost souls! We corpses can't move ourselves!" image={tiredCorpseImage} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Oh. Right! Well we gotta get over there and bring em' back!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="You do that. I'm going back to sleep. zzzzzzzZZZZZzzzzzz..." image={tiredCorpseImage} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="No time to waste! Let's go get em!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    // DCDCDC - change the name probably
+    <NormalDialogue text="What's this other graveyard called anyways?!" image={graveDiggerImg} answers={["Cool Guy Cemetery"]} isGlobal={true} />,
+    <NormalDialogue text="They got some crazy security over there... I guess we gotta fight fire with fire!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="I don't like havin' to call em up so close to Halloween but we got no choice! We gotta get help from the lost souls!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    callLostSoulsRules,
+    // TODO - change the CSS
+    <NormalDialogue text="How can we be... how can we be... of service?" image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="That cemetery over there's gone and stolen all our corpses! We need your help gettin' em back" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="................" image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="some lost souls have gone to the cemetery..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="those lost souls... they come back... different... changed... wrong..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="we cannot go... we will not go..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Well aint that fantastic! What're we supposed to do then?" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Hold on... I'm bound to this graveyard so I can't leave... but YOU lot can go anywhere!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="But their security is real tight" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="we know a way... we know a secret..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="*whisper whisper*" image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Hm. A potion eh? That should do the trick! So how do we make this thing?" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Answer our riddles and we shall tell you the answer" image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <PotionRules/>,
+    // TODO - make a screen for inserting the number to get a recipe
+    // dissection
+
+    // in the graveyard game - a chain of ppl? (spoon in mouth or something) knife in mouth? moving rings (souls) from one side to the other. Bones is better tho
 
     // "I didn't want to disturb them since this is the one time a year they get to let loose"
     // "Lost souls help with upkeep and security"
 
     <NormalDialogue text="oooo there's a bunch of dialogue missing don't even worry :> " audio={trickMusic} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="This potion will allow your soul to leave your body to secretly infiltrate the other cemetery." audio={witch2Music} image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="So it is effectively poison" image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="Don't worry! The souls here will inhabit your body while you're gone so it doesn't 'Die'. The potion also removes the tether to your body, so you can move freel." image={evilGuyImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="In case some of you are captured, I recommend you go in pairs." image={evilGuyImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="This potion will allow your soul to leave your body to secretly infiltrate the other cemetery." audio={witch2Music} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="So it is effectively poison" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="Don't worry! The souls here will inhabit your body while you're gone so it doesn't 'Die'. The potion also removes the tether to your body, so you can move freel." image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="In case some of you are captured, I recommend you go in pairs." image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="nothing to see here... " answers={["k"]} isGlobal={true} />,
     <NormalDialogue text="STILL nothing to see here... " isGlobal={true} />,
     ]

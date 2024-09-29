@@ -30,7 +30,7 @@ const theme = createTheme({
   }
 });
 
-// Quick test commit
+// TODO - this should be changed to Halloween 2024
 function App() {
   useEffect(() => {
     document.title = "Halloween 2023"
