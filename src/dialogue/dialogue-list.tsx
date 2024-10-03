@@ -34,8 +34,10 @@ import Intro from "./scenes/intro"
 import WolfRules from "./scenes/wolf-rules"
 import SoupGame from "./scenes/soup-game"
 import TimerGame from "./scenes/timer-game"
+import Timer from "./scenes/timer"
 import DivinationRules from "./scenes/divination"
 import PotionRules from "./scenes/potion"
+import BossBattle from "./scenes/boss-battle"
 
 const graveDiggerImg = ghostsImg
 const tiredCorpseImage = ghostsImg
@@ -106,18 +108,18 @@ const corpseFindingRules = <NormalDialogue header={"CORPSE SEARCH"}
     ]} />
 
 
-// TODO change name
-// TODO - also change image
-const dialogue2023 =
-    [<NormalDialogue text="Halloween 2023 >:)" image={ghostsImg} answers={[]} isGlobal={true} />,
+const dialogue2024 =
+    [<NormalDialogue text="Halloween 2024 >:)" image={ghostsImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="Another day... another empty grave to fill... *mumble mumble*" image={graveDiggerImg} answers={[]} isGlobal={true} audio={backstory} />,
     <NormalDialogue text="Well, hello there! Welcome to my graveyard, I hope you'll choose to-" image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="Ah. You're alive. Then have you perhaps come to reserve your future tombstone?" image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="Oh you're here for the party... Well, this is a little awkward. You see, the party is actually for lost souls, and yours seem pretty at home in your body so..." image={evilGuyImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="Though I suppose you technically could be future customers *mumble mumble*" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <BossBattle/>,
     <NormalDialogue text="Tell you what. If you help me get things ready, you can join in on the fun! Do we got a deal?" image={graveDiggerImg} answers={["yes", "of course", "i guess", "sure", "okay", "ok", "k", "kk", "yeah", "ya", "ye", "deal", "We have a deal", "sounds good"]} isGlobal={true} />,
     // DCDC - you receive info about lost souls
     <NormalDialogue text="Good on ya!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <TimerGame/>,
     // DCDC lost humans, wayward humans?
     <NormalDialogue text="So you see, this here's a party for lost souls, real ones, not just lost humans. We wanna thank em for all they do for us an' try to show em that our graveyard is a nice place to take a rest. Every graveyard does the same thing around Halloween." image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="I've dug some new comfy graves, but we need some tombstones to go with them." image={graveDiggerImg} answers={[]} isGlobal={true} />,
@@ -166,10 +168,9 @@ const dialogue2023 =
     <NormalDialogue text="Hm. A potion eh? That should do the trick! So how do we make this thing?" image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="Answer our riddles and we shall tell you the answer" image={lostSoulsImg} answers={[]} isGlobal={true} />,
     <PotionRules/>,
-    // TODO - make a screen for inserting the number to get a recipe
+    <NormalDialogue text="Did ya drink the potion? If not, ya better hurry up and do it! (write done when everyone has drank the potion)" audio={witchMusic} answers={["done"]} isGlobal={true} />,
     // dissection
-
-    // in the graveyard game - a chain of ppl? (spoon in mouth or something) knife in mouth? moving rings (souls) from one side to the other. Bones is better tho
+    // in the graveyard game - a chain of ppl? (spoon in mouth or something) chopsticks in mouth? moving rings (souls) from one side to the other. Bones is better tho
 
     // "I didn't want to disturb them since this is the one time a year they get to let loose"
     // "Lost souls help with upkeep and security"
@@ -181,6 +182,9 @@ const dialogue2023 =
     <NormalDialogue text="In case some of you are captured, I recommend you go in pairs." image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="nothing to see here... " answers={["k"]} isGlobal={true} />,
     <NormalDialogue text="STILL nothing to see here... " isGlobal={true} />,
+    <NormalDialogue text="STILL nothing to see here... " isGlobal={true} />,
+    <BossBattle/>, // TODO - make going back SKIP the boss battle!
+    <NormalDialogue text="YAY" audio={realParty} image={graveDiggerImg} isGlobal={true} />,
     ]
 
 // the page says something like,
@@ -335,7 +339,7 @@ const dialogueList = [<NormalDialogue text="You lot are staying here with me. Th
 
 // TODO - all areas have same dialogue, depending on team, return different order (future task after Halloween2023)
 export const getDialogue = (team: string) => {
-    return dialogue2023;
+    return dialogue2024;
 
 }
 

@@ -4,12 +4,15 @@ import { Button, Slide } from '@mui/material';
 import { ref, onValue, getDatabase, set } from 'firebase/database';
 import { Fade } from '@mui/material';
 import { setAudio, setLoop } from "../../store/audioSlice";
+import { useIncAllIndices } from "../../hooks/indexHooks";
 
 import bloodSFX from "../../assets/audio/blood.wav"
 import death from "../../assets/imgs/death2.png"
 
+const fullTime = 15 * 60000;
+
 // TODO if playerIndex < index, then use a local component index
-const TimerGame = ({ audio }: { audio: any }) => {
+const TimerGame = ({ audio }: { audio?: any }) => {
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
     const dispatch = useAppDispatch()
     const db = getDatabase();
@@ -17,13 +20,10 @@ const TimerGame = ({ audio }: { audio: any }) => {
     const [timeLeft, setTimeLeft] = useState<number>()
     const [deathTime, setDeathTime] = useState(false)
     const [treeTime, setTreeTime] = useState(false)
-    const [retryTime, setRetryTime] = useState(false)
+    const [continueTime, setContinueTime] = useState(false)
+    const globalIncIdx = useIncAllIndices()
 
     const updateTimeLeft = () => {
-        // DCDCDC this ok?
-        if (retryTime) {
-            return
-        }
 
         setTimeout(() => {
             if (timeLeft && timeLeft <= 0) {
@@ -36,12 +36,11 @@ const TimerGame = ({ audio }: { audio: any }) => {
 
                 setTimeout(() => {
                     console.log("uhh")
-                    setRetryTime(true)
+                    setContinueTime(true)
                 }, 3000)
 
             } else {
                 if (start > 0) {
-                    const fullTime = 10 * 60000;
                     const time = (fullTime + start) - Date.now();
                     setTimeLeft(time)
                 }
@@ -64,36 +63,21 @@ const TimerGame = ({ audio }: { audio: any }) => {
                     setStart(data)
                 }
             } else {
-                console.log("something is wrong")
+                set(ref(db, dbCode + "/" + "/middleTimer"), 0);
             }
         });
-    }
-
-    const reset = async () => {
-        const dbCode = (localStorage.getItem("code") as string)
-        const time = Date.now();
-
-        if (start + 10 * 60000 < time) {
-            set(ref(db, dbCode + "/" + "/middleTimer"), time);
-        }
-        setDeathTime(false)
-        setTreeTime(false)
-        setRetryTime(false)
-        setTimeLeft(undefined)
     }
 
     useEffect(() => {
         getTime()
     }, [playerIndex])
 
-    // take in audio
-    // When retryTime is set to false
     useEffect(() => {
-        if (!retryTime) {
+        if (!continueTime) {
             dispatch(setLoop(true))
             dispatch(setAudio(audio))
         }
-    }, [retryTime])
+    }, [continueTime])
 
 
     useEffect(() => {
@@ -125,15 +109,14 @@ const TimerGame = ({ audio }: { audio: any }) => {
                 </Slide>}
             </div>
         </Fade>}
-        {retryTime && <Fade in={retryTime} timeout={{ enter: 1000, exit: 2000 }}>
+        {continueTime && <Fade in={continueTime} timeout={{ enter: 1000, exit: 2000 }}>
             <div style={{ zIndex: 30, position: 'absolute', background: "black", padding: "20px", borderRadius: "10px", marginRight: '10px' }}>
-                <p>You seem to have died...</p>
-                <p>Take 5 penalties each to set the clock back and try again</p>
+                <p>Are you ready to continue?</p>
                 <Button
                     color="primary"
                     variant="contained"
-                    onClick={reset}>
-                    Retry?
+                    onClick={globalIncIdx}>
+                    Yes
                 </Button>
             </div>
         </Fade>}

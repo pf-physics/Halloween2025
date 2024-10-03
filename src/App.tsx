@@ -4,6 +4,8 @@ import './firebaseconfig';
 import CodeHandler from './CodeHandler/code-handler';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Menu from './misc/Menu';
+import { useAppSelector } from "./store/hooks";
+import { useGetPoints } from "./hooks/pointsHooks";
 
 /*
 const theme = createTheme({
@@ -30,19 +32,24 @@ const theme = createTheme({
   }
 });
 
-// TODO - render points here!
+
 function App() {
+  const points = useAppSelector((state) => state.points.value)
+  const bossTime = useAppSelector((state) => state.misc.bossTime)
+  useGetPoints()
+
   useEffect(() => {
     document.title = "Halloween 2024"
   }, [])
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-      <header className="App-header">
+      {!bossTime && <header className="App-header">
         <div>Halloween 2024</div>
+        <div>{points} points</div>
         <Menu/>
-      </header>
-      <div className="app-content">
+      </header>}
+      <div className="app-content" style={{maxWidth: bossTime ? undefined : "400px"}}>
         <CodeHandler/>
       </div>
       </ThemeProvider>

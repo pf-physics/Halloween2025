@@ -44,7 +44,7 @@ export const addTeamScore = async (db: Database, team: string, points: number) =
         set(ref(db, dbCode + "/" + teamAccess + "/" + team + pointsUrl), currentPoints.val() + points);
     })
 
-    // TODO get in the other file too!
+    // Update then check data
     const data = (await get(q)).val()
 
     if (typeof(data) === "number") {

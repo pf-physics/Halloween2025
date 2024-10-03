@@ -6,6 +6,7 @@ import { Button, Modal } from '@mui/material';
 import { useState } from 'react';
 import { useAppSelector } from '../store/hooks';
 import { TeamChoice } from './SharedComponents';
+import { useIncPoints } from "../hooks/pointsHooks";
 
 export default function MenuDropDown() {
     const teams = useAppSelector((state) => state.teams.value)
@@ -16,6 +17,8 @@ export default function MenuDropDown() {
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
+    const incPoints = useIncPoints()
+
     const handleClose = () => {
         setAnchorEl(null);
       };
@@ -58,6 +61,37 @@ export default function MenuDropDown() {
         borderRadius: "10px"
       };
 
+      const AddPointsForm = ({teamErr, chooseTeam}: {teamErr: string, chooseTeam: (team: string) => void}) => {
+          const [points, setPoints] = useState(0)
+          const [name, setName] = useState("")
+          const [reason, setReason] = useState("")
+      
+          const handleUpdatePoints = (pts: string) => {
+                if (!isNaN(parseInt(pts))) {
+                    setPoints(parseInt(pts))
+                }
+          }
+
+        // TODO - only allow update points for the game codes and overwrite old ones I guess... still need history ough
+          return <div>
+              <div className="title">Add game points</div>
+              <input value={points}
+                  onChange={(e) => handleUpdatePoints(e.target.value)}
+              />
+              <Button
+                  className="button"
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    incPoints(points)}}
+              >
+                  <b>Update Points</b>
+              </Button>
+              <div className="error">{teamErr}</div>
+              </div>
+      }
+      
+
     return (
         <div>
             <Modal
@@ -71,7 +105,11 @@ export default function MenuDropDown() {
                     <div className='modal-title'>Switch Teams</div>
                     <div>You are currently on the {team} team</div>
                     <TeamChoice teamErr={teamErr} chooseTeam={chooseTeam}/>
-                </div> :
+                </div> : modalRender === "points" ?
+                <div style={style} className='modal-content'>
+                    <AddPointsForm teamErr={teamErr} chooseTeam={chooseTeam}/>
+                </div>
+                :
                 <div style={style} className='modal-content'>
                     <div className='modal-title'>Reset Code</div>
                     <div>Click here to reset the game code</div>
@@ -98,6 +136,9 @@ export default function MenuDropDown() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
+                <MenuItem onClick={handleMenuClick("points")}>
+                    <div className="menu-dropdown">Add Points</div>
+                </MenuItem>
                 <MenuItem onClick={handleMenuClick("teams")}>
                     <div className="menu-dropdown">Teams</div>
                 </MenuItem>

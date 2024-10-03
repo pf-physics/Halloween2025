@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export const audioSlice = createSlice({
-  name: 'index', // ??? TODO - fix this
+  name: 'audio',
   initialState: {
     value: undefined as any | undefined,
     fadeIn: false,
