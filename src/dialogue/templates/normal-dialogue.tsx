@@ -7,7 +7,9 @@ import { useIncIndex, useDecIndex, useIncAllIndices, useJumpToCurrent } from "..
 import { setAudio } from "../../store/audioSlice";
 import { useSetGlobalScene } from "../../hooks/common";
 
-const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, header}: {text: string | string[], image?: string, answers?: string[], audio?: any, isGlobal?: boolean, globalScene?: string, header?: string}) => {
+export type DialogueProps = {text: string | string[], image?: string, answers?: string[], audio?: any, isGlobal?: boolean, globalScene?: string, header?: string}
+
+const NormalDialogue = ({text, image, answers=[], audio, isGlobal, globalScene, header}: DialogueProps) => {
     const index = useAppSelector((state) => state.index.value)
     const playerIndex = useAppSelector((state) => state.playerIndex.value)
     const incIdx = useIncIndex()

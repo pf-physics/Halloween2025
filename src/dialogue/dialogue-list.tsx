@@ -16,7 +16,7 @@ import backstory2 from "../assets/audio/backstory2.mp3"
 import fakeParty from "../assets/audio/fakeParty3.mp3"
 import realParty from "../assets/audio/fakeParty.mp3"
 import evilGuy from "../assets/audio/badGuy.mp3"
-import witchImg from "../assets/imgs/witch3.jpg"
+import Sammy from "../assets/imgs/Sammy.jpg"
 import witchMusic from "../assets/audio/witches.mp3"
 import witch2Music from "../assets/audio/witches2.mp3"
 import wolfImg from "../assets/imgs/wolf.jpg"
@@ -27,21 +27,30 @@ import bossFight from "../assets/audio/bossFight.mp3";
 import summoning from "../assets/audio/summoning.mp3"
 import trickMusic from "../assets/audio/tricktreat.mp3"
 import trickImg from "../assets/imgs/candy.jpg"
-import pepperImg from "../assets/imgs/pepper.png"
-import endImg from "../assets/imgs/endImg.jpg"
+//import sadSkeleton from "../assets/imgs/skeleton_sad_eyes.png"
+import shinySkeleton from "../assets/imgs/skeleton_shiny_eyes.png"
+import sheetGhost from "../assets/imgs/sheet-ghost.jpg"
+
 
 import Intro from "./scenes/intro"
 import WolfRules from "./scenes/wolf-rules"
 import SoupGame from "./scenes/soup-game"
 import TimerGame from "./scenes/timer-game"
 import Timer from "./scenes/timer"
+
+
 import DivinationRules from "./scenes/divination"
 import PotionRules from "./scenes/potion"
 import BossBattle from "./scenes/boss-battle"
+import GhostDialogue from "./templates/ghost-dialogue"
 
-const graveDiggerImg = ghostsImg
+const graveDiggerImg = merchantImg
 const tiredCorpseImage = ghostsImg
 const lostSoulsImg = ghostsImg
+const homeCorpseImg = shinySkeleton
+const otherCorpseImg = sheetGhost
+
+const otherGraveDiggerName = 'Rattler'
 
 // import GlobalDialogue from "./templates/normal-dialogue", basically the same...?
 
@@ -91,7 +100,7 @@ const corpseFindingRules = <NormalDialogue header={"CORPSE SEARCH"}
         //rules,
     ]} />
 
-    const callLostSoulsRules = <NormalDialogue header={"BOBBING FOR LOST SOULS"}
+const callLostSoulsRules = <NormalDialogue header={"BOBBING FOR LOST SOULS"}
     text={[`Take turns using the chopsticks to remove a lost soul from the water.`,
         `Unwrap the lost soul and takes the number of penalties written.`,
         `The number on the lost soul is also the row from which you must hit to get the number of points.`, // TODO - paper airplanes instead?
@@ -99,14 +108,26 @@ const corpseFindingRules = <NormalDialogue header={"CORPSE SEARCH"}
         //rules,
     ]} />
 
-    const potionIngredientsGame = <NormalDialogue header={"POTION RECIPE"}
-    text={[`A member from one team picks a question from the deck of trivia questions`,
-        `They read the question for the other team to guess`,
-        `Then switch roles until 7 questions have been asked of each team`,
-        `Keep track of the number of correct answers each team has`,
-        //rules,
+const rescueCorpsesGame = <NormalDialogue header={"RESCUE THE CORPSES"}
+    text={[`It's time to rescue the corpses! Because you are fresh ghosts, you haven't yet manifested your arms and legs. You can only move things with your mouths.`,
+        `Everyone grab a chopstick and make two lines up to the corpses.`,
+        `When both teams are ready, move the corpses to the other side of the room, passing them from person to person.`,
+        `Count the number of corpses each team moved, this is the number of points they get.`,
     ]} />
 
+const summonCrowGame = <NormalDialogue header={"SUMMON CROW MESSENGERS"}
+    text={[`Warn the residents of the other cemetery by summoning crow messengers.`,
+    `Each member take two pieces of "summoning paper" (black paper) and fold them into crows (paper airplane).`,
+    `One at a time, stand in front of the mirror beside the bookcase and throw the crow to the other cemetery.`,
+    // TODO - double check points
+    `3 points for getting on the dresser. 2 points for getting it past the gate. 1 points for getting it in the room.`,
+    ]} />
+
+const dissectionGame = <NormalDialogue header={"DISSECT A CORPSE"}
+    text={[`Head over to the morgue and uncover the corpse.`,
+    `Use the knife to cut open the stomach.`,
+    `Get one point for each team member brave enough to reach in and grab a bone.`,
+    ]} />
 
 const dialogue2024 =
     [<NormalDialogue text="Halloween 2024 >:)" image={ghostsImg} answers={[]} isGlobal={true} />,
@@ -122,6 +143,7 @@ const dialogue2024 =
     <TimerGame/>,
     // DCDC lost humans, wayward humans?
     <NormalDialogue text="So you see, this here's a party for lost souls, real ones, not just lost humans. We wanna thank em for all they do for us an' try to show em that our graveyard is a nice place to take a rest. Every graveyard does the same thing around Halloween." image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue image={ghostsImg} text="hi... we are the ghosts..."/>,
     <NormalDialogue text="I've dug some new comfy graves, but we need some tombstones to go with them." image={graveDiggerImg} answers={[]} isGlobal={true} />,
         tombstoneRules,
     <NormalDialogue text="Hm. Those sure are some... intersting tombstones. Well you did your best." image={graveDiggerImg} answers={[]} isGlobal={true} />,
@@ -150,42 +172,84 @@ const dialogue2024 =
     <NormalDialogue text="No time to waste! Let's go get em!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
     // DCDCDC - change the name probably
     <NormalDialogue text="What's this other graveyard called anyways?!" image={graveDiggerImg} answers={["Cool Guy Cemetery"]} isGlobal={true} />,
-    <NormalDialogue text="They got some crazy security over there... I guess we gotta fight fire with fire!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="I've met the grave digger over there. He was a lil greedy but never struck me as the thieving type... You think you know a guy!" image={graveDiggerImg} isGlobal={true} />,
+    <NormalDialogue text="But they got some crazy security over there. We better fight fire with fire!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="I don't like havin' to call em up so close to Halloween but we got no choice! We gotta get help from the lost souls!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
     callLostSoulsRules,
     // TODO - change the CSS
-    <NormalDialogue text="How can we be... how can we be... of service?" image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text="How can we be... how can we be... of service?" image={lostSoulsImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="That cemetery over there's gone and stolen all our corpses! We need your help gettin' em back" image={graveDiggerImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="................" image={lostSoulsImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="some lost souls have gone to the cemetery..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="those lost souls... they come back... different... changed... wrong..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="we cannot go... we will not go..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text="................" image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text="some lost souls have gone to the cemetery..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text="those lost souls... they come back... different... changed... wrong..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text="we cannot go... we will not go..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="Well aint that fantastic! What're we supposed to do then?" image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="Hold on... I'm bound to this graveyard so I can't leave... but YOU lot can go anywhere!" image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="But their security is real tight" image={graveDiggerImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="we know a way... we know a secret..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="*whisper whisper*" image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text="we know a way... we know a secret..." image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text="*whisper whisper*" image={lostSoulsImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="Hm. A potion eh? That should do the trick! So how do we make this thing?" image={graveDiggerImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="Answer our riddles and we shall tell you the answer" image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text="Answer our riddles... and the potion... will be revealed" image={lostSoulsImg} answers={[]} isGlobal={true} />,
     <PotionRules/>,
     <NormalDialogue text="Did ya drink the potion? If not, ya better hurry up and do it! (write done when everyone has drank the potion)" audio={witchMusic} answers={["done"]} isGlobal={true} />,
-    // dissection
+    <NormalDialogue text="It should a lil while to take effect. Meet me back here in 15 minutes" answers={[]} globalScene="intermission" isGlobal={true} />,
     // in the graveyard game - a chain of ppl? (spoon in mouth or something) chopsticks in mouth? moving rings (souls) from one side to the other. Bones is better tho
 
     // "I didn't want to disturb them since this is the one time a year they get to let loose"
     // "Lost souls help with upkeep and security"
-
-    <NormalDialogue text="oooo there's a bunch of dialogue missing don't even worry :> " audio={trickMusic} answers={[]} isGlobal={true} />,
     <NormalDialogue text="This potion will allow your soul to leave your body to secretly infiltrate the other cemetery." audio={witch2Music} image={graveDiggerImg} answers={[]} isGlobal={true} />,
     <NormalDialogue text="So it is effectively poison" image={graveDiggerImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="Don't worry! The souls here will inhabit your body while you're gone so it doesn't 'Die'. The potion also removes the tether to your body, so you can move freel." image={graveDiggerImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="In case some of you are captured, I recommend you go in pairs." image={graveDiggerImg} answers={[]} isGlobal={true} />,
-    <NormalDialogue text="nothing to see here... " answers={["k"]} isGlobal={true} />,
-    <NormalDialogue text="STILL nothing to see here... " isGlobal={true} />,
-    <NormalDialogue text="STILL nothing to see here... " isGlobal={true} />,
-    <BossBattle/>, // TODO - make going back SKIP the boss battle!
+    <NormalDialogue text={["Don' get yer panties in a twist! These here souls'll enter yer bodies to keep em' warm. You just gotta be quick about it or they'll snatch em fer good."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text="The potion made you poltergeists, so yer not tied to yer bodies and can move stuff around." image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["But lookin at you lot... yer arms n' legs haven't manifested yet. Yer like lil baby ghosts.", "You still have yer mouths at least. That'll have to do."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Best be on yer way. We'll keep yer bodies safe n' sound."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text={"Think I can do a flip?"} image={Sammy} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["*ahem* Off you go!"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Write 'Next' when you're in front of the other cemetery"]} answers={['Next']} isGlobal={true} />,
+    rescueCorpsesGame,
+    <NormalDialogue text={["Bring the corpses back to the cemetery. Write Next when you've returned."]} answers={['Next']} isGlobal={true} />,
+    <NormalDialogue text={["The corpses! You brought em' back!"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    // TODO - allow ghosts?
+    <NormalDialogue text={["I suppose you want yer bodies back (take three penalties to become human again)"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Broken bones? I'm sure yer bones have always been broken."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Boss! We're finally home!"]} image={homeCorpseImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Welcome home, harold."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["It was awful! He told us he'd bring us home if we worked for him, but he worked us to the bone! He made us clean and dig graves all day. We didn't even get to sleep in them! He just wanted to attract lost souls. And whenever one would show up, he'd eat them! It was horrifying."]} image={homeCorpseImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Yeah, yeah, it's all over now"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Wait a tick. He was eating lost souls?"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Yeah! He'd just go 'SHOOP' and they were gone!"]} image={homeCorpseImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Sometimes he'd spit them out after, but they were always different after that."]} image={homeCorpseImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["I heard of lost souls eating other lost souls. Never heard of gravekeepers doin it. You sure that's what you saw?"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Everything he says is true."]} image={otherCorpseImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Who're you? You're not from this cemetery!"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["I snuck my corpse in with yours while they were getting rescued. I had to escape the cemetery, before I got absorbed too."]} image={otherCorpseImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Absorbed? What are you going on about?"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["There's something wrong with my cemetery's gravekeeper, Rattler. One day he absorbed a lost soul and he's been different ever since. He works day and night trying to lure in lost souls so he can absorb them. I thought I was safe, but I saw him absorb a regular ghost the other day so I knew I had to escape."]} image={otherCorpseImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Rattler's always been a lil obsessed with attracting lost souls, but he'd never hurt his own residents. Something strange is afoot."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    // DCDCDC - number of points
+    <NormalDialogue text={["You lot got any idea what's goin' on?", "(Hint: If you don't know, try talking to Mort through the menu. The first to guess the correct answer gets 5 points)"]} image={graveDiggerImg} answers={['Corruted souls', 'Corrupted soul', 'Corrupt soul', 'Corrupt souls']} isGlobal={true} />,
+    <NormalDialogue text={["Corrupted souls? I reckon that might explain it!"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+
+    <NormalDialogue text={[`So ${otherGraveDiggerName} didn't absorb the soul, the corrupted soul possessed him!`]} image={otherCorpseImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["With the number of souls he's absorbed, there's no telling how strong he is now", "We gotta exorcise him before he reaches 1000 souls, or he'll start absorbing souls from living humans!"]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text={['Is there another way?', 'Many of our friends have been absorbed.', "We don't want to lose them"]} image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["There is a way... but it's much more dangerous."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <GhostDialogue text="🥺" image={lostSoulsImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["Don' look at me with those big ol' eyes, we'll do it."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["We gotta do a ritual to summon and bind him. Then we can cut out the souls he ate."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["In the meantime, we oughta warn the souls in the other cemetery. They can't leave the cemetery, since their bodies are there, but they can hide from Rattler. It's too dangerous to go back there so we gotta send some messengers."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    summonCrowGame,
+    <NormalDialogue text={["We need a bunch of ingredients for the ritual. I got most of them here but I'll need you to fetch some."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    <NormalDialogue text={["We need bones from a fresh corpse. I'm sure the morgue'll have a body."]} image={graveDiggerImg} answers={[]} isGlobal={true} />,
+    dissectionGame,
+
+    <NormalDialogue text={["When everyone is ready, light the incense and write 'Next'"]} globalScene="bossBattle" answers={['Next']} isGlobal={true} />,
+    <BossBattle/>,
     <NormalDialogue text="YAY" audio={realParty} image={graveDiggerImg} isGlobal={true} />,
+    <NormalDialogue text="What have I told you about accepting shady deals?" image={graveDiggerImg} isGlobal={true} />,
     ]
+
+// -1 point every place you get string anywhere but the paper
 
 // the page says something like,
 // Mix up groups again
@@ -214,44 +278,8 @@ const finalFight = <NormalDialogue header={`"Water" the Tree`}
         `On another plate, write the sealing symbol and place the ugliest carved pepper on top`,
         `Remove the rest of the root and dig until you find the seed.`]} />
 
-/*
-The flesh and blood of humans are the soil, souls of the dead provide the water. 
-The seeds of the tree lie in wait 
-“The farmer” an immortal being tasked with the upkeep of the tree. 
-(Why needs help? Too weak. Trying to shirk responsibilities. He was awoken recently) 
-The roots of the tree extend into the human world, eating humans (and animals) to sustain itself. The tree grows in the afterlife world. Ghosts eat its apples (berries?). (berries part of race?) These apples absorb the undead energy (life force, death force) to awaken the seeds in the apples, erasing the spirit from existence and creating new trees. 
-The farmer promises that plant kind will be spared 
-The farmer will also farm humans to keep a steady source of human meat for 
-The farmer is the opposite of the reaper, who collects and protects souls (raises souls) 
-The farmer destroys souls 
-When consumed by the roots 
-
-
-Entice the roots out with a bit of spirit energy, then feed poisoned blood? Seal with spell 
-The farmer seeks to rid the world of humans and ghosts, to be replaced with plants 
-*/
-
-//     <NormalDialogue text={`If we are to fight the Gardener, we must make it appear as though everything is going according to plan. So you all must pretend to be Halloween creatures`} image={pumpkinHead} isGlobal={true}/>,
 
 const stickerRules = `First place winner gets 4 ${magicPower}, second gets 3, third gets 2, fourth gets 1. In case of ties, both players get the same number`
-
-const spiderPongRules = <NormalDialogue header={"FEED THE SPIDERS"}
-    text={[`Your goal is to, as a team, get one prey in each bucket on the wall.`,
-        "Retrieve the container of spider prey. One at a time, stand behind the middle of the coffee table and retrieve 3 prey from the container.",
-        "If you get a prey into a bucket, award yourself that number of points, and keep track of which buckets have been filled",
-        "If you accidentally get prey in an already filled bucket, get one point. You can switch the order of who goes first each rotation.",
-        "Once all the buckets have been filled, the winner is the player with the most points.",
-        "Handicap: Stand behind the pole",
-        stickerRules,
-        "If you run out of prey, make more with foil"]} image={spiderImg} />
-
-const decorationRules = <NormalDialogue header={"WEB DECORATION"}
-    text={["Take some spider silk from the wall.",
-        "Everyone stand around the pole in the room and attempt to swing the silk into the circle.",
-        "When the silk is attached, use tape to tape the other end to another part of the ceiling/room",
-        `The person to attach their string first gets 4 ${magicPower}, second gets 2, and third gets 1`
-    ]} image={spiderImg} />
-
 
 const summoningRules = <NormalDialogue header={"GHOST SUMMONING"}
     audio={summoning}
@@ -265,77 +293,7 @@ const summoningRules = <NormalDialogue header={"GHOST SUMMONING"}
         stickerRules
     ]} />
 
-// Tricks:
-// Throw on your next turn
-// Give away a candy if you have one
-// miss a turn
-// take only one candy on your next turn, if you land on a door
-// Put your most valuable candy back in the candy bucket, and get another
-// carrot -1 point
-const trickOrTreat = <NormalDialogue header={"TRICK OR TREAT"}
-    audio={trickMusic}
-    image={trickImg}
-    text={[`One at a time, pick up the knocker from the door. Close your eyes and walk towards the door. Attempt to aim at a good Trick or Treating door.`, // DCDCDC knocker? Blindfold?
-        `Purple doors: get 3 candies from the treat mbucket. Green door: get 2 candies from treat bucket. Orange door: Get 1 candy from treat bucket. Garbage can: 1 trick from trick bucket. In between doors: 1 from trick and one from treat`,
-        `Play until someone gets 20 points (but finish the round)`,
-        `Chocolate is worth 5 points, lollipops are worth 3, other candies are worth 1. Fruit and other things are worth 0. Carrots are worth -1.`,
-        `If you get a trick, put it back in the button after you've completed the task`,
-        `Handicaps: Ghosts must walk backwards to the door`,
-        stickerRules
-    ]} />
 
-const fangGame = <NormalDialogue header={"SPOOKY SPEECH"}
-    text={[`Grab the bag labelled "SPOOKY SPEECH"`,
-        `One a time, pick a word from the bag, as well as teeth.`,
-        `Wear the teeth and say the word to a text-to-speech app (ie - google translate). You have three tries to get it to recognize the word.`,
-        `Get 3 ${magicPower} if you succeed.`,
-        `Handicaps: Ghosts get only two tries`,
-    ]} />
-
-const disguiseGame = <NormalDialogue header={"SPOOKY DISGUISE"}
-    text={[`Use the magic paint (makeup crayons) to paint on another team member, whatever they want to be disguised as. Pumpkinhead will use his magic to make you appear that way in the eyes of the gardener.`,
-        `To get full inspiration from the creatures of the night, make sure your eyes are closed.`,
-        `Handicaps: Ghosts must use their non-dominant hand`,
-        `When everyone's face (or arm or whatever) is painted, vote on the best drawing and the worst drawing.`,
-        `The artist who painted the most beautiful design gets 3 ${magicPower} and the canvas of the worst drawing gets 2 ${magicPower}.`
-    ]} />
-
-
-const ghostDecorations = <NormalDialogue header={"HALLOWEEN SPIRIT"}
-    text={["Fill the room with Halloween Spirits!",
-        `Take the bag labelled "Halloween spirit", along with the house, and put it on the coffee table. Try to position yourself so the box is in reach.`,
-        "When everyone is ready, start a 5 minute timer and try to make as many ghosts as you can.",
-        "The winner is the one with the most little ghosts at the end of the 5 minutes.",
-        "The ghosts must all have a face and a hook attached to their back. If ghosts are poorly made other team members can reject the ghost, if there is a consensus.",
-        "handicap: Close your eyes when building the ghost. Eyes can be open while fetching ingredients and drawing the face.",
-        stickerRules
-    ]} image={ghostCraft} />
-
-const dialogueList = [<NormalDialogue text="You lot are staying here with me. The rest will go into the portal." image={pumpkinHead} />,
-<NormalDialogue text="It's time to make this place fitting for a real Halloween party!" image={pumpkinHead} audio={pumpkinHeadMusic2} />,
-<NormalDialogue text="Every great Halloween party needs spider silk. It's just our luck that a few spiders have made their home here and their silk looks exquisite!" image={pumpkinHead} />,
-<NormalDialogue text="Though, I'll let you do the negotiating. My kind doesn't get along well with them..." image={pumpkinHead} />,
-<NormalDialogue text="(The spiders watch your with their many eyes)" image={spiderImg} audio={spiderMusic} />,
-<NormalDialogue text="I can tell by the way you eye my web why you have come to us." image={spiderImg} />,
-<NormalDialogue text="Pumpkinhead refuses to approach our lair I see. What a shame. His head would make a great home for my children." image={spiderImg} />,
-<NormalDialogue text="You must understand that silk of this quality doesn't come cheap. And we are very hungry. I'm sure you wouldn't mind providing us a few morsels for our wares." image={spiderImg} />,
-<NormalDialogue text="Psst. There is some food in that bucket there. Make sure you keep your distance when you give it to them, and then grab the thread while they're distracted!" image={pumpkinHead} />,
-    spiderPongRules,
-<NormalDialogue text="Quick! While they're busy feeding, each get a string of web!" image={pumpkinHead} audio={itsy} />,
-    decorationRules,
-<NormalDialogue text="This room is already looking quite spooky, but it's not enough! This room lacks Halloween spirit! You'd better hurry, there's much to do!" image={pumpkinHead} audio={pumpkinHeadMusic2} />,
-    ghostDecorations,
-<NormalDialogue text={`(Get two extra ${magicPower} if your ghosts have a least 3 different expressions. Hang up the ghosts on the string light above the table.)`} />,
-<NormalDialogue text="Not bad, not bad, it's starting to get spooky!" image={pumpkinHead} />,
-<NormalDialogue text="Now that you're done, I'll need you to run some errands for me as well." image={pumpkinHead} />,
-<NormalDialogue text="(If the other team has finished their tasks, switch places with them and enter the portal, otherwise sit tight!)" />,
-<NormalDialogue text="(Press next when you are in front of the merchant's table.)" />,
-<NormalDialogue text="Hello, and welcome to my shop." image={merchantImg} audio={merchantMusic} />,
-<NormalDialogue text="More new customers! Today must be my lucky day!" image={merchantImg} />,
-<NormalDialogue text={`You want to trade your winning rat race card for ${merchantItem2}? Well, normally that'd be a good deal, but seeing as your friends just gave me one, I'd prefer something else.`} image={merchantImg} />,
-<NormalDialogue text={`How about this? We play a friendly game and I'll give you the ${merchantItem2} if you win!`} image={merchantImg} />,
-<DivinationRules />
-]
 
 // TODO - all areas have same dialogue, depending on team, return different order (future task after Halloween2023)
 export const getDialogue = (team: string) => {

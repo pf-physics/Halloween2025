@@ -17,6 +17,11 @@ code {
   font-family: 'Candy';
   src: local('Candy'), url(./assets/fonts/scarycandy.otf) format('truetype');}
 
-  @font-face {
-    font-family: 'Murderer';
-    src: local('Murderer'), url(./assets/fonts/youmurdererbb_reg.ttf) format('truetype');}
+@font-face {
+  font-family: 'Murderer';
+  src: local('Murderer'), url(./assets/fonts/youmurdererbb_reg.ttf) format('truetype');}
+
+@font-face {
+  font-family: 'PhantomFingers';
+  src: local('PhantomFingers'), url(./assets/fonts/PhantomFingers.ttf) format('truetype');}
+    

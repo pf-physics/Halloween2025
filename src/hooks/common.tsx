@@ -59,8 +59,6 @@ export const getTeamScene = async (db: Database, team: string) => {
     const dbCode = (localStorage.getItem("code") as string)
     const q = ref(db, dbCode + "/" + teamAccess + "/" + team + "/globalScene");
 
-    console.log(dbCode + "/" + team + "/globalScene")
-
     const data = (await get(q)).val()
     return data as string
 }
