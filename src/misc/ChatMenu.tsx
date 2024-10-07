@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Dialogue from "../dialogue/templates/dialogue";
-import { Button } from "@mui/material";
+import { Button, List, ListItem } from "@mui/material";
+import { graveDiggerImg } from "../dialogue/dialogue-list";
 
 type DialogueOptions = { [key: string]: string[] };
 const dialogueOptions: DialogueOptions = {
@@ -13,9 +14,17 @@ const dialogueOptions: DialogueOptions = {
     "Soooo many things!",
   ],
   "What's up?": ["Some bats, I reckon"],
+  "Where do you sleep?": [
+    "I dig myself up a new grave every night.",
+    "Not a fan of coffins, myself. I prefer the nice soft dirt.",
+  ],
+  "Why are you trying to attract lost souls?": ["idk"],
+  "What do lost souls do to help?": ["idk"],
+  "What are lost souls?": ["idk"],
+  "What do lost souls gain by helping?": ["idk"],
 };
 
-const ChatMenu = ({ image }: { image?: string }) => {
+const ChatMenu = () => {
   const [textKey, setTextKey] = useState<string | undefined>(undefined);
   const defaultText = "What d'ya wanna know?";
   const [idx, setIdx] = useState(0);
@@ -40,35 +49,45 @@ const ChatMenu = ({ image }: { image?: string }) => {
   };
 
   return (
+    // code for dark purple background: background: '#3f51b5'
     <div>
       <Dialogue
         header={"Chat with Mortimer"}
         text={textKey ? dialogueOptions[textKey][idx] : defaultText}
-        image={image}
+        image={graveDiggerImg}
       />
-      {Object.keys(dialogueOptions).map((option) => (
-        <Button key={option} onClick={() => setTextKey(option)}>
-          {option}
-        </Button>
-      ))}
-      <div className="buttons-row">
-        <Button
-          disabled={idx === 0}
-          color="primary"
-          variant="contained"
-          onClick={handleBack}
-        >
-          Back
-        </Button>
-        <Button
-          disabled={!textKey}
-          color="primary"
-          variant="contained"
-          onClick={handleNext}
-        >
-          Next
-        </Button>
-      </div>
+      {!textKey && (
+        <div>
+          {Object.keys(dialogueOptions).map((option) => (
+            <div>
+              <Button key={option} onClick={() => setTextKey(option)}>
+                {option}
+              </Button>
+              <div />
+            </div>
+          ))}
+        </div>
+      )}
+      {textKey && (
+        <div className="buttons-row">
+          <Button
+            disabled={idx === 0}
+            color="primary"
+            variant="contained"
+            onClick={handleBack}
+          >
+            Back
+          </Button>
+          <Button
+            disabled={!textKey}
+            color="primary"
+            variant="contained"
+            onClick={handleNext}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

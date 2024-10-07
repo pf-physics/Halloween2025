@@ -42,7 +42,7 @@ import PotionRules from "./scenes/potion";
 import BossBattle from "./scenes/boss-battle";
 import GhostDialogue from "./templates/ghost-dialogue";
 
-const graveDiggerImg = merchantImg;
+export const graveDiggerImg = merchantImg;
 const tiredCorpseImage = ghostsImg;
 const lostSoulsImg = ghostsImg;
 const homeCorpseImg = shinySkeleton;

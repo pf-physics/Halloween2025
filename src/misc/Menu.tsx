@@ -120,6 +120,18 @@ export default function MenuDropDown() {
           <div style={style} className="modal-content">
             <AddPointsForm teamErr={teamErr} chooseTeam={chooseTeam} />
           </div>
+        ) : modalRender === "chat" ? (
+          <div
+            style={{
+              ...style,
+              background: "rgb(46, 0, 63)",
+              width: "80%",
+              maxWidth: "400px",
+            }}
+            className="modal-content"
+          >
+            <ChatMenu />
+          </div>
         ) : (
           <div style={style} className="modal-content">
             <div className="modal-title">Reset Code</div>

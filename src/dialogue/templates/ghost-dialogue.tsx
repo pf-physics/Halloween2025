@@ -1,13 +1,6 @@
 import "../templates/dialogue.css";
-import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
 import NormalDialogue, { DialogueProps } from "./normal-dialogue";
-import { useIncIndex, useDecIndex } from "../../hooks/indexHooks";
-import cauldronImg from "../../assets/imgs/cauldron.jpg";
-import soupMusic from "../../assets/audio/chemist.mp3";
-import { setAudio } from "../../store/audioSlice";
-import { useAppDispatch } from "../../store/hooks";
-import { Opacity } from "@mui/icons-material";
 
 const FloatingText = ({ text }: { text: string }) => {
   const maxWidth = window.innerWidth - 200;
