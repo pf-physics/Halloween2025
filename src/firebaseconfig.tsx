@@ -6,7 +6,6 @@ import { initializeApp } from "firebase/app";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-
 // Your web app's Firebase configuration
 
 const firebaseConfig = {
@@ -16,10 +15,8 @@ const firebaseConfig = {
   projectId: "halloween2023-e0136",
   storageBucket: "halloween2023-e0136.appspot.com",
   messagingSenderId: "130574249218",
-  appId: "1:130574249218:web:8bf4eb3c1b3ac350eca61b"
-
+  appId: "1:130574249218:web:8bf4eb3c1b3ac350eca61b",
 };
-
 
 // Initialize Firebase
 

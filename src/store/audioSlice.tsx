@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const audioSlice = createSlice({
-  name: 'audio',
+  name: "audio",
   initialState: {
     value: undefined as any | undefined,
     fadeIn: false,
@@ -10,14 +10,14 @@ export const audioSlice = createSlice({
   },
   reducers: {
     setAudio: (state, action: PayloadAction<any>) => {
-          state.value = action.payload
+      state.value = action.payload;
     },
     setLoop: (state, action: PayloadAction<boolean>) => {
-      state.loop = action.payload
+      state.loop = action.payload;
     },
   },
-})
+});
 
-export const { setAudio, setLoop } = audioSlice.actions
+export const { setAudio, setLoop } = audioSlice.actions;
 
-export default audioSlice.reducer
+export default audioSlice.reducer;

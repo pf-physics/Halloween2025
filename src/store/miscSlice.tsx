@@ -1,18 +1,18 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const miscSlice = createSlice({
-  name: 'misc',
+  name: "misc",
   initialState: {
     bossTime: false as boolean,
   },
   reducers: {
     // for onLoad
     setBossTime: (state, action: PayloadAction<boolean>) => {
-          state.bossTime = action.payload
+      state.bossTime = action.payload;
     },
   },
-})
+});
 
-export const { setBossTime } = miscSlice.actions
+export const { setBossTime } = miscSlice.actions;
 
-export default miscSlice.reducer
+export default miscSlice.reducer;

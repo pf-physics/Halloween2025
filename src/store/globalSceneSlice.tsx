@@ -1,17 +1,17 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const globalSceneSlice = createSlice({
-  name: 'globalSceneValid',
+  name: "globalSceneValid",
   initialState: {
     value: false,
   },
   reducers: {
     setGlobalSceneValid: (state, action: PayloadAction<boolean>) => {
-        state.value = action.payload
-      },
+      state.value = action.payload;
+    },
   },
-})
+});
 
-export const { setGlobalSceneValid } = globalSceneSlice.actions
+export const { setGlobalSceneValid } = globalSceneSlice.actions;
 
-export default globalSceneSlice.reducer
+export default globalSceneSlice.reducer;

@@ -1,5 +1,5 @@
-import React, { useState, MouseEvent } from 'react';
-import { Button, Menu, MenuItem } from '@mui/material';
+import React, { useState, MouseEvent } from "react";
+import { Button, Menu, MenuItem } from "@mui/material";
 
 // TODO - delete these test files!
 
@@ -7,18 +7,22 @@ const SimpleMenu: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
-    console.log('Button clicked'); // Check if this logs
+    console.log("Button clicked"); // Check if this logs
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    console.log('Menu closed'); // Check if this logs
+    console.log("Menu closed"); // Check if this logs
     setAnchorEl(null);
   };
 
   return (
     <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+      <Button
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
         Open Menu
       </Button>
       <Menu
@@ -34,6 +38,6 @@ const SimpleMenu: React.FC = () => {
       </Menu>
     </div>
   );
-}
+};
 
 export default SimpleMenu;

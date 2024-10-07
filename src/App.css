@@ -1,10 +1,11 @@
 .App {
-  background-color: #11100F;
+  background-color: #11100f;
   min-height: 100vh;
-  color: #902EBB;
-  color: #63C328;
-  color: #F4831B;
-  font-family: 'Candy, Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #902ebb;
+  color: #63c328;
+  color: #f4831b;
+  font-family: "Candy, Franklin Gothic Medium", "Arial Narrow", Arial,
+    sans-serif;
   font-size: 16px;
 }
 
@@ -37,8 +38,8 @@
 }
 
 .App-header {
-  background-color: #1C1C1C;
-  color: #86FF3C;
+  background-color: #1c1c1c;
+  color: #86ff3c;
   font-size: 20px;
   font-weight: bold;
   display: flex;
@@ -63,9 +64,9 @@
 
 input {
   background-color: transparent;
-  outline: 2px solid #86FF3C;
+  outline: 2px solid #86ff3c;
   border: 0px;
-  color: #86FF3C;
+  color: #86ff3c;
   font-size: 20px;
   border-radius: 5px;
   padding-top: 7px;
@@ -100,23 +101,23 @@ input {
 .tree-cover {
   height: 100%;
   width: 110vw;
-  
+
   object-position: "top";
   background-color: black;
   position: absolute;
 }
 
 .MuiPaper-root {
-  background-color: #11100F !important;
+  background-color: #11100f !important;
 }
 
 .MuiList-root {
-  background-color: #11100F !important;
+  background-color: #11100f !important;
   color: black;
 }
 
 .menu-dropdown {
-  color: #86FF3C;
+  color: #86ff3c;
 }
 
 .modal-title {
