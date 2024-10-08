@@ -21,6 +21,7 @@ export default function MenuDropDown() {
   const incPoints = useIncPoints();
 
   const handleClose = () => {
+    console.log("closing");
     setAnchorEl(null);
   };
 
@@ -109,6 +110,7 @@ export default function MenuDropDown() {
         onClose={() => setModalOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        style={{ overflow: "scroll" }}
       >
         {modalRender === "teams" ? (
           <div style={style} className="modal-content">

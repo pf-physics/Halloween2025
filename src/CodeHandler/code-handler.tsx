@@ -133,6 +133,7 @@ const CodeHandler = () => {
   const EnterCode = () => {
     const [inputCode, setInputCode] = useState("");
     const jokeCode = "goose";
+    const jokeCode2 = "wenis";
 
     const submitCode = () => {
       if (inputCode.length === 0) {
@@ -146,6 +147,9 @@ const CodeHandler = () => {
         return;
       } else if (inputCode.toLocaleLowerCase() === jokeCode) {
         setErr("honk");
+        return;
+      } else if (inputCode.toLocaleLowerCase() === jokeCode2) {
+        setErr("Nice try. It will now be confiscated.");
         return;
       }
       setTries(tries + 1);
