@@ -1,11 +1,12 @@
 import "../templates/dialogue.css";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import Dialogue from "../templates/dialogue";
 import { useIncIndex, useDecIndex } from "../../hooks/indexHooks";
 import candlesImg from "../../assets/imgs/candles.jpg";
 import { teamAccess } from "../../constants";
 import { Database, ref, get, getDatabase, set } from "firebase/database";
+import { useIncPoints } from "../../hooks/pointsHooks";
 
 const potionUrl = "/potionScore";
 
@@ -220,21 +221,14 @@ export const getTeamPotionScore = async (db: Database) => {
   if (typeof data === "number") {
     return data;
   } else {
-    console.log("negative");
     return -1;
   }
-};
-
-export const setTeamPotionScore = async (db: Database, score: number) => {
-  const dbCode = localStorage.getItem("code") as string;
-  const team = localStorage.getItem("team") as string;
-
-  set(ref(db, dbCode + "/" + teamAccess + "/" + team + potionUrl), score);
 };
 
 const PotionRules = () => {
   const incIdx = useIncIndex();
   const decIdx = useDecIndex();
+  const incPoints = useIncPoints();
   const [inp, setInp] = useState("");
   const [totalPoints, setTotalPoints] = useState(0);
   const [qIdx, setQIdx] = useState(0);
@@ -242,6 +236,13 @@ const PotionRules = () => {
   const [potionRecipe, setPotionRecipe] = useState<string[]>([]);
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const setTeamPotionScore = async (db: Database, score: number) => {
+    const dbCode = localStorage.getItem("code") as string;
+    const team = localStorage.getItem("team") as string;
+
+    set(ref(db, dbCode + "/" + teamAccess + "/" + team + potionUrl), score);
+  };
 
   const setRecipe = (pts: number) => {
     if (pts >= 12) {
@@ -264,8 +265,8 @@ const PotionRules = () => {
         setTotalPoints(score);
         setQIdx(questions.length);
         setRecipe(score);
-        setLoading(false);
       }
+      setLoading(false);
     });
   }, []);
 
@@ -294,12 +295,12 @@ const PotionRules = () => {
 
     if (newIdx >= questions.length) {
       setRecipe(newTotal);
+      incPoints(newTotal); // DCDCDC - make sure this is okay
     }
     setInp("");
   };
 
   const handleNext = () => {
-    // TODO - add points from potion game to total points
     incIdx();
   };
 
@@ -321,7 +322,7 @@ const PotionRules = () => {
         <Dialogue
           header={"Find the Potion Recipe"}
           text={[
-            `Answer the "Riddles" to receive the potion recipe. Write "Okay" when ready`,
+            `Answer the "Riddles" to receive the potion recipe. Each team must solve the riddles separately. Write "Okay" when ready`,
           ]}
           image={candlesImg}
         />

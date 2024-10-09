@@ -4,15 +4,22 @@ import { Button, Slide } from "@mui/material";
 import { ref, onValue, getDatabase, set } from "firebase/database";
 import { Fade } from "@mui/material";
 import { setAudio, setLoop } from "../../store/audioSlice";
-import { useIncAllIndices } from "../../hooks/indexHooks";
+import {
+  useIncAllIndices,
+  useIncIndex,
+  useDecIndex,
+} from "../../hooks/indexHooks";
 
-import bloodSFX from "../../assets/audio/blood.wav";
-import death from "../../assets/imgs/death2.png";
+import bloodSFX from "../../assets/audio/death_bell.mp3";
+import death from "../../assets/imgs/skeleton_hand.jpg";
+import Dialogue from "../templates/dialogue";
 
 const fullTime = 15 * 60000;
 
 // TODO if playerIndex < index, then use a local component index
 const TimerGame = ({ audio }: { audio?: any }) => {
+  const incIdx = useIncIndex();
+  const decIdx = useDecIndex();
   const playerIndex = useAppSelector((state) => state.playerIndex.value);
   const dispatch = useAppDispatch();
   const db = getDatabase();
@@ -22,10 +29,13 @@ const TimerGame = ({ audio }: { audio?: any }) => {
   const [treeTime, setTreeTime] = useState(false);
   const [continueTime, setContinueTime] = useState(false);
   const globalIncIdx = useIncAllIndices();
+  const [alreadyDone, setAlreadyDone] = useState<Boolean | undefined>(
+    undefined
+  );
 
   const updateTimeLeft = () => {
     setTimeout(() => {
-      if (timeLeft && timeLeft <= 0) {
+      if (!alreadyDone && timeLeft && timeLeft <= 0) {
         setDeathTime(true);
         setTimeout(() => {
           setTreeTime(true);
@@ -34,13 +44,20 @@ const TimerGame = ({ audio }: { audio?: any }) => {
         }, 400);
 
         setTimeout(() => {
-          console.log("uhh");
           setContinueTime(true);
         }, 3000);
       } else {
         if (start > 0) {
+          console.log("??");
           const time = fullTime + start - Date.now();
           setTimeLeft(time);
+          if (alreadyDone === undefined) {
+            if (time <= 0) {
+              setAlreadyDone(true);
+            } else {
+              setAlreadyDone(false);
+            }
+          }
         }
       }
     }, 1000);
@@ -48,20 +65,21 @@ const TimerGame = ({ audio }: { audio?: any }) => {
 
   const getTime = async () => {
     const dbCode = localStorage.getItem("code") as string;
-    const time = ref(db, dbCode + "/" + "middleTimer");
+    const time = ref(db, dbCode + "/middleTimer");
 
     onValue(time, async (snapshot) => {
       const data = await snapshot.val();
+      console.log(data);
       if (typeof data === "number") {
         if (data === 0) {
           const time = Date.now();
           setStart(time);
-          set(ref(db, dbCode + "/" + "/middleTimer"), time);
+          set(ref(db, dbCode + "/middleTimer"), time);
         } else {
           setStart(data);
         }
       } else {
-        set(ref(db, dbCode + "/" + "/middleTimer"), 0);
+        set(ref(db, dbCode + "/middleTimer"), 0);
       }
     });
   };
@@ -93,6 +111,15 @@ const TimerGame = ({ audio }: { audio?: any }) => {
       );
     }
     return <div></div>;
+  };
+
+  const handleNext = () => {
+    // TODO - add points from potion game to total points
+    incIdx();
+  };
+
+  const handleBack = () => {
+    decIdx();
   };
 
   return (
@@ -155,6 +182,23 @@ const TimerGame = ({ audio }: { audio?: any }) => {
         </Fade>
       )}
       <DisplayTime />
+      <Dialogue
+        text={
+          alreadyDone
+            ? "Hold on! It's not break time! Get back to doing stuff!"
+            : "Enjoy the break..."
+        }
+      />
+      {alreadyDone && (
+        <div className="buttons-row">
+          <Button color="primary" variant="contained" onClick={handleBack}>
+            Back
+          </Button>
+          <Button color="primary" variant="contained" onClick={handleNext}>
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

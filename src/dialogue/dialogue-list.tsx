@@ -31,13 +31,8 @@ import trickImg from "../assets/imgs/candy.jpg";
 import shinySkeleton from "../assets/imgs/skeleton_shiny_eyes.png";
 import sheetGhost from "../assets/imgs/sheet-ghost.jpg";
 
-import Intro from "./scenes/intro";
-import WolfRules from "./scenes/wolf-rules";
-import SoupGame from "./scenes/soup-game";
-import TimerGame from "./scenes/timer-game";
-import Timer from "./scenes/timer";
+import TimerGame from "./scenes/timer";
 
-import DivinationRules from "./scenes/divination";
 import PotionRules from "./scenes/potion";
 import BossBattle from "./scenes/boss-battle";
 import GhostDialogue from "./templates/ghost-dialogue";
@@ -158,6 +153,7 @@ const dissectionGame = (
       `Head over to the morgue and uncover the corpse.`,
       `Use the knife to cut open the stomach.`,
       `Get one point for each team member brave enough to reach in and grab a bone.`,
+      `Wash the bones with the cloth beside the corpse.`,
     ]}
   />
 );
@@ -229,7 +225,6 @@ const dialogue2024 = [
     answers={[]}
     isGlobal={true}
   />,
-  <TimerGame />,
   // DCDC lost humans, wayward humans?
   <NormalDialogue
     text="So you see, this here's a party for lost souls, real ones, not just lost humans. We wanna thank em for all they do for us an' try to show em that our graveyard is a nice place to take a rest. Every graveyard does the same thing around Halloween."
@@ -237,7 +232,6 @@ const dialogue2024 = [
     answers={[]}
     isGlobal={true}
   />,
-  <GhostDialogue image={ghostsImg} text="hi... we are the ghosts..." />,
   <NormalDialogue
     text="I've dug some new comfy graves, but we need some tombstones to go with them."
     image={graveDiggerImg}
@@ -486,16 +480,17 @@ const dialogue2024 = [
   <PotionRules />,
   <NormalDialogue
     text="Did ya drink the potion? If not, ya better hurry up and do it! (write done when everyone has drank the potion)"
-    audio={witchMusic}
+    image={graveDiggerImg}
     answers={["done"]}
     isGlobal={true}
   />,
   <NormalDialogue
-    text="It should a lil while to take effect. Meet me back here in 15 minutes"
+    text="It should a lil while to take effect. Take a break for the time bein'."
+    image={graveDiggerImg}
     answers={[]}
-    globalScene="intermission"
     isGlobal={true}
   />,
+  <TimerGame />,
   // in the graveyard game - a chain of ppl? (spoon in mouth or something) chopsticks in mouth? moving rings (souls) from one side to the other. Bones is better tho
 
   // "I didn't want to disturb them since this is the one time a year they get to let loose"
@@ -503,6 +498,7 @@ const dialogue2024 = [
   <NormalDialogue
     text="This potion will allow your soul to leave your body to secretly infiltrate the other cemetery."
     audio={witch2Music}
+    globalScene="intermission"
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}
@@ -782,7 +778,9 @@ const dialogue2024 = [
   dissectionGame,
 
   <NormalDialogue
-    text={["When everyone is ready, light the incense and write 'Next'"]}
+    text={[
+      "When everyone is ready to fight, light the incense and write 'Next'",
+    ]}
     globalScene="bossBattle"
     answers={["Next"]}
     isGlobal={true}

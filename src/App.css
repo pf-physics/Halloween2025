@@ -99,8 +99,7 @@ input {
 }
 
 .tree-cover {
-  height: 100%;
-  width: 110vw;
+  height: 50%;
 
   object-position: "top";
   background-color: black;
