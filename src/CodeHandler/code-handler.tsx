@@ -25,7 +25,6 @@ const CodeHandler = () => {
   const [code, setCode] = useState("");
   const [team, setTeam] = useState<string | undefined>();
   const playerIndex = useAppSelector((state) => state.playerIndex.value);
-  const autoSync = useAppSelector((state) => state.misc.autoSync);
   const dispatch = useAppDispatch();
   const [codeValid, setCodeValid] = useState(false);
   const db = getDatabase();
@@ -117,8 +116,8 @@ const CodeHandler = () => {
       setLoading(false);
       const data = await snapshot.val();
       if (typeof data === "number") {
+        const autoSync = localStorage.getItem("autoSync");
         dispatch(setIndex(data));
-        console.log("?");
 
         if (autoSync) {
           dispatch(setPlayerIndex(data));

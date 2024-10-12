@@ -8,7 +8,7 @@ import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { TeamChoice } from "./SharedComponents";
 import { useIncPoints } from "../hooks/pointsHooks";
 import ChatMenu from "./ChatMenu";
-import { toggleAutoSync } from "../store/miscSlice";
+import { setAutoSync } from "../store/miscSlice";
 
 export default function MenuDropDown() {
   const teams = useAppSelector((state) => state.teams.value);
@@ -98,8 +98,14 @@ export default function MenuDropDown() {
   };
 
   const ToggleAutoSync = () => {
-    const autoSync = useAppSelector((state) => state.misc.autoSync);
-    const dispatch = useAppDispatch();
+    const [autoSync, setAutoSync] = useState(
+      localStorage.getItem("autoSync") === "true"
+    );
+
+    const toggleAutoSync = () => {
+      const newAutoSync = !autoSync;
+      localStorage.setItem("autoSync", newAutoSync.toString());
+    };
 
     return (
       <div>
@@ -108,10 +114,7 @@ export default function MenuDropDown() {
           Autosync means the dialogue will change automatically when anyone
           updates it, without having to press next.
         </div>
-        <Switch
-          checked={autoSync}
-          onChange={() => dispatch(toggleAutoSync())}
-        />
+        <Switch checked={autoSync} onChange={toggleAutoSync} />
       </div>
     );
   };

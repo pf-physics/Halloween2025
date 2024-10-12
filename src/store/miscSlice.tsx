@@ -11,12 +11,12 @@ export const miscSlice = createSlice({
     setFullScreen: (state, action: PayloadAction<boolean>) => {
       state.fullScreen = action.payload;
     },
-    toggleAutoSync: (state) => {
-      state.autoSync = !state.autoSync;
+    setAutoSync: (state, action: PayloadAction<boolean>) => {
+      state.autoSync = action.payload;
     },
   },
 });
 
-export const { setFullScreen, toggleAutoSync } = miscSlice.actions;
+export const { setFullScreen, setAutoSync } = miscSlice.actions;
 
 export default miscSlice.reducer;
