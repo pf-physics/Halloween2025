@@ -124,6 +124,10 @@ input {
   font-size: larger;
 }
 
+.modal-content {
+  min-width: 70%;
+}
+
 .ritual-text {
   font-family: "bloodcrow";
   font-size: 30px;

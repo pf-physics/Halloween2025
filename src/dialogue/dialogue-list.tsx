@@ -315,7 +315,7 @@ const dialogue2024 = [
     isGlobal={true}
   />,
   <NormalDialogue
-    text="Halloween is soon! I need you lot"
+    text="Halloween is soon! I need you lot to pull your weight in gettin' things ready!"
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}

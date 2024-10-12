@@ -2,12 +2,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Button, Modal } from "@mui/material";
+import { Button, Modal, Switch } from "@mui/material";
 import { useState } from "react";
-import { useAppSelector } from "../store/hooks";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { TeamChoice } from "./SharedComponents";
 import { useIncPoints } from "../hooks/pointsHooks";
 import ChatMenu from "./ChatMenu";
+import { toggleAutoSync } from "../store/miscSlice";
 
 export default function MenuDropDown() {
   const teams = useAppSelector((state) => state.teams.value);
@@ -63,13 +64,7 @@ export default function MenuDropDown() {
     borderRadius: "10px",
   };
 
-  const AddPointsForm = ({
-    teamErr,
-    chooseTeam,
-  }: {
-    teamErr: string;
-    chooseTeam: (team: string) => void;
-  }) => {
+  const AddPointsForm = () => {
     const [points, setPoints] = useState(0);
     const [name, setName] = useState("");
     const [reason, setReason] = useState("");
@@ -98,7 +93,25 @@ export default function MenuDropDown() {
         >
           <b>Update Points</b>
         </Button>
-        <div className="error">{teamErr}</div>
+      </div>
+    );
+  };
+
+  const ToggleAutoSync = () => {
+    const autoSync = useAppSelector((state) => state.misc.autoSync);
+    const dispatch = useAppDispatch();
+
+    return (
+      <div>
+        <div className="title">Toggle autosync</div>
+        <div>
+          Autosync means the dialogue will change automatically when anyone
+          updates it, without having to press next.
+        </div>
+        <Switch
+          checked={autoSync}
+          onChange={() => dispatch(toggleAutoSync())}
+        />
       </div>
     );
   };
@@ -120,7 +133,11 @@ export default function MenuDropDown() {
           </div>
         ) : modalRender === "points" ? (
           <div style={style} className="modal-content">
-            <AddPointsForm teamErr={teamErr} chooseTeam={chooseTeam} />
+            <AddPointsForm />
+          </div>
+        ) : modalRender === "autosync" ? (
+          <div style={style} className="modal-content">
+            <ToggleAutoSync />
           </div>
         ) : modalRender === "chat" ? (
           <div
@@ -176,6 +193,9 @@ export default function MenuDropDown() {
         </MenuItem>
         <MenuItem onClick={handleMenuClick("chat")}>
           <div className="menu-dropdown">Talk to Mort</div>
+        </MenuItem>
+        <MenuItem onClick={handleMenuClick("autosync")}>
+          <div className="menu-dropdown">Toggle Autosync</div>
         </MenuItem>
       </Menu>
     </div>

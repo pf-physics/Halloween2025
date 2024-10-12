@@ -49,7 +49,7 @@ export const useIncIndex = () => {
       if (code !== localCode) {
         set(
           ref(db, code + "/" + teamAccess + "/" + team + "/index"),
-          index + 1,
+          index + 1
         );
       }
       dispatch(setIndex(index + 1));
@@ -93,7 +93,7 @@ export const useIncAllIndices = () => {
   const index = useAppSelector((state) => state.index.value);
   const playerIdx = useAppSelector((state) => state.playerIndex.value);
   const globalSceneValid = useAppSelector(
-    (state) => state.globalSceneValid.value,
+    (state) => state.globalSceneValid.value
   );
   const teams = useAppSelector((state) => state.teams.value);
 
@@ -121,10 +121,10 @@ export const useIncAllIndices = () => {
     }
 
     const indices = await Promise.all(
-      teams.map(async (t) => getTeamIndex(db, t, indexUrl)),
+      teams.map(async (t) => getTeamIndex(db, t, indexUrl))
     );
     const scenes = await Promise.all(
-      teams.map(async (t) => getTeamScene(db, t)),
+      teams.map(async (t) => getTeamScene(db, t))
     );
 
     // Check all scenes match the first scene
@@ -139,8 +139,8 @@ export const useIncAllIndices = () => {
       indices.forEach((index, listIndex) =>
         set(
           ref(db, code + "/" + teamAccess + "/" + teams[listIndex] + indexUrl),
-          index + 1,
-        ),
+          index + 1
+        )
       );
 
       dispatch(setGlobalSceneValid(true));

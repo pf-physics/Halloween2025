@@ -24,6 +24,8 @@ const CodeHandler = () => {
   const [code, setCode] = useState("");
   const [team, setTeam] = useState<string | undefined>();
   const playerIndex = useAppSelector((state) => state.playerIndex.value);
+  const autoSync = useAppSelector((state) => state.misc.autoSync);
+  const trueIndex = useAppSelector((state) => state.index.value);
   const dispatch = useAppDispatch();
   const [codeValid, setCodeValid] = useState(false);
   const db = getDatabase();
@@ -210,7 +212,13 @@ const CodeHandler = () => {
 
     const dialogueList = getDialogue(team);
 
-    if (playerIndex !== undefined && playerIndex < dialogueList.length) {
+    if (autoSync && trueIndex !== undefined) {
+      if (trueIndex < dialogueList.length) {
+        return dialogueList[trueIndex];
+      } else {
+        return dialogueList[dialogueList.length - 1];
+      }
+    } else if (playerIndex !== undefined && playerIndex < dialogueList.length) {
       return dialogueList[playerIndex];
     } else {
       return dialogueList[dialogueList.length - 1];
