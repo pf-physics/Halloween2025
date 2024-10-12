@@ -1,7 +1,7 @@
 import NormalDialogue from "./templates/normal-dialogue";
 import pumpkinHead from "../assets/imgs/pumpkin_head.png";
 import ratsImg from "../assets/imgs/rats.png";
-import ratMusic from "../assets/audio/ratMusic.mp3";
+import introMusic from "../assets/audio/Intro_2024.mp3";
 import merchantImg from "../assets/imgs/skeleton-temp.jpg";
 import merchantMusic from "../assets/audio/merchant.mp3";
 import spiderMusic from "../assets/audio/spiderRune.mp3";
@@ -27,6 +27,9 @@ import bossFight from "../assets/audio/bossFight.mp3";
 import summoning from "../assets/audio/summoning.mp3";
 import trickMusic from "../assets/audio/tricktreat.mp3";
 import trickImg from "../assets/imgs/candy.jpg";
+import cemteryImg from "../assets/imgs/cem2.jpg";
+import firstImg from "../assets/imgs/first_img.jpg";
+import graveMusic from "../assets/audio/Runescape_Halloween.mp3";
 //import sadSkeleton from "../assets/imgs/skeleton_sad_eyes.png"
 import shinySkeleton from "../assets/imgs/skeleton_shiny_eyes.png";
 import sheetGhost from "../assets/imgs/sheet-ghost.jpg";
@@ -36,12 +39,15 @@ import TimerGame from "./scenes/timer";
 import PotionRules from "./scenes/potion";
 import BossBattle from "./scenes/boss-battle";
 import GhostDialogue from "./templates/ghost-dialogue";
+import RitualRules from "./scenes/ritual-instructions";
 
 export const graveDiggerImg = merchantImg;
+const rattlerImg = ratsImg;
 const tiredCorpseImage = ghostsImg;
 const lostSoulsImg = ghostsImg;
 const homeCorpseImg = shinySkeleton;
 const otherCorpseImg = sheetGhost;
+const corruptSoulImg = spiderImg;
 
 const otherGraveDiggerName = "Rattler";
 
@@ -59,7 +65,7 @@ const magicPower = "Halloween power";
 // Delete
 const merchantItem1 = "Liquid Lightning";
 const merchantItem2 = "Spider Venom";
-const rules = `First place winner gets 4 ${magicPower}, second gets 3, third gets 2, fourth gets 1. In case of ties, both players get the same number`;
+const rules = `The team who gets fewer points must take three penalties (3 sips or three squats )`;
 
 // TODO remove all audio I guess
 
@@ -71,11 +77,10 @@ const tombstoneRules = (
       `Everyone take a sheet of tombstone material (tin foil)`,
       `When everyone is ready, start a timer for 3 minutes`,
       `Make a tombstone by ripping the tin foil`,
-      `An angel tombstone gets 10 points`,
+      `An angel tombstone gets 8 points`,
       `A cross tombstone gets 4 points`,
       `A regular tombstone gets 2 point`,
       `If the lines are very wiggly, get half the points`,
-      `The best tombstone gets 7 points, second gets 5, third gets 3`,
       rules,
     ]}
   />
@@ -85,7 +90,6 @@ const tombstoneRules = (
 const graveDiggingRules = (
   <NormalDialogue
     header={"GRAVE DIGGING"}
-    audio={pumpkinIntro}
     text={[
       `Each team take a grave (cup) and line up`,
       `TODO - decide on rules`,
@@ -161,7 +165,17 @@ const dissectionGame = (
 const dialogue2024 = [
   <NormalDialogue
     text="Halloween 2024 >:)"
-    image={ghostsImg}
+    image={firstImg}
+    answers={["tombstone"]}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text={[
+      "With Halloween night only a few weeks away, creatures of the night are busy preparing for its arrival.",
+      "In an ordinary graveyard like any other, a lonestome grave digger is busy digging graves for the lost souls that will soon arrive...",
+    ]}
+    audio={introMusic}
+    image={cemteryImg}
     answers={[]}
     isGlobal={true}
   />,
@@ -170,7 +184,6 @@ const dialogue2024 = [
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}
-    audio={backstory}
   />,
   <NormalDialogue
     text="Well, hello there! Welcome to my graveyard, I hope you'll choose to-"
@@ -186,19 +199,18 @@ const dialogue2024 = [
   />,
   <NormalDialogue
     text="Oh you're here for the party... Well, this is a little awkward. You see, the party is actually for lost souls, and yours seem pretty at home in your body so..."
-    image={evilGuyImg}
-    answers={[]}
-    isGlobal={true}
-  />,
-  <NormalDialogue
-    text="Though I suppose you technically could be future customers *mumble mumble*"
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}
   />,
-  <BossBattle />,
   <NormalDialogue
-    text="Tell you what. If you help me get things ready, you can join in on the fun! Do we got a deal?"
+    text="Though I suppose you could be future residents *mumble mumble*"
+    image={graveDiggerImg}
+    answers={[]}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="Tell ya what. If you help me get things ready, you can join in on the fun! Do we got a deal?"
     image={graveDiggerImg}
     answers={[
       "yes",
@@ -218,11 +230,18 @@ const dialogue2024 = [
     ]}
     isGlobal={true}
   />,
-  // DCDC - you receive info about lost souls
   <NormalDialogue
     text="Good on ya!"
     image={graveDiggerImg}
     answers={[]}
+    audio={graveMusic}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="The name's Mort, it'll be a pleasure working with ya, I'm sure"
+    image={graveDiggerImg}
+    answers={[]}
+    audio={graveMusic}
     isGlobal={true}
   />,
   // DCDC lost humans, wayward humans?
@@ -776,24 +795,93 @@ const dialogue2024 = [
     isGlobal={true}
   />,
   dissectionGame,
-
+  <RitualRules />,
   <NormalDialogue
     text={[
-      "When everyone is ready to fight, light the incense and write 'Next'",
+      "Cause of the potion, you lot still got some ghostly powers, but this also means it's easy for Rattler to absorb your souls.",
+      "You can channel ectoplasm with these here devices to bind him and extract the souls.",
+      "I'll show you where to aim the ectoplasm. You don't got infinite ectoplasm, so you might hav'ta switch out partway through.",
+    ]}
+    image={graveDiggerImg}
+    answers={[]}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text={[
+      "When everyone has their weapons and is ready to fight, extinguish the incense in the ritual bowl and insert the secret code",
     ]}
     globalScene="bossBattle"
-    answers={["Next"]}
+    answers={["HalloweenTime"]}
     isGlobal={true}
   />,
   <BossBattle />,
+  <NormalDialogue text="Uugghhh..." image={rattlerImg} isGlobal={true} />,
   <NormalDialogue
-    text="YAY"
-    audio={realParty}
+    text="Rattler? Is that you?"
     image={graveDiggerImg}
     isGlobal={true}
   />,
   <NormalDialogue
+    text="Hm? Mort?! What's going on here? Last thing I remember I was making a deal with a lost soul..."
+    image={rattlerImg}
+    isGlobal={true}
+  />,
+  <NormalDialogue
     text="What have I told you about accepting shady deals?"
+    image={graveDiggerImg}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="It seemed like a good idea at the time..."
+    image={rattlerImg}
+    isGlobal={true}
+  />,
+  <GhostDialogue
+    text="Where am I... who am I...?"
+    image={corruptSoulImg}
+    answers={[]}
+    isGlobal={true}
+  />,
+  <NormalDialogue text="..." image={graveDiggerImg} isGlobal={true} />,
+  <NormalDialogue
+    text="Yer Mort junior. Yer a resident of this graveyard. You seem t'ave lost yer memory, and your skeleton. But those bones in that there bowl look like they might fit you."
+    image={graveDiggerImg}
+    isGlobal={true}
+  />,
+  <GhostDialogue
+    text="I am...?"
+    image={corruptSoulImg}
+    answers={[]}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="Yes. I am. Of course."
+    image={corruptSoulImg}
+    isGlobal={true}
+  />,
+  <GhostDialogue
+    text="We are free..... we are alive.... sort of..."
+    image={lostSoulsImg}
+    answers={[]}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="Well the graveyard's a mess, but we all made it out undead."
+    image={graveDiggerImg}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="It's a little early, but I reckon we deserve ourselves a party!"
+    image={graveDiggerImg}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="I know a made a huge mess out of things, but let's party!"
+    image={rattlerImg}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="Happy Halloween!"
     image={graveDiggerImg}
     isGlobal={true}
   />,

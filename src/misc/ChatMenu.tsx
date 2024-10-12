@@ -33,7 +33,7 @@ const dialogueOptions: DialogueOptions = {
   "What are lost souls?": [
     "Lost souls are souls that ain't tethered.",
     "Most souls are tethered to their body, or home, or an object. They got some poltergeist powers near their tether.",
-    "Without a tether, lost souls are polergeists everywhere, and are free to wander the earth.",
+    "Without a tether, lost souls are poltergeists everywhere, and are free to wander the earth.",
     "These souls are free, but they got no home. Without a home, it's easy to lose yourself.",
   ],
   "What do lost souls gain by helping?": [

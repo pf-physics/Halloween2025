@@ -69,7 +69,7 @@ const GhostDialogue = ({ text, ...props }: DialogueProps) => {
   floatingText = floatingText.concat(floatingText).concat(floatingText); //.concat(floatingText)
 
   // another thing hardcoded for fun
-  if (text == "🥺") {
+  if (text === "🥺") {
     floatingText = floatingText.concat(floatingText);
   }
 

@@ -33,3 +33,10 @@ code {
     local("PhantomFingers"),
     url(./assets/fonts/PhantomFingers.ttf) format("truetype");
 }
+
+@font-face {
+  font-family: "bloodcrow";
+  src:
+    local("bloodcrow"),
+    url(./assets/fonts/bloodcrow.ttf) format("truetype");
+}

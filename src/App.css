@@ -123,3 +123,13 @@ input {
   font-weight: bold;
   font-size: larger;
 }
+
+.ritual-text {
+  font-family: "bloodcrow";
+  font-size: 30px;
+}
+
+.regular-text {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
