@@ -2,7 +2,7 @@ import "../templates/dialogue.css";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import Dialogue from "../templates/dialogue";
-import { useIncIndex, useDecIndex } from "../../hooks/indexHooks";
+import { useIncAllIndices, useDecIndex } from "../../hooks/indexHooks";
 import candlesImg from "../../assets/imgs/candles.jpg";
 import { teamAccess } from "../../constants";
 import { Database, ref, get, getDatabase, set } from "firebase/database";
@@ -226,7 +226,7 @@ export const getTeamPotionScore = async (db: Database) => {
 };
 
 const PotionRules = () => {
-  const incIdx = useIncIndex();
+  const incIdx = useIncAllIndices();
   const decIdx = useDecIndex();
   const incPoints = useIncPoints();
   const [inp, setInp] = useState("");

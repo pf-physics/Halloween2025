@@ -118,7 +118,10 @@ const CodeHandler = () => {
       const data = await snapshot.val();
       if (typeof data === "number") {
         dispatch(setIndex(data));
-        if (!playerIndex) {
+
+        if (autoSync) {
+          dispatch(setPlayerIndex(data));
+        } else if (!playerIndex) {
           dispatch(initializePlayerIndex(data));
         }
       } else {
