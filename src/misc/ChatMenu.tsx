@@ -94,8 +94,8 @@ const ChatMenu = () => {
       />
       {!textKey && (
         <div>
-          {Object.keys(dialogueOptions).map((option) => (
-            <div>
+          {Object.keys(dialogueOptions).map((option, key) => (
+            <div key={`chat-${key}`}>
               <Button
                 style={{ textAlign: "justify" }}
                 key={option}

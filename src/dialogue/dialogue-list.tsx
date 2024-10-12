@@ -73,6 +73,7 @@ const rules = `The team who gets fewer points must take three penalties (3 sips 
 const tombstoneRules = (
   <NormalDialogue
     header={"TOMBSTONE ARCHITECTURE"}
+    isGlobal={true}
     text={[
       `Everyone take a sheet of tombstone material (tin foil)`,
       `When everyone is ready, start a timer for 3 minutes`,
@@ -89,6 +90,7 @@ const tombstoneRules = (
 // TODO DCDCDC the rules here
 const graveDiggingRules = (
   <NormalDialogue
+    isGlobal={true}
     header={"GRAVE DIGGING"}
     text={[
       `Each team take a grave (cup) and line up`,
@@ -102,6 +104,7 @@ const graveDiggingRules = (
 const corpseFindingRules = (
   <NormalDialogue
     header={"CORPSE SEARCH"}
+    isGlobal={true}
     text={[
       `Everyone grab an EMF (one person gets the real one). Use the emf to locate corpses. You can each find a maximum of 2 corpses`, // TODO DCDCDC this
       `You have two minutes to find and dig up the corpses (a demonstration will be made)`,
@@ -115,6 +118,7 @@ const corpseFindingRules = (
 const callLostSoulsRules = (
   <NormalDialogue
     header={"BOBBING FOR LOST SOULS"}
+    isGlobal={true}
     text={[
       `Take turns using the chopsticks to remove a lost soul from the water.`,
       `Unwrap the lost soul and takes the number of penalties written.`,
@@ -128,6 +132,7 @@ const callLostSoulsRules = (
 const rescueCorpsesGame = (
   <NormalDialogue
     header={"RESCUE THE CORPSES"}
+    isGlobal={true}
     text={[
       `It's time to rescue the corpses! Because you are fresh ghosts, you haven't yet manifested your arms and legs. You can only move things with your mouths.`,
       `Everyone grab a chopstick and make two lines up to the corpses.`,
@@ -140,6 +145,7 @@ const rescueCorpsesGame = (
 const summonCrowGame = (
   <NormalDialogue
     header={"SUMMON CROW MESSENGERS"}
+    isGlobal={true}
     text={[
       `Warn the residents of the other cemetery by summoning crow messengers.`,
       `Each member take two pieces of "summoning paper" (black paper) and fold them into crows (paper airplane).`,
@@ -153,6 +159,7 @@ const summonCrowGame = (
 const dissectionGame = (
   <NormalDialogue
     header={"DISSECT A CORPSE"}
+    isGlobal={true}
     text={[
       `Head over to the morgue and uncover the corpse.`,
       `Use the knife to cut open the stomach.`,
@@ -259,7 +266,7 @@ const dialogue2024 = [
   />,
   tombstoneRules,
   <NormalDialogue
-    text="Hm. Those sure are some... intersting tombstones. Well you did your best."
+    text="Hm. Those sure are some... interesting tombstones. Well you did your best."
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}

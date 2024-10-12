@@ -1,9 +1,10 @@
 import "./code-handler.css";
-import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, set, get } from "firebase/database";
+import { useEffect, useState } from "react";
+// firebase subscribe to value done here
+import { getDatabase, ref, onValue, get } from "firebase/database";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setIndex } from "../store/indexSlice";
-import { Button, CircularProgress, TextField } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import getDialogue from "../dialogue/dialogue-list";
 import {
   initializePlayerIndex,
@@ -25,7 +26,6 @@ const CodeHandler = () => {
   const [team, setTeam] = useState<string | undefined>();
   const playerIndex = useAppSelector((state) => state.playerIndex.value);
   const autoSync = useAppSelector((state) => state.misc.autoSync);
-  const trueIndex = useAppSelector((state) => state.index.value);
   const dispatch = useAppDispatch();
   const [codeValid, setCodeValid] = useState(false);
   const db = getDatabase();
@@ -118,10 +118,6 @@ const CodeHandler = () => {
       const data = await snapshot.val();
       if (typeof data === "number") {
         dispatch(setIndex(data));
-        // TODO - fix this I guess? It seems fine though??
-        // No longer automatically updates player index
-        // YAH it's not working
-        // Only do it on init
         if (!playerIndex) {
           dispatch(initializePlayerIndex(data));
         }
@@ -212,13 +208,7 @@ const CodeHandler = () => {
 
     const dialogueList = getDialogue(team);
 
-    if (autoSync && trueIndex !== undefined) {
-      if (trueIndex < dialogueList.length) {
-        return dialogueList[trueIndex];
-      } else {
-        return dialogueList[dialogueList.length - 1];
-      }
-    } else if (playerIndex !== undefined && playerIndex < dialogueList.length) {
+    if (playerIndex !== undefined && playerIndex < dialogueList.length) {
       return dialogueList[playerIndex];
     } else {
       return dialogueList[dialogueList.length - 1];

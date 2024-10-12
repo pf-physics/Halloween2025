@@ -48,7 +48,6 @@ const TimerGame = ({ audio }: { audio?: any }) => {
         }, 3000);
       } else {
         if (start > 0) {
-          console.log("??");
           const time = fullTime + start - Date.now();
           setTimeLeft(time);
           if (alreadyDone === undefined) {

@@ -27,7 +27,7 @@ const NormalDialogue = ({
   image,
   answers = [],
   audio,
-  isGlobal,
+  isGlobal = true, // DEFAULT FOR HALLOWEEN 2024!
   globalScene,
   header,
 }: DialogueProps) => {
@@ -39,7 +39,7 @@ const NormalDialogue = ({
   const jumpToCurrent = useJumpToCurrent();
   const ansRequired =
     playerIndex !== undefined &&
-    index != undefined &&
+    index !== undefined &&
     !(playerIndex < index) &&
     answers.length > 0;
   const dispatch = useAppDispatch();
