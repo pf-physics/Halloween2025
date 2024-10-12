@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Halloween2024/static/css/main.ee8ff7ea.css",
-    "main.js": "/Halloween2024/static/js/main.2f18d376.js",
+    "main.js": "/Halloween2024/static/js/main.c59227f9.js",
     "static/js/787.afd0cc8a.chunk.js": "/Halloween2024/static/js/787.afd0cc8a.chunk.js",
     "static/media/test_video.mp4": "/Halloween2024/static/media/test_video.eab56f1c32c4f54ec39d.mp4",
     "static/media/Ghost-Town-Myuu.mp3": "/Halloween2024/static/media/Ghost-Town-Myuu.2a9c65ab7d074a1848ff.mp3",
@@ -28,11 +28,11 @@
     "static/media/spider6.jpg": "/Halloween2024/static/media/spider6.11658acce82a40cebce0.jpg",
     "index.html": "/Halloween2024/index.html",
     "main.ee8ff7ea.css.map": "/Halloween2024/static/css/main.ee8ff7ea.css.map",
-    "main.2f18d376.js.map": "/Halloween2024/static/js/main.2f18d376.js.map",
+    "main.c59227f9.js.map": "/Halloween2024/static/js/main.c59227f9.js.map",
     "787.afd0cc8a.chunk.js.map": "/Halloween2024/static/js/787.afd0cc8a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ee8ff7ea.css",
-    "static/js/main.2f18d376.js"
+    "static/js/main.c59227f9.js"
   ]
 }
