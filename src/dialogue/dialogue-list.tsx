@@ -33,6 +33,7 @@ import graveMusic from "../assets/audio/Runescape_Halloween.mp3";
 //import sadSkeleton from "../assets/imgs/skeleton_sad_eyes.png"
 import shinySkeleton from "../assets/imgs/skeleton_shiny_eyes.png";
 import sheetGhost from "../assets/imgs/sheet-ghost.jpg";
+import ghostMusic from "../assets/audio/Ghost-Town-Myuu.mp3";
 
 import TimerGame from "./scenes/timer";
 
@@ -427,6 +428,7 @@ const dialogue2024 = [
   // TODO - change the CSS
   <GhostDialogue
     text="How can we be... how can we be... of service?"
+    audio={ghostMusic}
     image={lostSoulsImg}
     answers={[]}
     isGlobal={true}
