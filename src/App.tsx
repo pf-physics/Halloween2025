@@ -33,7 +33,7 @@ const theme = createTheme({
 
 function App() {
   const points = useAppSelector((state) => state.points.value);
-  const bossTime = useAppSelector((state) => state.misc.bossTime);
+  const fullScreen = useAppSelector((state) => state.misc.fullScreen);
   useGetPoints();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        {!bossTime && (
+        {!fullScreen && (
           <header className="App-header">
             <div>Halloween 2024</div>
             <div>{points} points</div>
@@ -51,7 +51,7 @@ function App() {
         )}
         <div
           className="app-content"
-          style={{ maxWidth: bossTime ? undefined : "400px" }}
+          style={{ maxWidth: fullScreen ? undefined : "400px" }}
         >
           <CodeHandler />
         </div>

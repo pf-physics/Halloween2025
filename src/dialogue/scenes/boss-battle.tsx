@@ -1,7 +1,7 @@
 import "../templates/dialogue.css";
 import NormalDialogue from "../templates/normal-dialogue";
 import { useIncIndex } from "../../hooks/indexHooks";
-import { setBossTime } from "../../store/miscSlice";
+import { setFullScreen } from "../../store/miscSlice";
 import { setAudio } from "../../store/audioSlice";
 import bossFight from "../../assets/videos/test_video.mp4";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -20,14 +20,14 @@ const BossRules = () => {
     if (playerIdx && index && playerIdx < index) {
       setBattleOver(true);
     } else {
-      dispatch(setBossTime(true));
+      dispatch(setFullScreen(true));
       dispatch(setAudio(undefined));
     }
   }, [playerIdx, index]);
 
   const handleNext = () => {
     incIdx();
-    dispatch(setBossTime(false));
+    dispatch(setFullScreen(false));
   };
 
   if (battleOver) {

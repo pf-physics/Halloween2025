@@ -11,6 +11,7 @@ import {
 } from "../../hooks/indexHooks";
 import { setAudio } from "../../store/audioSlice";
 import { useSetGlobalScene } from "../../hooks/common";
+import { setFullScreen } from "../../store/miscSlice";
 
 export type DialogueProps = {
   text: string | string[];
@@ -20,6 +21,7 @@ export type DialogueProps = {
   isGlobal?: boolean;
   globalScene?: string;
   header?: string;
+  resetFullScreen?: boolean;
 };
 
 const NormalDialogue = ({
@@ -29,6 +31,7 @@ const NormalDialogue = ({
   audio,
   isGlobal = true, // DEFAULT FOR HALLOWEEN 2024!
   globalScene,
+  resetFullScreen,
   header,
 }: DialogueProps) => {
   const index = useAppSelector((state) => state.index.value);
@@ -44,6 +47,12 @@ const NormalDialogue = ({
     answers.length > 0;
   const dispatch = useAppDispatch();
   const setGlobalScene = useSetGlobalScene();
+
+  useEffect(() => {
+    if (resetFullScreen) {
+      dispatch(setFullScreen(false));
+    }
+  }, []);
 
   useEffect(() => {
     if (globalScene !== undefined) {

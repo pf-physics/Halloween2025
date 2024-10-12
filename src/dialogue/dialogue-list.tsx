@@ -530,6 +530,7 @@ const dialogue2024 = [
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}
+    resetFullScreen
   />,
   <NormalDialogue
     text="So it is effectively poison"
@@ -824,7 +825,12 @@ const dialogue2024 = [
     isGlobal={true}
   />,
   <BossBattle />,
-  <NormalDialogue text="Uugghhh..." image={rattlerImg} isGlobal={true} />,
+  <NormalDialogue
+    text="Uugghhh..."
+    image={rattlerImg}
+    isGlobal={true}
+    resetFullScreen
+  />,
   <NormalDialogue
     text="Rattler? Is that you?"
     image={graveDiggerImg}

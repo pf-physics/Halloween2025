@@ -4,21 +4,17 @@ import { Button, Slide } from "@mui/material";
 import { ref, onValue, getDatabase, set } from "firebase/database";
 import { Fade } from "@mui/material";
 import { setAudio, setLoop } from "../../store/audioSlice";
-import {
-  useIncAllIndices,
-  useIncIndex,
-  useDecIndex,
-} from "../../hooks/indexHooks";
+import { useIncAllIndices, useDecIndex } from "../../hooks/indexHooks";
 
 import bloodSFX from "../../assets/audio/death_bell.mp3";
 import death from "../../assets/imgs/skeleton_hand.jpg";
 import Dialogue from "../templates/dialogue";
+import { setFullScreen } from "../../store/miscSlice";
 
 const fullTime = 15 * 60000;
 
 // TODO if playerIndex < index, then use a local component index
 const TimerGame = ({ audio }: { audio?: any }) => {
-  const incIdx = useIncIndex();
   const decIdx = useDecIndex();
   const playerIndex = useAppSelector((state) => state.playerIndex.value);
   const dispatch = useAppDispatch();
@@ -68,7 +64,6 @@ const TimerGame = ({ audio }: { audio?: any }) => {
 
     onValue(time, async (snapshot) => {
       const data = await snapshot.val();
-      console.log(data);
       if (typeof data === "number") {
         if (data === 0) {
           const time = Date.now();
@@ -82,6 +77,10 @@ const TimerGame = ({ audio }: { audio?: any }) => {
       }
     });
   };
+
+  useEffect(() => {
+    dispatch(setFullScreen(true));
+  }, []);
 
   useEffect(() => {
     getTime();
@@ -104,7 +103,7 @@ const TimerGame = ({ audio }: { audio?: any }) => {
       const seconds = Math.floor((timeLeft % 60000) / 1000);
 
       return (
-        <div>
+        <div style={{ fontSize: "60px" }}>
           {minutes}:{seconds < 10 ? "0" + seconds : seconds}
         </div>
       );
@@ -114,7 +113,7 @@ const TimerGame = ({ audio }: { audio?: any }) => {
 
   const handleNext = () => {
     // TODO - add points from potion game to total points
-    incIdx();
+    globalIncIdx();
   };
 
   const handleBack = () => {
@@ -122,12 +121,12 @@ const TimerGame = ({ audio }: { audio?: any }) => {
   };
 
   return (
-    <div>
+    <div style={{ color: "lime" }}>
       {deathTime && (
         <Fade in timeout={{ enter: 1000, exit: 2000 }}>
           <div
             style={{
-              position: "absolute",
+              //position: "absolute",
               height: "100vh",
               zIndex: 10,
               marginTop: "-100px",
@@ -167,27 +166,41 @@ const TimerGame = ({ audio }: { audio?: any }) => {
             style={{
               zIndex: 30,
               position: "absolute",
-              background: "black",
-              padding: "20px",
-              borderRadius: "10px",
-              marginRight: "10px",
+              width: "100%",
             }}
           >
-            <p>Are you ready to continue?</p>
-            <Button color="primary" variant="contained" onClick={globalIncIdx}>
-              Yes
-            </Button>
+            <div
+              style={{
+                background: "black",
+                padding: "20px",
+                borderRadius: "10px",
+                marginRight: "10px",
+                width: "fit-content",
+                margin: "auto",
+              }}
+            >
+              <p>Are you ready to continue?</p>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={globalIncIdx}
+              >
+                Yes
+              </Button>
+            </div>
           </div>
         </Fade>
       )}
-      <DisplayTime />
-      <Dialogue
-        text={
-          alreadyDone
-            ? "Hold on! It's not break time! Get back to doing stuff!"
-            : "Enjoy the break..."
-        }
-      />
+      <div style={{ width: "fit-content", margin: "auto" }}>
+        <DisplayTime />
+        <Dialogue
+          text={
+            alreadyDone
+              ? "Hold on! It's not break time! Get back to doing stuff!"
+              : "Enjoy the break..."
+          }
+        />
+      </div>
       {alreadyDone && (
         <div className="buttons-row">
           <Button color="primary" variant="contained" onClick={handleBack}>
