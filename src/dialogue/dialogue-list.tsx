@@ -62,10 +62,15 @@ const otherGraveDiggerName = "Rattler";
 
 // FUTURE - multiple endings
 
+const CharmRules = [
+  "Coven Charm/Curse: In a group of 3, each roll a dice. If the average value is greater than 3, you can charm/curse someone",
+  "Wizard's Tower Charm/Curse: Everyone in the group rolls a dice. If someone rolls a 6, you can charm/curse someone, otherwise everyone must take 3 penalties.",
+  "Scientist's sacrifice: Take a shot to charm/curse someone",
+  "Skeleton's hand: Roll a dice. If the value is greater than 2, you can charm/curse someone, otherwise, you are cursed for the round.",
+  "Devil's wager: Roll a dice with someone from the other team. Whoever gets a lower value is cursed.",
+];
+
 const magicPower = "Halloween power";
-// Delete
-const merchantItem1 = "Liquid Lightning";
-const merchantItem2 = "Spider Venom";
 const rules = `The team who gets fewer points must take three penalties (3 sips or three squats )`;
 
 // TODO remove all audio I guess
@@ -79,10 +84,13 @@ const tombstoneRules = (
       `Everyone take a sheet of tombstone material (tin foil)`,
       `When everyone is ready, start a timer for 3 minutes`,
       `Make a tombstone by ripping the tin foil`,
-      `An angel tombstone gets 8 points`,
-      `A cross tombstone gets 4 points`,
-      `A regular tombstone gets 2 point`,
+      `An angel tombstone gets 4 points`,
+      `A cross tombstone gets 2 points`,
+      `A regular tombstone gets 1 point`,
       `If the lines are very wiggly, get half the points`,
+      `Charm: Get 4 minutes to make a tombstone`,
+      `Alternate Charm: Get 2 tries (within 3 minutes)`,
+      `Curse: Get 2 minutes to make a tombstone`,
       rules,
     ]}
   />
@@ -94,9 +102,9 @@ const graveDiggingRules = (
     isGlobal={true}
     header={"GRAVE DIGGING"}
     text={[
-      `Each team take a grave (cup) and line up`,
-      `TODO - decide on rules`,
-      `Winning team gets 10 points`,
+      `Each team take a cemetery plot`,
+      `When everyone is ready, everyone start digging (eating the dirt)`,
+      `The first team to "find the thing" gets 6 points`,
       rules,
     ]}
   />
@@ -107,11 +115,13 @@ const corpseFindingRules = (
     header={"CORPSE SEARCH"}
     isGlobal={true}
     text={[
-      `Everyone grab an EMF (one person gets the real one). Use the emf to locate corpses. You can each find a maximum of 2 corpses`, // TODO DCDCDC this
-      `You have two minutes to find and dig up the corpses (a demonstration will be made)`,
+      `Everyone grab an EMF. Use the emf to locate corpses.`,
+      `You have five minutes to find and dig up the corpses (a demonstration will be made)`,
+      `To dig up corpses, gently dig (rip) the dirt (wallpaper) until you find the corpse`,
       `Each corpse is worth 2 points`,
-      // `-1 points if you start on an odd number`,
-      //rules,
+      `Charm: Get 6 minutes`,
+      `Curse: Get 4 minutes`,
+      rules,
     ]}
   />
 );
@@ -136,9 +146,10 @@ const rescueCorpsesGame = (
     isGlobal={true}
     text={[
       `It's time to rescue the corpses! Because you are fresh ghosts, you haven't yet manifested your arms and legs. You can only move things with your mouths.`,
-      `Everyone grab a chopstick and make two lines up to the corpses.`,
+      `Everyone grab a skewer and make two lines up to the corpses.`,
       `When both teams are ready, move the corpses to the other side of the room, passing them from person to person.`,
       `Count the number of corpses each team moved, this is the number of points they get.`,
+      `Charm: Get a 10 second head start`,
     ]}
   />
 );
@@ -148,11 +159,32 @@ const summonCrowGame = (
     header={"SUMMON CROW MESSENGERS"}
     isGlobal={true}
     text={[
-      `Warn the residents of the other cemetery by summoning crow messengers.`,
+      `Investigate the graveyard by sending crow messengers.`,
       `Each member take two pieces of "summoning paper" (black paper) and fold them into crows (paper airplane).`,
       `One at a time, stand in front of the mirror beside the bookcase and throw the crow to the other cemetery.`,
-      // TODO - double check points
-      `3 points for getting on the dresser. 2 points for getting it past the gate. 1 points for getting it in the room.`,
+      `Everyone gets two tries`,
+      `2 points for getting it past the gate. 1 points for getting it in the room.`,
+      `One extra point if you attach a feather to your crow (and it makes it at least into the room)`,
+      `Charm: Throw the crow from the sink`,
+      `Curse: Throw the crow facing backwards`,
+    ]}
+  />
+);
+
+// dinosaur
+// dragon
+const telepathyGame = (
+  <NormalDialogue
+    header={"COMMUNICATE TELEPATHICALLY"}
+    isGlobal={true}
+    text={[
+      `Everyone grab a sheet of paper and a pen.`,
+      `Line up so you use the back of the person in front of you as a surface for drawing.`,
+      `The last person can use a wall as a surface.`,
+      `Ask the game master for what the drawing should be.`,
+      `The last person has to guess what the drawing is.`,
+      `The first team to guess correctly gets 6 points.`,
+      `Curse: One of the middle people can with their eyes closed/they don't use paper.`,
     ]}
   />
 );
@@ -162,7 +194,7 @@ const dissectionGame = (
     header={"DISSECT A CORPSE"}
     isGlobal={true}
     text={[
-      `Head over to the morgue and uncover the corpse.`,
+      `Head over to the morgue (near the other cemetery) and uncover the corpse.`,
       `Use the knife to cut open the stomach.`,
       `Get one point for each team member brave enough to reach in and grab a bone.`,
       `Wash the bones with the cloth beside the corpse.`,
@@ -404,7 +436,7 @@ const dialogue2024 = [
   <NormalDialogue
     text="What's this other graveyard called anyways?!"
     image={graveDiggerImg}
-    answers={["Cool Guy Cemetery"]}
+    answers={["Deadend Cemetery"]}
     isGlobal={true}
   />,
   <NormalDialogue
@@ -413,7 +445,19 @@ const dialogue2024 = [
     isGlobal={true}
   />,
   <NormalDialogue
-    text="But they got some crazy security over there. We better fight fire with fire!"
+    text="We oughta do some investigatin' before we go over there. Better send some spies!"
+    image={graveDiggerImg}
+    isGlobal={true}
+  />,
+  summonCrowGame,
+  <NormalDialogue
+    text="What do the crows say? Hm... I see."
+    image={graveDiggerImg}
+    answers={[]}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="They got some crazy security over there! Electric fence and all. Well, I reckon we better fight fire with fire!"
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}
@@ -424,8 +468,12 @@ const dialogue2024 = [
     answers={[]}
     isGlobal={true}
   />,
-  callLostSoulsRules,
-  // TODO - change the CSS
+  <NormalDialogue
+    text="To call em' up, we need a sacrifice. Everybody take 3 penalties."
+    image={graveDiggerImg}
+    answers={[]}
+    isGlobal={true}
+  />,
   <GhostDialogue
     text="How can we be... how can we be... of service?"
     audio={ghostMusic}
@@ -476,7 +524,7 @@ const dialogue2024 = [
     isGlobal={true}
   />,
   <NormalDialogue
-    text="But their security is real tight"
+    text="If it weren't for that darned electric fence!"
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}
@@ -519,10 +567,6 @@ const dialogue2024 = [
     isGlobal={true}
   />,
   <TimerGame />,
-  // in the graveyard game - a chain of ppl? (spoon in mouth or something) chopsticks in mouth? moving rings (souls) from one side to the other. Bones is better tho
-
-  // "I didn't want to disturb them since this is the one time a year they get to let loose"
-  // "Lost souls help with upkeep and security"
   <NormalDialogue
     text="This potion will allow your soul to leave your body to secretly infiltrate the other cemetery."
     audio={witch2Music}
@@ -533,7 +577,7 @@ const dialogue2024 = [
     resetFullScreen
   />,
   <NormalDialogue
-    text="So it is effectively poison"
+    text="In other words, it's poison."
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}
@@ -557,6 +601,22 @@ const dialogue2024 = [
       "But lookin at you lot... yer arms n' legs haven't manifested yet. Yer like lil baby ghosts.",
       "You still have yer mouths at least. That'll have to do.",
     ]}
+    image={graveDiggerImg}
+    answers={[]}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text={[
+      "As ghosts, you should be able to communicate telepathically.",
+      "Might as well give it a try.",
+    ]}
+    image={graveDiggerImg}
+    answers={[]}
+    isGlobal={true}
+  />,
+  telepathyGame,
+  <NormalDialogue
+    text={["Perhaps that skill takes time..."]}
     image={graveDiggerImg}
     answers={[]}
     isGlobal={true}
@@ -602,6 +662,7 @@ const dialogue2024 = [
   <NormalDialogue
     text={[
       "I suppose you want yer bodies back (take three penalties to become human again)",
+      //'If you choose, you can remain a ghost, but you must take a penalty for every game. You can make one other person take the penalty'
     ]}
     image={graveDiggerImg}
     answers={[]}
@@ -709,7 +770,6 @@ const dialogue2024 = [
     answers={[]}
     isGlobal={true}
   />,
-  // DCDCDC - number of points
   <NormalDialogue
     text={[
       "You lot got any idea what's goin' on?",
@@ -781,15 +841,6 @@ const dialogue2024 = [
   />,
   <NormalDialogue
     text={[
-      "In the meantime, we oughta warn the souls in the other cemetery. They can't leave the cemetery, since their bodies are there, but they can hide from Rattler. It's too dangerous to go back there so we gotta send some messengers.",
-    ]}
-    image={graveDiggerImg}
-    answers={[]}
-    isGlobal={true}
-  />,
-  summonCrowGame,
-  <NormalDialogue
-    text={[
       "We need a bunch of ingredients for the ritual. I got most of them here but I'll need you to fetch some.",
     ]}
     image={graveDiggerImg}
@@ -805,7 +856,7 @@ const dialogue2024 = [
     isGlobal={true}
   />,
   dissectionGame,
-  <RitualRules />,
+  <RitualRules />, // TODO - global??
   <NormalDialogue
     text={[
       "Cause of the potion, you lot still got some ghostly powers, but this also means it's easy for Rattler to absorb your souls.",
@@ -886,12 +937,22 @@ const dialogue2024 = [
     isGlobal={true}
   />,
   <NormalDialogue
-    text="It's a little early, but I reckon we deserve ourselves a party!"
+    text="I wanna thank you all. It ain't much, but I hope you'll accept this as thanks."
     image={graveDiggerImg}
     isGlobal={true}
   />,
   <NormalDialogue
-    text="I know a made a huge mess out of things, but let's party!"
+    text="When you've gotten your reward, write 'Next'"
+    answers={["Next"]}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="It's a little early, but I reckon we deserve ourselves a break."
+    image={graveDiggerImg}
+    isGlobal={true}
+  />,
+  <NormalDialogue
+    text="I know a made a huge mess out of things, but let me help set everything up. Let's party!"
     image={rattlerImg}
     isGlobal={true}
   />,

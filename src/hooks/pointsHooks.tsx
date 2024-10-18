@@ -13,7 +13,6 @@ export const useIncPoints = () => {
 
   const incPoints = async (pts: number) => {
     const team = localStorage.getItem("team") as string;
-    const dbCode = localStorage.getItem("code") as string;
     const newPoints = await addTeamScore(db, team, pts);
 
     dispatch(setPoints(newPoints));

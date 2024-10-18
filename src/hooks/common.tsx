@@ -4,11 +4,12 @@ import { teamAccess } from "../constants";
 import { setComponentIndex } from "../store/componentIndexSlice";
 
 const pointsUrl = "/points";
+const pointsLog = "/pointslog";
 
 export const getTeamIndex = async (
   db: Database,
   team: string,
-  indexUrl: string,
+  indexUrl: string
 ) => {
   const dbCode = localStorage.getItem("code") as string;
   const q = ref(db, dbCode + "/" + teamAccess + "/" + team + indexUrl);
@@ -39,24 +40,38 @@ export const getTeamScore = async (db: Database, team: string) => {
   }
 };
 
-// TODO - add history and names
 export const addTeamScore = async (
   db: Database,
   team: string,
-  points: number,
+  points: number
+  //reason: string
 ) => {
   const dbCode = localStorage.getItem("code") as string;
   const q = ref(db, dbCode + "/" + teamAccess + "/" + team + pointsUrl);
+  const allPointsQ = ref(
+    db,
+    dbCode + "/" + teamAccess + "/" + team + pointsLog
+  );
 
   get(q).then((currentPoints) => {
     set(
       ref(db, dbCode + "/" + teamAccess + "/" + team + pointsUrl),
-      currentPoints.val() + points,
+      currentPoints.val() + points
+    );
+    set(
+      ref(
+        db,
+        dbCode + "/" + teamAccess + "/" + team + pointsLog + "/" // + reason
+      ),
+      points
     );
   });
 
   // Update then check data
   const data = (await get(q)).val();
+
+  const allPoints = (await get(allPointsQ)).val();
+  console.log(allPoints);
 
   if (typeof data === "number") {
     return data;
@@ -81,7 +96,7 @@ export const useSetGlobalScene = () => {
     const team = localStorage.getItem("team") as string;
     const code = localStorage.getItem("code") as string;
 
-    set(ref(db, code + "/" + team + "/globalScene"), scene);
+    set(ref(db, code + "/" + teamAccess + "/" + team + "/globalScene"), scene);
   };
 
   return setGlobalScene;
