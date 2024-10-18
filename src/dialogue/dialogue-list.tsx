@@ -34,6 +34,7 @@ import graveMusic from "../assets/audio/Runescape_Halloween.mp3";
 import shinySkeleton from "../assets/imgs/skeleton_shiny_eyes.png";
 import sheetGhost from "../assets/imgs/sheet-ghost.jpg";
 import ghostMusic from "../assets/audio/Ghost-Town-Myuu.mp3";
+import raveMusic from "../assets/audio/rave.mp4";
 
 import TimerGame from "./scenes/timer";
 
@@ -91,6 +92,7 @@ const tombstoneRules = (
       `Charm: Get 4 minutes to make a tombstone`,
       `Alternate Charm: Get 2 tries (within 3 minutes)`,
       `Curse: Get 2 minutes to make a tombstone`,
+      `Game code: tombstone`,
       rules,
     ]}
   />
@@ -105,6 +107,7 @@ const graveDiggingRules = (
       `Each team take a cemetery plot`,
       `When everyone is ready, everyone start digging (eating the dirt)`,
       `The first team to "find the thing" gets 6 points`,
+      `Game code: digging`,
       rules,
     ]}
   />
@@ -121,21 +124,8 @@ const corpseFindingRules = (
       `Each corpse is worth 2 points`,
       `Charm: Get 6 minutes`,
       `Curse: Get 4 minutes`,
+      `Game code: emf`,
       rules,
-    ]}
-  />
-);
-
-const callLostSoulsRules = (
-  <NormalDialogue
-    header={"BOBBING FOR LOST SOULS"}
-    isGlobal={true}
-    text={[
-      `Take turns using the chopsticks to remove a lost soul from the water.`,
-      `Unwrap the lost soul and takes the number of penalties written.`,
-      `The number on the lost soul is also the row from which you must hit to get the number of points.`, // TODO - paper airplanes instead?
-      `(ie - 1 = first row onwards, 2 = second row onwards, etc.)`,
-      //rules,
     ]}
   />
 );
@@ -150,6 +140,8 @@ const rescueCorpsesGame = (
       `When both teams are ready, move the corpses to the other side of the room, passing them from person to person.`,
       `Count the number of corpses each team moved, this is the number of points they get.`,
       `Charm: Get a 10 second head start`,
+      `Game code: rescue`,
+      rules,
     ]}
   />
 );
@@ -167,6 +159,8 @@ const summonCrowGame = (
       `One extra point if you attach a feather to your crow (and it makes it at least into the room)`,
       `Charm: Throw the crow from the sink`,
       `Curse: Throw the crow facing backwards`,
+      `Game code: crows`,
+      rules,
     ]}
   />
 );
@@ -184,6 +178,7 @@ const telepathyGame = (
       `Ask the game master for what the drawing should be.`,
       `The last person has to guess what the drawing is.`,
       `The first team to guess correctly gets 6 points.`,
+      `Game code: telepathy`,
       `Curse: One of the middle people can with their eyes closed/they don't use paper.`,
     ]}
   />
@@ -198,6 +193,7 @@ const dissectionGame = (
       `Use the knife to cut open the stomach.`,
       `Get one point for each team member brave enough to reach in and grab a bone.`,
       `Wash the bones with the cloth beside the corpse.`,
+      `game code: dissection`,
     ]}
   />
 );
@@ -432,7 +428,6 @@ const dialogue2024 = [
     answers={[]}
     isGlobal={true}
   />,
-  // DCDCDC - change the name probably
   <NormalDialogue
     text="What's this other graveyard called anyways?!"
     image={graveDiggerImg}
@@ -776,6 +771,7 @@ const dialogue2024 = [
       "(Hint: If you don't know, try talking to Mort through the menu. The first to guess the correct answer gets 5 points)",
     ]}
     image={graveDiggerImg}
+    answerPoints={5}
     answers={[
       "Corruted souls",
       "Corrupted soul",
@@ -960,6 +956,7 @@ const dialogue2024 = [
     text="Happy Halloween!"
     image={graveDiggerImg}
     isGlobal={true}
+    audio={raveMusic}
   />,
 ];
 

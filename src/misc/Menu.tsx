@@ -2,7 +2,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Button, Modal, Switch } from "@mui/material";
+import {
+  Button,
+  createTheme,
+  FormControl,
+  InputLabel,
+  Modal,
+  Select,
+  SelectChangeEvent,
+  Switch,
+  ThemeProvider,
+} from "@mui/material";
 import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { TeamChoice } from "./SharedComponents";
@@ -22,7 +32,6 @@ export default function MenuDropDown() {
   const incPoints = useIncPoints();
 
   const handleClose = () => {
-    console.log("closing");
     setAnchorEl(null);
   };
 
@@ -64,10 +73,63 @@ export default function MenuDropDown() {
     borderRadius: "10px",
   };
 
+  const theme = createTheme({
+    components: {
+      MuiSelect: {
+        styleOverrides: {
+          select: {
+            backgroundColor: "rgb(187, 0, 255)", // Change the background color of the select input
+            color: "black", // Change text color of the select input
+            "&:focus": {
+              backgroundColor: "rgb(187, 0, 255)", // Keep background color on focus
+            },
+          },
+          icon: {
+            color: "#000000", // Change the color of the dropdown arrow
+          },
+        },
+      },
+
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#000000", // Background color of each dropdown item
+            color: "rgb(187, 0, 255)", // Text color of each dropdown item
+            "&.Mui-selected": {
+              backgroundColor: "rgb(112, 0, 153)", // Background color when selected
+              color: "#000000", // Text color when selected
+            },
+          },
+        },
+      },
+    },
+  });
+
+  /*
+        <ThemeProvider theme={theme}>
+          <FormControl fullWidth>
+            <Select value={reason} label={"Reason"} onChange={handleReason}>
+              <MenuItem value="N/A">
+                <em>Reason</em>
+              </MenuItem>
+              <MenuItem className="select-override" value={"Digging"}>
+                Tombstone
+              </MenuItem>
+              <MenuItem className="select-override" value={"Digging"}>
+                Digging
+              </MenuItem>
+              <MenuItem className="select-override" value={20}>
+                EMF
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </ThemeProvider>*/
+
   const AddPointsForm = () => {
     const [points, setPoints] = useState(0);
-    const [name, setName] = useState("");
+    const [name, setName] = useState(""); // person name, whatever
     const [reason, setReason] = useState("");
+    const [invalid, setInvalid] = useState(false);
 
     const handleUpdatePoints = (pts: string) => {
       if (!isNaN(parseInt(pts))) {
@@ -75,24 +137,51 @@ export default function MenuDropDown() {
       }
     };
 
+    // and answer and potion
+    const possibleReasons = [
+      "digging",
+      "emf",
+      "crows",
+      "tombstone",
+      "rescue",
+      "telepathy",
+      "dissection",
+      "boss",
+    ];
+    const handleReason = (event: SelectChangeEvent) => {
+      setReason(event.target.value as string);
+    };
+
+    const checkReasonAndSubmit = () => {
+      if (possibleReasons.includes(reason.toLowerCase())) {
+        incPoints(points, reason.toLowerCase());
+        handleClose();
+        setModalOpen(false);
+      } else {
+        setInvalid(true);
+      }
+    };
+
     // TODO - only allow update points for the game codes and overwrite old ones I guess... still need history ough
     return (
-      <div>
+      <div className="points-form">
         <div className="title">Add game points</div>
         <input
           value={points}
           onChange={(e) => handleUpdatePoints(e.target.value)}
         />
+        <div className="title">Game name:</div>
+        <input value={reason} onChange={handleReason} />
         <Button
           className="button"
           color="primary"
           variant="contained"
-          onClick={() => {
-            incPoints(points);
-          }}
+          disabled={points === 0 || reason === "" || reason === "N/A"}
+          onClick={checkReasonAndSubmit}
         >
           <b>Update Points</b>
         </Button>
+        {invalid && <div className="error">That is not a real game</div>}
       </div>
     );
   };
@@ -105,6 +194,7 @@ export default function MenuDropDown() {
     const toggleAutoSync = () => {
       const newAutoSync = !autoSync;
       localStorage.setItem("autoSync", newAutoSync.toString());
+      setAutoSync(newAutoSync);
     };
 
     return (

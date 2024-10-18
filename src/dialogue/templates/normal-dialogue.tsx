@@ -12,6 +12,7 @@ import {
 import { setAudio } from "../../store/audioSlice";
 import { useSetGlobalScene } from "../../hooks/common";
 import { setFullScreen } from "../../store/miscSlice";
+import { useIncPoints } from "../../hooks/pointsHooks";
 
 export type DialogueProps = {
   text: string | string[];
@@ -22,6 +23,7 @@ export type DialogueProps = {
   globalScene?: string;
   header?: string;
   resetFullScreen?: boolean;
+  answerPoints?: number;
 };
 
 const NormalDialogue = ({
@@ -33,6 +35,7 @@ const NormalDialogue = ({
   globalScene,
   resetFullScreen,
   header,
+  answerPoints,
 }: DialogueProps) => {
   const index = useAppSelector((state) => state.index.value);
   const playerIndex = useAppSelector((state) => state.playerIndex.value);
@@ -40,6 +43,7 @@ const NormalDialogue = ({
   const globalIncIdx = useIncAllIndices();
   const decIdx = useDecIndex();
   const jumpToCurrent = useJumpToCurrent();
+  const incPoints = useIncPoints();
   const ansRequired =
     playerIndex !== undefined &&
     index !== undefined &&
@@ -72,6 +76,9 @@ const NormalDialogue = ({
     if (ansRequired) {
       if (answers.map((a) => a.toLowerCase()).includes(ans.toLowerCase())) {
         setAns("");
+        if (answerPoints) {
+          incPoints(answerPoints, "answer");
+        }
         isGlobal ? globalIncIdx() : incIdx();
       }
     } else {

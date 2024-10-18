@@ -3,8 +3,8 @@ import { StringDecoder } from "string_decoder";
 import { teamAccess } from "../constants";
 import { setComponentIndex } from "../store/componentIndexSlice";
 
-const pointsUrl = "/points";
-const pointsLog = "/pointslog";
+export const pointsUrl = "/points";
+export const pointsLog = "/pointslog";
 
 export const getTeamIndex = async (
   db: Database,
@@ -43,8 +43,8 @@ export const getTeamScore = async (db: Database, team: string) => {
 export const addTeamScore = async (
   db: Database,
   team: string,
-  points: number
-  //reason: string
+  points: number,
+  reason: string
 ) => {
   const dbCode = localStorage.getItem("code") as string;
   const q = ref(db, dbCode + "/" + teamAccess + "/" + team + pointsUrl);
@@ -61,7 +61,7 @@ export const addTeamScore = async (
     set(
       ref(
         db,
-        dbCode + "/" + teamAccess + "/" + team + pointsLog + "/" // + reason
+        dbCode + "/" + teamAccess + "/" + team + pointsLog + "/" + reason
       ),
       points
     );
@@ -71,7 +71,14 @@ export const addTeamScore = async (
   const data = (await get(q)).val();
 
   const allPoints = (await get(allPointsQ)).val();
-  console.log(allPoints);
+  if (typeof allPoints === "object") {
+    const keys = Object.keys(allPoints);
+    // sum all the points
+    const sum = keys.reduce((acc, key) => {
+      return acc + allPoints[key];
+    }, 0);
+    return sum;
+  }
 
   if (typeof data === "number") {
     return data;

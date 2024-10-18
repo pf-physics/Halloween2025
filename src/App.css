@@ -111,11 +111,6 @@ input {
   background-color: #11100f !important;
 }
 
-.MuiList-root {
-  background-color: #11100f !important;
-  color: black;
-}
-
 .menu-dropdown {
   color: #86ff3c;
 }
@@ -137,4 +132,14 @@ input {
 .regular-text {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.points-form {
+  .MuiSelect-select,
+  .MuiButton-root {
+    background-color: rgb(187, 0, 255) !important;
+  }
+  .error {
+    color: red;
+  }
 }

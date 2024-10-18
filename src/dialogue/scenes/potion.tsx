@@ -295,7 +295,7 @@ const PotionRules = () => {
 
     if (newIdx >= questions.length) {
       setRecipe(newTotal);
-      incPoints(newTotal); // DCDCDC - make sure this is okay
+      incPoints(newTotal, "potion"); // DCDCDC - make sure this is okay
     }
     setInp("");
   };
