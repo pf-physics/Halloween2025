@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Halloween2024/static/css/main.ee8ff7ea.css",
-    "main.js": "/Halloween2024/static/js/main.0d2d23a6.js",
+    "main.css": "/Halloween2024/static/css/main.01da539b.css",
+    "main.js": "/Halloween2024/static/js/main.63b6e9d1.js",
     "static/js/787.afd0cc8a.chunk.js": "/Halloween2024/static/js/787.afd0cc8a.chunk.js",
     "static/media/test_video.mp4": "/Halloween2024/static/media/test_video.eab56f1c32c4f54ec39d.mp4",
     "static/media/Ghost-Town-Myuu.mp3": "/Halloween2024/static/media/Ghost-Town-Myuu.2a9c65ab7d074a1848ff.mp3",
@@ -9,6 +9,7 @@
     "static/media/summoning.mp3": "/Halloween2024/static/media/summoning.e7734f00f6c69a044954.mp3",
     "static/media/first_img.jpg": "/Halloween2024/static/media/first_img.c1dd24eac673bf26a854.jpg",
     "static/media/Runescape_Halloween.mp3": "/Halloween2024/static/media/Runescape_Halloween.ff9aec399c3f17411633.mp3",
+    "static/media/rave.mp4": "/Halloween2024/static/media/rave.3854a174f5fa26047851.mp4",
     "static/media/Intro_2024.mp3": "/Halloween2024/static/media/Intro_2024.94422186c854664f399a.mp3",
     "static/media/sheet-ghost.jpg": "/Halloween2024/static/media/sheet-ghost.c9df9502a7d0c1e37b7c.jpg",
     "static/media/skeleton_hand.jpg": "/Halloween2024/static/media/skeleton_hand.0215b12802a43c40ca72.jpg",
@@ -27,12 +28,12 @@
     "static/media/symbol.png": "/Halloween2024/static/media/symbol.f74c578b371fe1f269ff.png",
     "static/media/spider6.jpg": "/Halloween2024/static/media/spider6.11658acce82a40cebce0.jpg",
     "index.html": "/Halloween2024/index.html",
-    "main.ee8ff7ea.css.map": "/Halloween2024/static/css/main.ee8ff7ea.css.map",
-    "main.0d2d23a6.js.map": "/Halloween2024/static/js/main.0d2d23a6.js.map",
+    "main.01da539b.css.map": "/Halloween2024/static/css/main.01da539b.css.map",
+    "main.63b6e9d1.js.map": "/Halloween2024/static/js/main.63b6e9d1.js.map",
     "787.afd0cc8a.chunk.js.map": "/Halloween2024/static/js/787.afd0cc8a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee8ff7ea.css",
-    "static/js/main.0d2d23a6.js"
+    "static/css/main.01da539b.css",
+    "static/js/main.63b6e9d1.js"
   ]
 }
