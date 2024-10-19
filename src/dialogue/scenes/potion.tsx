@@ -13,7 +13,7 @@ const potionUrl = "/potionScore";
 const goodRecipe = [
   `Procure a big cauldron/receptacle`,
   `Pour in 1 cup of breath of death`,
-  `Add 10 drops of spider venom`,
+  `Add 10ml/10 drops of spider venom`,
   `Wait 20 seconds then mix 3 times`,
   `Add ½ cup of liquid lightning`,
   `Add 1 tbsp of crystallized banshee tears`,
@@ -24,7 +24,7 @@ const goodRecipe = [
 const mediumRecipe = [
   `Procure a big cauldron/receptacle`,
   `Pour in ½ cup of breath of death`,
-  `Add 10 drops of spider venom`,
+  `Add 10ml/10 drops of spider venom`,
   `Wait 20 seconds then mix 3 times`,
   `Add ¼ cup of pumpkin juice`,
   `Add 1/2 cup of swamp water `,
@@ -35,7 +35,7 @@ const mediumRecipe = [
 const okayRecipe = [
   `Procure a big cauldron/receptacle`,
   `Pour in ½ cup of breath of death`,
-  `Add 10 drops of spider venom`,
+  `Add 10ml/10 drops of spider venom`,
   `Wait 20 seconds then mix 3 times`,
   `Add ½ cup of liquid lightning`,
   `Add ½ cup of demon tears`,
@@ -46,7 +46,7 @@ const okayRecipe = [
 const badRecipe = [
   `Procure a big cauldron/receptacle`,
   `Pour in ½ cup of breath of death`,
-  `Add 10 drops of spider venom`,
+  `Add 10ml/10 drops of spider venom`,
   `Wait 20 seconds then mix 3 times`,
   `Add 1 cup of demon tears`,
   `Add 2 tbsp of squid ink`,
@@ -55,7 +55,7 @@ const badRecipe = [
 ];
 
 const bonusPoints = [
-  `For three extra points, you can add 1 cup of essence of nightmares (alcoholic). If not everyone wants essence of nightmare, select people can add a shot of essence of nightmares to their own drink. To get the points, everyone else on the team must take 5 penalties`,
+  `For three extra points, you can add 1/3 cup of essence of nightmares (alcoholic). If not everyone wants essence of nightmare, select people can add a shot of essence of nightmares to their own drink. To get the points, everyone else on the team must take 5 penalties`,
 ];
 
 const question1 = [

@@ -35,7 +35,7 @@ const RitualRules = () => {
           2. Crush the leaves into the ritual bowl
         </div>
         <div className="regular-text">
-          3. Pour goat's blood on the leaves so they are covered
+          3. Pour ox's blood on the leaves so they are covered
         </div>
         <div className="regular-text">
           4. Line the bones around inside the bowl so one end sticks out.
