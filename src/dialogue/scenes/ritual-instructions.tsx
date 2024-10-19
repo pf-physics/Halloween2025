@@ -48,8 +48,8 @@ const RitualRules = () => {
         </div>
         <div className="regular-text">
           7. Light incense. Wave the incense in a figure-8 motion in front of
-          the the mat, and speak the words (ideally in the interval of a
-          diminished 5th, and a fourth)
+          the the mat, and repeat these words (ideally in the interval of a
+          diminished 5th, and a fourth) three times
         </div>
         <div className="ritual-text">
           omnes vulnerant, postuma necat omnes feriunt, ultima necat
