@@ -1,13 +1,13 @@
 import "../templates/dialogue.css";
 import { Button } from "@mui/material";
 import Dialogue from "../templates/dialogue";
-import { useIncIndex, useDecIndex } from "../../hooks/indexHooks";
+import { useIncAllIndices, useDecIndex } from "../../hooks/indexHooks";
 import symbol from "../../assets/imgs/symbol.png";
 
 // draw on a leaf and crush it u[]
 
 const RitualRules = () => {
-  const incIdx = useIncIndex();
+  const incIdx = useIncAllIndices();
   const decIdx = useDecIndex();
 
   const handleNext = () => {
@@ -48,7 +48,8 @@ const RitualRules = () => {
         </div>
         <div className="regular-text">
           7. Light incense. Wave the incense in a figure-8 motion in front of
-          the the mat, and speak the words
+          the the mat, and speak the words (ideally in the interval of a
+          diminished 5th, and a fourth)
         </div>
         <div className="ritual-text">
           omnes vulnerant, postuma necat omnes feriunt, ultima necat

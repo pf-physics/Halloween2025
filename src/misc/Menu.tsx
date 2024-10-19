@@ -18,7 +18,6 @@ import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { TeamChoice } from "./SharedComponents";
 import { useIncPoints } from "../hooks/pointsHooks";
 import ChatMenu from "./ChatMenu";
-import { setAutoSync } from "../store/miscSlice";
 
 export default function MenuDropDown() {
   const teams = useAppSelector((state) => state.teams.value);
@@ -146,6 +145,7 @@ export default function MenuDropDown() {
       "rescue",
       "telepathy",
       "dissection",
+      "costume",
       "boss",
     ];
     const handleReason = (event: SelectChangeEvent) => {

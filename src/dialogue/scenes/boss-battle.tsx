@@ -39,8 +39,8 @@ const BossRules = () => {
   return (
     <div>
       <video
-        src={bossFight}
-        autoPlay
+        src={"https://storage.googleapis.com/halloween2024/test_video.mp4"}
+        autoPlay={true}
         controls
         onEnded={handleNext}
         width="100%"

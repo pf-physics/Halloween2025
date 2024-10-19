@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import Dialogue from "../templates/dialogue";
 import { useIncAllIndices, useDecIndex } from "../../hooks/indexHooks";
-import candlesImg from "../../assets/imgs/candles.jpg";
+import candlesImg from "../../assets/imgs/cauldron.jpg";
 import { teamAccess } from "../../constants";
 import { Database, ref, get, getDatabase, set } from "firebase/database";
 import { useIncPoints } from "../../hooks/pointsHooks";
@@ -12,10 +12,10 @@ const potionUrl = "/potionScore";
 
 const goodRecipe = [
   `Procure a big cauldron/receptacle`,
-  `Pour in ½ cup of breath of death`,
+  `Pour in 1 cup of breath of death`,
   `Add 10 drops of spider venom`,
   `Wait 20 seconds then mix 3 times`,
-  `Add 1 cup of liquid lightning`,
+  `Add ½ cup of liquid lightning`,
   `Add 1 tbsp of crystallized banshee tears`,
   `Mix 5 times`,
   `Add 3 spider webs`,

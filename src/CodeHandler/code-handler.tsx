@@ -116,7 +116,7 @@ const CodeHandler = () => {
       setLoading(false);
       const data = await snapshot.val();
       if (typeof data === "number") {
-        const autoSync = localStorage.getItem("autoSync");
+        const autoSync = localStorage.getItem("autoSync") === "true";
         dispatch(setIndex(data));
 
         if (autoSync) {

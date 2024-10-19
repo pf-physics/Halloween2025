@@ -1,32 +1,9 @@
 import NormalDialogue from "./templates/normal-dialogue";
-import pumpkinHead from "../assets/imgs/pumpkin_head.png";
-import ratsImg from "../assets/imgs/rats.png";
 import introMusic from "../assets/audio/Intro_2024.mp3";
-import merchantImg from "../assets/imgs/skeleton-temp.jpg";
-import merchantMusic from "../assets/audio/merchant.mp3";
-import spiderMusic from "../assets/audio/spiderRune.mp3";
-import spiderImg from "../assets/imgs/spider6.jpg";
 import ghostsImg from "../assets/imgs/ghosts.png";
-import evilGuyImg from "../assets/imgs/evilGuy.png";
-import pumpkinIntro from "../assets/audio/pumpkinIntro.mp3";
-import pumpkinHeadMusic from "../assets/audio/pumpkinHead.mp3";
-import pumpkinHeadMusic2 from "../assets/audio/pumpkinHead2.mp3";
-import backstory from "../assets/audio/backstory.mp3";
-import backstory2 from "../assets/audio/backstory2.mp3";
-import fakeParty from "../assets/audio/fakeParty3.mp3";
-import realParty from "../assets/audio/fakeParty.mp3";
-import evilGuy from "../assets/audio/badGuy.mp3";
 import Sammy from "../assets/imgs/Sammy.jpg";
-import witchMusic from "../assets/audio/witches.mp3";
 import witch2Music from "../assets/audio/witches2.mp3";
-import wolfImg from "../assets/imgs/wolf.jpg";
-import ghostCraft from "../assets/imgs/ghost_craft.png";
-import itsy from "../assets/audio/itsy.mp3";
-import relayMusic from "../assets/audio/fast.mp3";
-import bossFight from "../assets/audio/bossFight.mp3";
 import summoning from "../assets/audio/summoning.mp3";
-import trickMusic from "../assets/audio/tricktreat.mp3";
-import trickImg from "../assets/imgs/candy.jpg";
 import cemteryImg from "../assets/imgs/cem2.jpg";
 import firstImg from "../assets/imgs/first_img.jpg";
 import graveMusic from "../assets/audio/Runescape_Halloween.mp3";
@@ -34,7 +11,16 @@ import graveMusic from "../assets/audio/Runescape_Halloween.mp3";
 import shinySkeleton from "../assets/imgs/skeleton_shiny_eyes.png";
 import sheetGhost from "../assets/imgs/sheet-ghost.jpg";
 import ghostMusic from "../assets/audio/Ghost-Town-Myuu.mp3";
-import raveMusic from "../assets/audio/rave.mp4";
+import raveMusic from "../assets/audio/rave.mp3";
+import mort from "../assets/imgs/mort.png";
+import mort2 from "../assets/imgs/mort2.png";
+import rattler from "../assets/imgs/Rattler.png";
+import lil_ghost from "../assets/imgs/lil_ghost.png";
+import many_ghosts from "../assets/imgs/many_ghosts_freepik.jpg";
+import endCard from "../assets/imgs/HalloweenEnd.jpg";
+import skeletonSit from "../assets/imgs/sitting-skeleton-leaned-tree-dark-forest.jpg";
+import ominousMusic from "../assets/audio/ominous.mp3";
+import magicMusic from "../assets/audio/witches2.mp3";
 
 import TimerGame from "./scenes/timer";
 
@@ -43,13 +29,14 @@ import BossBattle from "./scenes/boss-battle";
 import GhostDialogue from "./templates/ghost-dialogue";
 import RitualRules from "./scenes/ritual-instructions";
 
-export const graveDiggerImg = merchantImg;
-const rattlerImg = ratsImg;
-const tiredCorpseImage = ghostsImg;
-const lostSoulsImg = ghostsImg;
+export const graveDiggerImg = mort2;
+const rattlerImg = rattler;
+const tiredCorpseImage = skeletonSit;
+const lostSoulsImg = many_ghosts;
 const homeCorpseImg = shinySkeleton;
 const otherCorpseImg = sheetGhost;
-const corruptSoulImg = spiderImg;
+const corruptSoulImg = lil_ghost;
+const endMusic = magicMusic;
 
 const otherGraveDiggerName = "Rattler";
 
@@ -547,6 +534,7 @@ const dialogue2024 = [
     image={lostSoulsImg}
     answers={[]}
     isGlobal={true}
+    audio={null}
   />,
   <PotionRules />,
   <NormalDialogue
@@ -876,6 +864,7 @@ const dialogue2024 = [
     text="Uugghhh..."
     image={rattlerImg}
     isGlobal={true}
+    audio={endMusic}
     resetFullScreen
   />,
   <NormalDialogue
@@ -958,6 +947,7 @@ const dialogue2024 = [
     isGlobal={true}
     audio={raveMusic}
   />,
+  <NormalDialogue text="HAPPY HALLOWEEN!" image={endCard} isGlobal={true} />,
 ];
 
 // -1 point every place you get string anywhere but the paper
