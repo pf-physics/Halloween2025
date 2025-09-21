@@ -167,7 +167,7 @@ const Intro = ({}: {}) => {
         </Fade>
       )}
       {playerComponentIndex === 0 && (
-        <div className="title">Welcome to Halloween 2024</div>
+        <div className="title">Welcome to Halloween 2025</div>
       )}
       {!open && !opening && <Dialogue text={el.text} image={""} />}
       {answers.length > 0 && ansRequired && (

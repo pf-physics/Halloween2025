@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 
 export const TeamChoice = ({
+  // TODO 2025 - delete
   teamErr,
   chooseTeam,
 }: {

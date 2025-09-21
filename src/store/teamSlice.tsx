@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const teamSlice = createSlice({
+  // TODO 2025 - delete
   name: "teams",
   initialState: {
     value: [] as string[],

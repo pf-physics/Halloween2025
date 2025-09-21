@@ -31,7 +31,7 @@ const NormalDialogue = ({
   image,
   answers = [],
   audio,
-  isGlobal = true, // DEFAULT FOR HALLOWEEN 2024!
+  isGlobal = true,
   globalScene,
   resetFullScreen,
   header,

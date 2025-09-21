@@ -9,13 +9,13 @@ import { initializeApp } from "firebase/app";
 // Your web app's Firebase configuration
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCW3KwoD5U14RFRnXoM819cx_0pf8n0BXo",
-  authDomain: "halloween2023-e0136.firebaseapp.com",
-  databaseURL: "https://halloween2023-e0136-default-rtdb.firebaseio.com",
-  projectId: "halloween2023-e0136",
-  storageBucket: "halloween2023-e0136.appspot.com",
-  messagingSenderId: "130574249218",
-  appId: "1:130574249218:web:8bf4eb3c1b3ac350eca61b",
+  apiKey: "AIzaSyDC1xKTGtvE01KrIj25NiTfDBMC9ThBH0Q",
+  authDomain: "halloween2024-94895.firebaseapp.com",
+  databaseURL: "https://halloween2024-94895-default-rtdb.firebaseio.com",
+  projectId: "halloween2024-94895",
+  storageBucket: "halloween2024-94895.firebasestorage.app",
+  messagingSenderId: "985750065791",
+  appId: "1:985750065791:web:1e2b285ff4b44aa5b8e54a",
 };
 
 // Initialize Firebase

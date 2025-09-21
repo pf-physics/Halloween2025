@@ -187,7 +187,7 @@ const dissectionGame = (
 
 const dialogue2024 = [
   <NormalDialogue
-    text="Halloween 2024 >:)"
+    text="Halloween 2025 >:)"
     image={firstImg}
     answers={["tombstone"]}
     isGlobal={true}

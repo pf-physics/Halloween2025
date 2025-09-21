@@ -7,19 +7,6 @@ import Menu from "./misc/Menu";
 import { useAppSelector } from "./store/hooks";
 import { useGetPoints } from "./hooks/pointsHooks";
 
-/*
-const theme = createTheme({
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: `
-        h1 {
-          color: grey;
-        }
-      `,
-    },
-  },
-});*/
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -32,20 +19,18 @@ const theme = createTheme({
 });
 
 function App() {
-  const points = useAppSelector((state) => state.points.value);
   const fullScreen = useAppSelector((state) => state.misc.fullScreen);
   useGetPoints();
 
   useEffect(() => {
-    document.title = "Halloween 2024";
+    document.title = "Halloween 2025";
   }, []);
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         {!fullScreen && (
           <header className="App-header">
-            <div>Halloween 2024</div>
-            <div>{points} points</div>
+            <div>Halloween 2025</div>
             <Menu />
           </header>
         )}

@@ -14,7 +14,7 @@ import { localCode, localIndex, teamAccess } from "../constants"; //LOCAL TODO t
 import AudioControl from "../dialogue/audio-control";
 import { useInitComponentIdx } from "../hooks/componentIndexHooks";
 import { setTeams } from "../store/teamSlice";
-import { TeamChoice } from "../misc/SharedComponents";
+import { defaultTeam } from "../constants";
 
 // https://firebase.google.com/docs/database/web/read-and-write
 // https://firebase.google.com/docs/app-check/web/recaptcha-provider
@@ -23,27 +23,15 @@ import { TeamChoice } from "../misc/SharedComponents";
 const CodeHandler = () => {
   const [loading, setLoading] = useState(true);
   const [code, setCode] = useState("");
-  const [team, setTeam] = useState<string | undefined>();
+  const team = defaultTeam;
   const playerIndex = useAppSelector((state) => state.playerIndex.value);
   const dispatch = useAppDispatch();
   const [codeValid, setCodeValid] = useState(false);
   const db = getDatabase();
   const [err, setErr] = useState("");
-  const [teamErr, setTeamErr] = useState("");
   const [tries, setTries] = useState(0);
-  const teams = useAppSelector((state) => state.teams.value);
   // const [teams, updateTeams] = useState<string[]>([])
   const initComponentIdx = useInitComponentIdx();
-
-  const chooseTeam = (team: string) => {
-    if (teams.includes(team)) {
-      localStorage.setItem("team", team);
-      setTeam(team);
-      getData();
-    } else {
-      setTeamErr("This is not a real team");
-    }
-  };
 
   useEffect(() => {
     if (codeValid && team) {
@@ -63,13 +51,7 @@ const CodeHandler = () => {
       const teamList = Object.keys(teamsObj);
       dispatch(setTeams(teamList));
 
-      if (team && teamList.includes(team)) {
-        setTeam(team);
-
-        getData();
-      } else {
-        setLoading(false);
-      }
+      getData();
     }
     if (code === localCode) {
       setCode(code);
@@ -96,7 +78,6 @@ const CodeHandler = () => {
 
   // When the code is input, then the query is made with the access code + team name to find the index the player should be at
   const getData = async () => {
-    const team = localStorage.getItem("team") as string;
     const dbCode = localStorage.getItem("code") as string;
     const localIdx = localStorage.getItem(localIndex) as string;
 
@@ -105,8 +86,6 @@ const CodeHandler = () => {
       dispatch(setIndex(idx));
       dispatch(setPlayerIndex(idx));
       setLoading(false);
-      setTeam("localTeam"); // LOCAL TODO - this is hardcoded
-      localStorage.setItem("team", "localTeam");
       return;
     }
 
@@ -205,10 +184,6 @@ const CodeHandler = () => {
   };
 
   const DisplayApp = () => {
-    if (!team) {
-      return;
-    }
-
     const dialogueList = getDialogue(team);
 
     if (playerIndex !== undefined && playerIndex < dialogueList.length) {
@@ -225,14 +200,10 @@ const CodeHandler = () => {
           <CircularProgress color="primary" />
         </div>
       ) : codeValid ? (
-        team ? (
-          <div>
-            <>{DisplayApp()}</>
-            <AudioControl />
-          </div>
-        ) : (
-          <TeamChoice teamErr={teamErr} chooseTeam={chooseTeam} />
-        )
+        <div>
+          <>{DisplayApp()}</>
+          <AudioControl />
+        </div>
       ) : (
         <EnterCode />
       )}
